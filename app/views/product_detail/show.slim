@@ -1,0 +1,14 @@
+section.home-page
+  .container
+    .row
+      .col-sm-3
+        .left-sidebar
+          = render "home/shared/category"
+          = render "home/shared/brands"
+          = render "home/shared/sales"
+          = render "home/shared/fanpage"
+      .col-sm-9.padding-right
+        .right-sidebar
+          = render 'product_detail/shared/product'
+          = render 'product_detail/shared/tab'
+          = render 'home/shared/recommended_items'

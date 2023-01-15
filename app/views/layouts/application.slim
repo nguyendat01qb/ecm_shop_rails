@@ -1,0 +1,25 @@
+doctype html
+html
+  head
+    title AssignmentStore
+    meta[name="viewport" content="width=device-width,initial-scale=1"]
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stripe_javascript_tag
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', :defer => "defer"
+    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
+  body *raicon_data_attributes
+    = render 'layouts/header'
+    - if flash
+      - flash.each do |message_type, message|
+        .alert.alert-dismissible[class="alert-#{message_type}" style="font-size: 15px; align-items: center;text-align: center;"]
+          button.close[data-dismiss="alert" type="button"] ×
+          = message
+    / ==== loader ====
+    #loader.display-flex
+      .position-center-center
+        .ldr
+    .show_body[style="display:block"]
+      = yield
+    = render 'layouts/footer'
+    
