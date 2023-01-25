@@ -3,6 +3,10 @@ class UserPolicy < ApplicationPolicy
 		authenticate_admin
 	end
 
+	def load_users?
+		authenticate_admin
+	end
+
 	def show?
 		authenticate_admin
 	end

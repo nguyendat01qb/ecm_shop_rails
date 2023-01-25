@@ -2,9 +2,7 @@ class Admin::ProductsController < Admin::BaseController
   before_action :set_product, only: %i[ show edit update destroy edit_product]
   before_action :authorize_admin!, only: [:index, :show, :edit, :update, :show, :destory]
 
-  def index
-    @pagy, @products = pagy(Product.all, items: 20)
-  end
+  def index; end
 
   def show;end
 
@@ -28,13 +26,13 @@ class Admin::ProductsController < Admin::BaseController
   end
 
   def create
-    create, @product = Admin::Products::CreateService.call(product_params)
+    create, message, @product = Admin::Products::CreateService.call(product_params)
 
     if create
-      flash[:success] = "Product was successfully created."
+      flash[:success] = message
       redirect_to admin_products_path
     else
-      flash[:danger] = "Product was failure created."
+      flash[:danger] = message
       render :new
     end
   end
@@ -44,7 +42,7 @@ class Admin::ProductsController < Admin::BaseController
   def edit_product
     attr1 = render_to_string partial: "admin/products/shared/add_attribute", :layout => false
     attr2 = render_to_string partial: "admin/products/shared/attribute2", :layout => false
-    
+
     data = {
       attributes: @product.product_attributes,
       value: @product.product_attributes[0].attribute_values,
@@ -57,7 +55,7 @@ class Admin::ProductsController < Admin::BaseController
 
   def update
     update = Admin::Products::UpdateService.call(@product, product_params)
-    
+
     if update
       flash[:success] = "Product was successfully updated."
     else
@@ -85,7 +83,7 @@ class Admin::ProductsController < Admin::BaseController
     params.require(:product).permit(
       :title,
       :meta_title,
-      :categories, 
+      :categories,
       :content,
       :quantity,
       :brand_id,
@@ -98,6 +96,7 @@ class Admin::ProductsController < Admin::BaseController
         attribute_value: [
           attribute: [],
           price_attribute_product: [],
+          discount_attribute_product: [],
           stock: [],
         ],
         images: []

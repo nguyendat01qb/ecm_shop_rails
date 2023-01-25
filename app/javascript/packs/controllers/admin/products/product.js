@@ -121,6 +121,10 @@ export default class ProductController {
         dataType: "json",
         success: (response) => {
           if (response.status == 200) {
+            $('#product_price').parent().parent().parent().hide();
+            $('#product_discount').parent().parent().parent().hide();
+            $('#product_quantity').parent().parent().parent().hide();
+            $('#product_images').parent().parent().parent().hide();
             $(".product-edit__section").replaceWith(response.html);
           }
         },
@@ -134,6 +138,10 @@ export default class ProductController {
       Ajax(this.api.showNoAttribute, "POST")
         .done((res) => {
           if (res.status == 200) {
+            $('#product_price').parent().parent().parent().show();
+            $('#product_discount').parent().parent().parent().show();
+            $('#product_quantity').parent().parent().parent().show();
+            $('#product_images').parent().parent().parent().show();
             $(".product-edit__section").replaceWith(res.html);
           }
         })
@@ -737,7 +745,7 @@ export default class ProductController {
             <div class="table-cell align-items-center border-top-0 border-bottom-0" data-index-attr2="1" style="min-height: 128px;"></div>
           </div>
         </div>
-      </div>        
+      </div>
     `;
     return html;
   };
@@ -754,9 +762,9 @@ export default class ProductController {
           <div class="form-group string optional product_product_attribute_values_attribute_1">
             <input class="form-control string optional input_attribute-product ${
               boolean == true ? "is-valid" : ""
-            }" multiple="multiple" 
-            placeholder="example: red, blue v.v" type="text" 
-            name="product[product_attribute_1][attribute_value][attribute][]" 
+            }" multiple="multiple"
+            placeholder="example: red, blue v.v" type="text"
+            name="product[product_attribute_1][attribute_value][attribute][]"
             id="product_product_attribute_1_attribute_value_attribute_1 ${
               id == undefined ? "" : id
             }" value="${value == undefined ? "" : value}">
@@ -771,19 +779,19 @@ export default class ProductController {
   };
 
   htmlInputAttr2 = ({ index: index, value: value, isValid: boolean }) => {
-    const html = ` 
+    const html = `
       <div class="variation-edit-right2 d-flex" data-index=${index}>
         <div class="variation-edit-right-content">
           <div class="form-group string optional product_product_attribute_values_attribute_2">
             <input class="form-control ${
               boolean == true ? "is-valid" : ""
-            } string optional attribute2" multiple="multiple" 
-            name="product[product_attribute_2][attribute_value][attribute][]" 
+            } string optional attribute2" multiple="multiple"
+            name="product[product_attribute_2][attribute_value][attribute][]"
             id="product_product_attribute_2_attribute_value_attribute_2" placeholder="example: red, blue v.v" type="text" value="${
               value == undefined ? "" : value
             }">
           </div>
-        
+
           <div>
             <i class="fa-solid fa-trash btn_delete_attr2"></i>
           </div>
@@ -812,10 +820,10 @@ export default class ProductController {
                   }">
                     <img class="img-thumbnail" style="display:${
                       img == undefined ? "none" : "block"
-                    }" 
+                    }"
                     aria-hidden="false" src="${img == undefined ? "" : img}">
                   </div>
-                  <input class="form-control file optional input_image_val" 
+                  <input class="form-control file optional input_image_val"
                   id="product_product_attribute_1_images_${index}"
                   name="product[product_attribute_1][images][]" style="display:none" type="file">
                   <i class="fa-sharp fa-solid fa-circle-plus"></i>
@@ -842,9 +850,22 @@ export default class ProductController {
           <div class="form-group float optional product_product_attribute_values_price_attribute_product">
             <input class="form-control numeric float optional ${
               boolean == true ? "is-valid" : ""
-            }" multiple="multiple" 
-            placeholder="Enter price" type="number" step="any" 
-            name="product[product_attribute_1][attribute_value][price_attribute_product][]" 
+            }" multiple="multiple"
+            placeholder="Enter price" type="number" step="any"
+            name="product[product_attribute_1][attribute_value][price_attribute_product][]"
+            id="product_product_attribute_1_attribute_value_price_attribute_product"
+            value="${price}">
+          </div>
+        </div>
+      </div>
+      <div class="table-cell flex-grow-1 content-price" style="min-height:${height}">
+        <div class="popover-wrap d-flex align-items-center" style="min-height:${height}">
+          <div class="form-group float optional product_product_attribute_values_price_attribute_product">
+            <input class="form-control numeric float optional ${
+              boolean == true ? "is-valid" : ""
+            }" multiple="multiple"
+            placeholder="Enter price" type="number" step="any"
+            name="product[product_attribute_1][attribute_value][discount_attribute_product][]"
             id="product_product_attribute_1_attribute_value_price_attribute_product"
             value="${price}">
           </div>
@@ -855,9 +876,9 @@ export default class ProductController {
           <div class="form-group integer optional product_product_attribute_values_stock">
             <input class="form-control numeric integer optional ${
               boolean == true ? "is-valid" : ""
-            }" multiple="multiple" 
-            placeholder="Enter amount stock" type="number" step="1" 
-            name="product[product_attribute_1][attribute_value][stock][]" 
+            }" multiple="multiple"
+            placeholder="Enter amount stock" type="number" step="1"
+            name="product[product_attribute_1][attribute_value][stock][]"
             id="product_product_attribute_1_attribute_value_stock"
             value="${stock}">
           </div>

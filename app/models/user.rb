@@ -20,7 +20,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :trackable,
          :omniauthable, omniauth_providers: %i[facebook google_oauth2]
 
-  validates :password, password: true, unless: -> { from_omniauth? }
+  validates :password, password: true, unless: -> { from_omniauth? }, on: :create
   validates :phone, phone_number: true, presence: true, unless: -> { from_omniauth? }
   validates :name, presence: true, length: { minimum: 6, maximum: 30 }, unless: -> { from_omniauth? }
   validates :email, presence: true, uniqueness: true

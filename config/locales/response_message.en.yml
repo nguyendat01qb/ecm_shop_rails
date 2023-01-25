@@ -1,0 +1,9 @@
+en:
+  messages:
+    success:
+      category:
+        list_categories: Get list categories successfully
+      product:
+        list_products: Get list products successfully
+      user:
+        list_users: Get list users successfully

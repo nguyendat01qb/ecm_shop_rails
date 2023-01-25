@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_221_104_095_624) do
+ActiveRecord::Schema.define(version: 20_230_125_064_901) do
   create_table 'active_storage_attachments', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
     t.string 'name', null: false
     t.string 'record_type', null: false
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 20_221_104_095_624) do
     t.integer 'stock'
     t.string 'attribute_1'
     t.string 'attribute_2'
+    t.float 'discount_attribute_product'
   end
 
   create_table 'brands', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|

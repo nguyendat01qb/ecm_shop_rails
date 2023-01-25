@@ -25,7 +25,12 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 gem 'simple_form'
-gem "cocoon"
+gem 'cocoon'
+
+gem 'config'
+
+gem 'slack-notifier'
+gem 'jwt'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
@@ -40,7 +45,7 @@ group :development, :test do
   gem 'rspec-mocks', '~> 3.12'
   gem 'rspec-expectations', '~> 3.12'
 
-  gem "factory_bot_rails"
+  gem 'factory_bot_rails'
 
   gem 'shoulda-matchers'
 
@@ -66,7 +71,7 @@ group :development do
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  gem "letter_opener"
+  gem 'letter_opener'
 end
 
 group :test do
@@ -88,15 +93,15 @@ gem 'stimulus-rails'
 
 gem 'devise'
 gem 'pundit'
-gem "rolify"
+gem 'rolify'
 gem 'friendly_id'
 
-gem "omniauth"
-gem "omniauth-facebook"
-gem "omniauth-google-oauth2"
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
 
-gem "paperclip"
+gem 'paperclip'
 gem 'image_processing'
 
 gem 'active_storage_validations'
@@ -105,11 +110,11 @@ gem 'active_model_serializers'
 gem 'carrierwave'
 gem 'ckeditor'
 
-gem "pagy"
+gem 'pagy'
 gem 'kaminari'
 
 gem 'stripe-rails'
-gem "money-rails"
+gem 'money-rails'
 
 gem 'rails-i18n'
 

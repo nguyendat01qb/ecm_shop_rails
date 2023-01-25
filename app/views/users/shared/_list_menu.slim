@@ -3,7 +3,9 @@
     .avatar_profile
       = image_tag('admin/avatars/user')
     .name_profile
-      strong Chào Lê Văn Tung
+      strong
+        | Chào
+        = @current_user.name
       br
       a[href="#{profile_edit_user_url}"] Edit account
   ul.menu_profile

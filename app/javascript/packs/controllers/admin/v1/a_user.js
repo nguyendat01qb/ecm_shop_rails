@@ -1,6 +1,6 @@
 import '../../lib/notify';
 
-function ACategory(options) {
+function AUser(options) {
   var module = this;
   var defaults = {
     pagination_template: $('#pagination-template'),
@@ -8,28 +8,28 @@ function ACategory(options) {
     page: 1,
     per_page: 10,
     api: {
-      get_all: '/v1/admin/load_categories',
+      get_all: '/v1/admin/load_users',
     },
     data: {
-      list_categories: {},
+      list_users: {},
     },
   };
 
   var elements = {
-    container: $('#categories_list'),
-    list_categories: $('#admin_category_template')
+    container: $('#users_list'),
+    list_users: $('#admin_user_template')
   }
 
   module.settings = $.extend({}, defaults, options);
 
-  module.loadCategories = function(callback) {
+  module.loadUsers = function(callback) {
     return $.ajax({
       url: module.settings.api.get_all + '?page=' + module.settings.page,
       type: 'GET',
       dataType: 'json',
       success: function (res) {
         if (res.code === 200) {
-          module.settings.data.list_categories = res.data.categories;
+          module.settings.data.list_users = res.data.users;
           module.settings.total_page = res.data.total_page;
           module.settings.total = res.data.total;
           module.settings.per_page = res.data.per_page;
@@ -47,13 +47,20 @@ function ACategory(options) {
     });
   };
 
-  module.renderCategories = function () {
-    var categories = module.settings.data.list_categories;
-    var template = _.template(elements.list_categories.html());
-    _.each(categories, (category, idx) => {
-      category.idx = (module.settings.page - 1) * module.settings.per_page + idx + 1;
+  module.getUser = function() {
+    $('#m_view_user').on('click', function(e) {
+      debugger
+      console.log(123);
+    })
+  }
+
+  module.renderUsers = function () {
+    var users = module.settings.data.list_users;
+    var template = _.template(elements.list_users.html());
+    _.each(users, (user, idx) => {
+      user.idx = (module.settings.page - 1) * module.settings.per_page + idx + 1;
     });
-    $(elements.container).html(template({ options: categories }));
+    $(elements.container).html(template({ options: users }));
     module.eventGoPage();
   };
 
@@ -61,7 +68,7 @@ function ACategory(options) {
     $('.pagination span a').on('click', function(){
       if ($(this).closest('.page').hasClass('current')) return;
       module.settings.page = $(this).data('page');
-      module.loadCategories(module.renderCategories);
+      module.loadUsers(module.renderUsers);
     });
   };
 
@@ -71,20 +78,21 @@ function ACategory(options) {
     module.settings.pagination_content.html('');
     module.settings.pagination_content.append(pagination(module.settings));
     totalpage_info += ' - ';
-    if (module.settings.per_page == module.settings.data.list_categories.length)
+    if (module.settings.per_page == module.settings.data.list_users.length)
       totalpage_info += module.settings.per_page * module.settings.page;
     else
-      totalpage_info += (module.settings.per_page * (module.settings.page - 1) + module.settings.data.list_categories.length);
+      totalpage_info += (module.settings.per_page * (module.settings.page - 1) + module.settings.data.list_users.length);
 
     $('.totalpage_info').html(totalpage_info);
   };
 
   module.init = function () {
-    module.loadCategories(module.renderCategories);
+    module.loadUsers(module.renderUsers);
+    module.getUser();
   };
 }
 
 $(document).ready(function () {
-  var category = new ACategory();
-  category.init();
+  var user = new AUser();
+  user.init();
 });

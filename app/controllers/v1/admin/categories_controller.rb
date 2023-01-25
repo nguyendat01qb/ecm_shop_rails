@@ -10,7 +10,7 @@ class V1::Admin::CategoriesController < V1::BaseController
       I18n.t('messages.success.category.list_categories'),
       categories: ActiveModelSerializers::SerializableResource.new(
         categories,
-        each_serializer: Category::CategorySerializer
+        each_serializer: Category::ListCategorySerializer
       ),
       total_page: categories.total_pages,
       per_page: per_page,

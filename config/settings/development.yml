@@ -1,0 +1,8 @@
+host: http://localhost:3000
+validation:
+  number_phone: !ruby/regexp /\A[0-9+()●-]+\z/
+hmac_secret: 'ecommerce-secret'
+slack:
+  error_500: https://hooks.slack.com/services/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
+sendgrid:
+  api_key: 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
