@@ -1,3 +1,10 @@
+= content_for :js_pages
+  = javascript_pack_tag 'controllers/admin/v1/a_category', 'data-turbolinks-track': 'reload'
+  css:
+    button {
+      border: none;
+    }
+
 .page-header
   h1 List of Categories
 ol.breadcrumb
@@ -36,32 +43,38 @@ ul.nav.nav-tabs.action_items
               th Slug
               th Created At
               th Action
-          tbody
-            - i = 0
-            - @categories.each do |category|
-              - is_category = category.parent_category
-              - i += 1
-              tr
-                td = i
-                td = category.id
-                td 
-                  - if !is_category.nil?
-                    label class="badge badge-success"
-                      = is_category.title
-                td = category.title
-                td = category.meta_title
-                td = category.slug
-                td = category.created_at.strftime("%H:%M %d/%m/%Y")
-                td style="width: 80px"
-                  ul.others
-                    li
-                      a href="#{admin_category_url(category.id)}" title="view"
-                        i.fa.fa-info-circle
-                    li
-                      a href="#{edit_admin_category_path(category.id)}" title="edit"
-                        i.fa.fa-edit
-                    li
-                      a [ data-confirm="Are you sure?" rel="nofollow" data-method="delete" 
-                          href="#{admin_category_url(category.id)}" ]
-                        i.fa-solid.fa-trash
-        == pagy_bootstrap_nav(@pagy)
+          tbody#categories_list
+        #paginate.paginatestext-center
+      = render 'admin/shared/paginate'
+
+script#admin_category_template[type='text/template']
+  | <%_.each(options, function(option) { %>
+  |   <tr>
+  |     <td> <%- option.idx %></td>
+  |     <td> <%- option.id %></td>
+  |     <td> <%- option.parent_category %></td>
+  |     <td> <%- option.title %></td>
+  |     <td> <%- option.meta_title %></td>
+  |     <td> <%- option.slug %></td>
+  |     <td> <%- option.created_at %></td>
+  |     <td style='width: 80px'>
+  |       <ul class='others'>
+  |         <li>
+  |           <button id='m_view_category' data-id='<%= option.id %>' title='view'>
+  |             <i class='fa fa-info-circle'></i>
+  |           </button>
+  |         </li>
+  |         <li>
+  |           <button id='m_edit_category' data-id='<%= option.id %>' title='edit'>
+  |             <i class='fa fa-edit'></i>
+  |           </button>
+  |         </li>
+  |         <li>
+  |           <button id='m_delete_category' data-confirm='Are you sure?' rel='nofollow' data-method='delete' data-id='<%= option.id %>'>
+  |             <i class='fa-solid fa-trash'></i>
+  |           </button>
+  |         </li>
+  |       </ul>
+  |     </td>
+  |  </tr>
+  | <% }) %>

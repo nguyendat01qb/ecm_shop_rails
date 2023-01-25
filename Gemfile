@@ -106,6 +106,7 @@ gem 'carrierwave'
 gem 'ckeditor'
 
 gem "pagy"
+gem 'kaminari'
 
 gem 'stripe-rails'
 gem "money-rails"

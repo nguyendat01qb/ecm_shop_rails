@@ -1,0 +1,40 @@
+script#pagination-template[type='text/template']
+  | <% total_page = parseInt(total_page); %>
+  | <% if(total_page > 1) { %>
+  | <% page = parseInt(page); %>
+  | <% per_page = parseInt(per_page); %>
+  |  <div class='ftlg12 FONT7a8599 textAlignRight jpagination-info'> <%- ((page - 1) * per_page) + 1 %> - <% if (page == total_page) { %> <%- total %> <% } else { %> <%- page * per_page %> <% } %> of <%- total %></div>
+  | <% } %>
+  | <div class='paginatestext-center'>
+  |   <nav class='pagination'>
+  |    <% if(page > 1) { %>
+  |     <span class='first'>
+  |       <a data-page='1'><img src='https://kintai.jinjer.biz/assets/common/img/common/icon_page_arrow_left_double.svg' width='11' height='11'></a>
+  |     </span>
+  |     <span class='prev'>
+  |       <a rel='prev' data-page='<%- page - 1 %>'><img src='https://kintai.jinjer.biz/assets/common/img/common/icon_page_arrow_left_single.svg' width='7' height='11'></a>
+  |     </span>
+  |   <% } %>
+  |   <% for(i=1; i<= total_page; i++) {
+  |         if(page == i) {
+  |   %>
+  |          <span class='page current'><a href='javascript:void(0)'><%- i %></a></span>
+  |   <%
+  |         }else {
+  |    %>
+  |         <span class='page'>
+  |            <a rel='next' data-page='<%- i %>'><%- i %></a>
+  |         </span>
+  |   <%    }
+  |     }
+  |    %>
+  |   <% if(page < total_page) { %>
+  |   <span class='next'>
+  |     <a rel='next' data-page='<%- page + 1 %>'><img src= 'https://kintai.jinjer.biz/assets/common/img/common/icon_page_arrow_right_single.svg' width='7' height='11'></a>
+  |   </span>
+  |   <span class='last'>
+  |     <a data-page='<%- total_page %>'><img src='https://kintai.jinjer.biz/assets/common/img/common/icon_page_arrow_right_double.svg' width='11' height='11'></a>
+  |   </span>
+    <% } %>
+  | </nav>
+  | </div>

@@ -17,8 +17,6 @@ class Admin::Products::CreateService < ApplicationService
         name = processing_product_attribute[:name]
         product_attribute = product.product_attributes.new(name: name, images: product_attribute_1[:images])
 
-        binding.pry
-
         product_attribute.save!
       end
 
@@ -51,8 +49,6 @@ class Admin::Products::CreateService < ApplicationService
               price_attribute_product: product_attribute_values_1[:price_attribute_product][count],
               stock: product_attribute_values_1[:stock][count]
             )
-
-            binding.pry
 
             product.product_attributes[0].product_attribute_values.create!(attribute_value_id: created_attribute_value.id)
             product.product_attributes[1].product_attribute_values.create!(attribute_value_id: created_attribute_value.id)

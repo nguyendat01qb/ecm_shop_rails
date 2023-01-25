@@ -1,0 +1,68 @@
+.pagination {
+  justify-content: center;
+}
+
+.jpagination-info {
+  float: right;
+}
+
+.pagination span.page a,
+.pagination span.next a,
+.pagination span.last a,
+.pagination span.first a,
+.pagination span.prev a {
+  text-align: center;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 11px;
+  border: 1px solid transparent;
+  color: #666666;
+}
+
+.pagination span.next a,
+.pagination span.last a,
+.pagination span.first a,
+.pagination span.prev a {
+  border: 1px solid #8b93a2;
+  color: #717a8c;
+  font-size: 16px;
+  padding: 6px 6px;
+  letter-spacing: -0.15em;
+}
+
+.pagination a:hover {
+  background: #eeeeee;
+}
+
+.pagination span.page a:hover,
+.pagination span.next a:hover,
+.pagination span.last a:hover,
+.pagination span.first a:hover,
+.pagination span.prev a:hover {
+  text-decoration: none;
+}
+
+.pagination span.page {
+  text-align: center;
+  display: inline-block;
+  vertical-align: middle;
+  white-space: nowrap;
+  font-size: 10px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 50em;
+  cursor: pointer;
+}
+
+.pagination span.current a {
+  color: #ffffff;
+  background-color: #428bca;
+  border: 1px solid #428bca;
+}
+
+.paginatestext-center {
+  text-align: center;
+}

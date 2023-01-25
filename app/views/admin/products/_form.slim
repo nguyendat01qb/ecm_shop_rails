@@ -15,13 +15,13 @@
   .form-group.control-group
     = f.label :brand, class:"col-sm-2 control-label"
     .col-sm-8.controls
-      = f.input :brand_id, collection: Brand.all, selected: @product.brand_id, label: false, hint: 'Required.', 
+      = f.input :brand_id, collection: Brand.all, selected: @product.brand_id, label: false, hint: 'Required.',
                 include_blank: true, :input_html => { class: "input_select2" }
   .form-group.control-group
     = f.label :attributes, class:"col-sm-2 control-label"
     .col-sm-8.controls.container_attribute
       = render 'admin/products/shared/attribute_form', f: f
-  
+
   .form-group.control-group
     = f.label :images, class:"col-sm-2 control-label"
     .col-sm-8.controls
@@ -44,10 +44,10 @@
     .col-sm-8.controls
       = f.input :content, class:"form-control ckeditor", label: false,
                 :as => :ckeditor, ckeditor: { language: 'uk'}, hint: 'Required. Length up to 800'
-  / .form-group.control-group
-  /   = f.label :quantity, class:"col-sm-2 control-label"
-  /   .col-sm-8.controls
-  /     = f.input :quantity, label: false, hint: 'Required. Length form 8 to 30.'
+  .form-group.control-group
+    = f.label :quantity, class:"col-sm-2 control-label"
+    .col-sm-8.controls
+      = f.input :quantity, label: false, hint: 'Required. Length form 8 to 30.'
   .form-group.form-actions
     .col-sm-offset-2.col-sm-8
       = f.submit class: "btn btn-primary btn-edit"

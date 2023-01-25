@@ -9,11 +9,12 @@ html[lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme
     = javascript_include_tag Ckeditor.cdn_url
   body
     .container-scroller
-      = render "admin/home/shared/navbar"
+      = render "admin/dashboards/shared/navbar"
       .container-fluid.page-body-wrapper
-          = render "admin/home/shared/sidebar"
+          = render "admin/dashboards/shared/sidebar"
           .main-panel
             .content-wrapper
               .row
                 = yield
-    
+  = content_for :js_pages
+  = content_for :css_pages
