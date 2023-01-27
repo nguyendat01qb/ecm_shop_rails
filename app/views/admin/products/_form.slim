@@ -36,6 +36,10 @@
       = f.input :images, :input_html => { class: "input_img", :multiple => true}, label: false , hint: 'Optional.'
 
   .form-group.control-group
+    = f.label :price, class:"col-sm-2 control-label"
+    .col-sm-8.controls
+      = f.input :price, label: false, hint: 'Optional.'
+  .form-group.control-group
     = f.label :discount, class:"col-sm-2 control-label"
     .col-sm-8.controls
       = f.input :discount, label: false, hint: 'Optional.'

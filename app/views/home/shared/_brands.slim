@@ -4,11 +4,9 @@ h2.title_sidebar Brands
     .panel.panel-default
       .panel-heading
         h4.panel-title
-          span.pull-right 
+          span.pull-right
             | (
             = brand.products.size
             | )
           a[class="brand__item #{params[:brand] == brand.slug ? "active" : nil}" id="#{brand.slug}_#{brand.id}"]
             = brand.title
-
-        

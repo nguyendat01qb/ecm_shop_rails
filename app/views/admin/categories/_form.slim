@@ -2,7 +2,7 @@
   .form-group.control-group
     = f.label "Parent Category", class:"col-sm-2 control-label"
     .col-sm-8.controls
-      = f.association :parent_category, selected: @category.category_id, 
+      = f.association :parent, selected: @category.category_id,
                       :input_html => { class: "input_select2" }, include_blank: true, label: false, hint: 'Optional.'
   .form-group.control-group
     = f.label :title, class:"col-sm-2 control-label"

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     post 'products/show_attribute2', to: 'products#show_attribute2'
     post 'products/show_no_attribute', to: 'products#show_no_attribute'
     resources :users
+    get 'admins', to: 'users#admin'
     resources :orders
     post 'orders/submit', to: 'orders#submit'
     post 'orders/cancel', to: 'orders#cancel'

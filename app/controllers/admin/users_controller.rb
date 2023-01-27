@@ -2,9 +2,9 @@ class Admin::UsersController < Admin::BaseController
   before_action :set_user, only: %i[show edit update destroy]
   before_action :authorize_admin!
 
-  def index
-    @pagy, @users = pagy(User.all, items: 10)
-  end
+  def index; end
+
+  def admin; end
 
   def show; end
 

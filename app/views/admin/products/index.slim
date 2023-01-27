@@ -1,3 +1,6 @@
+= content_for :js_pages
+  = javascript_pack_tag 'controllers/admin/v1/a_product', 'data-turbolinks-track': 'reload'
+
 .page-header
     h1 List of Products
 ol.breadcrumb
@@ -20,7 +23,7 @@ ul.nav.nav-tabs.action_items
     a class="pjax"
       i.fa.fa-share
       span Export
-  
+
 .col-lg-12.grid-margin.stretch-card
   .card
     .card-body
@@ -39,34 +42,41 @@ ul.nav.nav-tabs.action_items
               th Show Home
               th Created At
               th Action
-          tbody
-            - i = 0
-            - @products.each do |product|
-              - i += 1
-              tr
-                td = i
-                td = product.id
-                td = product.title
-                td = product.price
-                td = product.discount
-                td = product.quantity
-                td T-shirt
-                td T-shirt
-                td 
-                  label class="badge badge-info" Yes
-                td = product.created_at.strftime("%H:%M %d/%m/%Y")
-                td style="width: 80px"
-                  ul.others
-                    li
-                      a href="#{admin_product_url(product.id)}" title="view"
-                        i.fa.fa-info-circle
-                    li
-                      a href="#{edit_admin_product_path(product.id)}" title="edit"
-                        i.fa.fa-edit
-                    li
-                      a [class="delete" data-confirm="Are you sure?" rel="nofollow" 
-                          data-method="delete" href="#{admin_product_url(product.id)}"]
-                        i.fa-solid.fa-trash
-        == pagy_bootstrap_nav(@pagy)
+          tbody#products_list
+        #paginate.paginatestext-center
+      = render 'admin/shared/paginate'
 
-                          
+script#admin_product_template[type='text/template']
+  | <%_.each(options, function(option) { %>
+  |   <tr>
+  |     <td> <%- option.idx %></td>
+  |     <td> <%- option.id %></td>
+  |     <td> <%- option.title %></td>
+  |     <td> <%- option.price %></td>
+  |     <td> <%- option.discount %></td>
+  |     <td> <%- option.quantity %></td>
+  |     <td> <%- option.brand %></td>
+  |     <td> <%- option.categories %></td>
+  |     <td> <%- option.categories %></td>
+  |     <td> <%- option.created_at %></td>
+  |     <td style='width: 80px'>
+  |       <ul class='others'>
+  |         <li>
+  |           <a href='/admin/products/<%- option.id %>' title='view'>
+  |             <i class='fa fa-info-circle'></i>
+  |           </a>
+  |         </li>
+  |         <li>
+  |           <a href='/admin/products/<%- option.id %>/edit' title='edit'>
+  |             <i class='fa fa-edit'></i>
+  |           </a>
+  |         </li>
+  |         <li>
+  |           <a href='/admin/products/<%- option.id %>' data-confirm='Are you sure?' rel='nofollow' data-method='delete'>
+  |             <i class='fa-solid fa-trash'></i>
+  |           </a>
+  |         </li>
+  |       </ul>
+  |     </td>
+  |  </tr>
+  | <% }) %>

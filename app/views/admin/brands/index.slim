@@ -1,3 +1,6 @@
+= content_for :js_pages
+  = javascript_pack_tag 'controllers/admin/v1/a_brand', 'data-turbolinks-track': 'reload'
+
 .page-header
   h1 List of Brands
 ol.breadcrumb
@@ -31,30 +34,41 @@ ul.nav.nav-tabs.action_items
                 th STT
                 th ID
                 th Title
+                th Product Quantity
                 th Created At
                 th Updated At
                 th Action
-            tbody
-              - i = 0
-              - @brands.each do |brand|
-                - i += 1
-                tr
-                  td = i
-                  td = brand.id
-                  td = brand.title
-                  td = brand.created_at.strftime("%H:%M %d/%m/%Y")
-                  td = brand.updated_at.strftime("%H:%M %d/%m/%Y")
-                  td style="width: 80px"
-                    ul.others
-                      li
-                        a href="#{admin_brand_url(brand.id)}" title="view"
-                          i.fa.fa-info-circle
-                      li
-                        a href="#{edit_admin_brand_path(brand.id)}" title="edit"
-                          i.fa.fa-edit
-                      li
-                        a[data-confirm="Are you sure?" rel="nofollow" 
-                          data-method="delete" href="#{admin_brand_url(brand.id)}"]
-                          i.fa-solid.fa-trash
-          == pagy_bootstrap_nav(@pagy)
-                          
+            tbody#brands_list
+          #paginate.paginatestext-center
+        = render 'admin/shared/paginate'
+
+script#admin_brand_template[type='text/template']
+  | <%_.each(options, function(option) { %>
+  |   <tr>
+  |     <td> <%- option.idx %></td>
+  |     <td> <%- option.id %></td>
+  |     <td> <%- option.title %></td>
+  |     <td> <%- option.product_quantity %></td>
+  |     <td> <%- option.created_at %></td>
+  |     <td> <%- option.updated_at %></td>
+  |     <td style='width: 80px'>
+  |       <ul class='others'>
+  |         <li>
+  |           <a href='/admin/brands/<%- option.id %>' title='view'>
+  |             <i class='fa fa-info-circle'></i>
+  |           </a>
+  |         </li>
+  |         <li>
+  |           <a href='/admin/brands/<%- option.id %>/edit' title='edit'>
+  |             <i class='fa fa-edit'></i>
+  |           </a>
+  |         </li>
+  |         <li>
+  |           <a href='/admin/brands/<%- option.id %>' data-confirm='Are you sure?' rel='nofollow' data-method='delete'>
+  |             <i class='fa-solid fa-trash'></i>
+  |           </a>
+  |         </li>
+  |       </ul>
+  |     </td>
+  |  </tr>
+  | <% }) %>

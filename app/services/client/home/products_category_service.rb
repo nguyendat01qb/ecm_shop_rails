@@ -5,11 +5,11 @@ class Client::Home::ProductsCategoryService < ApplicationService
 
   def call
     category = Category.friendly.find_by(slug: slug)
-    child_category = category.child_category
+    childs = category.childs
 
     products = []
-    if child_category.present?
-      child_category.each do |item|
+    if childs.present?
+      childs.each do |item|
         products.concat(item.products.with_attached_images)
       end
     else

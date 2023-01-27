@@ -1,9 +1,5 @@
 = content_for :js_pages
   = javascript_pack_tag 'controllers/admin/v1/a_category', 'data-turbolinks-track': 'reload'
-  css:
-    button {
-      border: none;
-    }
 
 .page-header
   h1 List of Categories
@@ -52,7 +48,7 @@ script#admin_category_template[type='text/template']
   |   <tr>
   |     <td> <%- option.idx %></td>
   |     <td> <%- option.id %></td>
-  |     <td> <%- option.parent_category %></td>
+  |     <td> <%- option.parent %></td>
   |     <td> <%- option.title %></td>
   |     <td> <%- option.meta_title %></td>
   |     <td> <%- option.slug %></td>
@@ -60,19 +56,19 @@ script#admin_category_template[type='text/template']
   |     <td style='width: 80px'>
   |       <ul class='others'>
   |         <li>
-  |           <button id='m_view_category' data-id='<%= option.id %>' title='view'>
+  |           <a href='/admin/categories/<%- option.id %>' title='view'>
   |             <i class='fa fa-info-circle'></i>
-  |           </button>
+  |           </a>
   |         </li>
   |         <li>
-  |           <button id='m_edit_category' data-id='<%= option.id %>' title='edit'>
+  |           <a href='/admin/categories/<%- option.id %>/edit' title='edit'>
   |             <i class='fa fa-edit'></i>
-  |           </button>
+  |           </a>
   |         </li>
   |         <li>
-  |           <button id='m_delete_category' data-confirm='Are you sure?' rel='nofollow' data-method='delete' data-id='<%= option.id %>'>
+  |           <a href='/admin/categories/<%- option.id %>' data-confirm='Are you sure?' rel='nofollow' data-method='delete'>
   |             <i class='fa-solid fa-trash'></i>
-  |           </button>
+  |           </a>
   |         </li>
   |       </ul>
   |     </td>

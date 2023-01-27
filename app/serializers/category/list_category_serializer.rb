@@ -1,9 +1,9 @@
 class Category::ListCategorySerializer < ActiveModel::Serializer
-  attributes :id, :title, :meta_title, :parent_category, :slug, :created_at
+  attributes :id, :title, :meta_title, :parent, :slug, :created_at
 
-  def parent_category
-    return unless object.parent_category
-    object.parent_category.title
+  def parent
+    return unless object.parent
+    object.parent.title
   end
 
   def created_at

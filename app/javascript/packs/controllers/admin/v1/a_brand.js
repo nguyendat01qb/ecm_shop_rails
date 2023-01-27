@@ -1,6 +1,6 @@
 import '../../lib/notify';
 
-function AUser(options) {
+function ABrand(options) {
   var module = this;
   var defaults = {
     pagination_template: $('#pagination-template'),
@@ -8,32 +8,32 @@ function AUser(options) {
     page: 1,
     per_page: 10,
     api: {
-      get_all: '/v1/admin/load_users',
+      get_all: '/v1/admin/load_brands',
     },
     data: {
-      list_users: {},
+      list_brands: {},
     },
   };
 
   var elements = {
-    container: $('#users_list'),
-    list_users: $('#admin_user_template')
+    container: $('#brands_list'),
+    list_brands: $('#admin_brand_template')
   }
 
   module.settings = $.extend({}, defaults, options);
 
-  module.loadUsers = function(callback) {
+  module.loadBrands = function(callback) {
     return $.ajax({
-      url: module.settings.api.get_all + '?page=' + module.settings.page,
+      url: module.settings.api.get_all,
       type: 'GET',
       dataType: 'json',
       success: function (res) {
         if (res.code === 200) {
-          module.settings.data.list_users = res.data.users;
+          module.settings.data.list_brands = res.data.brands;
           module.settings.total_page = res.data.total_page;
           module.settings.total = res.data.total;
           module.settings.per_page = res.data.per_page;
-          if (module.settings.total_page > 1) {
+          if (module.settings.total_page == 1) {
             $('#paginate').show();
             module.initPaginate();
           } else {
@@ -47,13 +47,13 @@ function AUser(options) {
     });
   };
 
-  module.renderUsers = function () {
-    var users = module.settings.data.list_users;
-    var template = _.template(elements.list_users.html());
-    _.each(users, (user, idx) => {
-      user.idx = (module.settings.page - 1) * module.settings.per_page + idx + 1;
+  module.renderBrands = function () {
+    var brands = module.settings.data.list_brands;
+    var template = _.template(elements.list_brands.html());
+    _.each(brands, (brand, idx) => {
+      brand.idx = (module.settings.page - 1) * module.settings.per_page + idx + 1;
     });
-    $(elements.container).html(template({ options: users }));
+    $(elements.container).html(template({ options: brands }));
     module.eventGoPage();
   };
 
@@ -61,7 +61,7 @@ function AUser(options) {
     $('.pagination span a').on('click', function(){
       if ($(this).closest('.page').hasClass('current')) return;
       module.settings.page = $(this).data('page');
-      module.loadUsers(module.renderUsers);
+      module.loadBrands(module.renderBrands);
     });
   };
 
@@ -71,20 +71,20 @@ function AUser(options) {
     module.settings.pagination_content.html('');
     module.settings.pagination_content.append(pagination(module.settings));
     totalpage_info += ' - ';
-    if (module.settings.per_page == module.settings.data.list_users.length)
+    if (module.settings.per_page == module.settings.data.list_brands.length)
       totalpage_info += module.settings.per_page * module.settings.page;
     else
-      totalpage_info += (module.settings.per_page * (module.settings.page - 1) + module.settings.data.list_users.length);
+      totalpage_info += (module.settings.per_page * (module.settings.page - 1) + module.settings.data.list_brands.length);
 
     $('.totalpage_info').html(totalpage_info);
   };
 
   module.init = function () {
-    module.loadUsers(module.renderUsers);
+    module.loadBrands(module.renderBrands);
   };
 }
 
 $(document).ready(function () {
-  var user = new AUser();
-  user.init();
+  var brand = new ABrand();
+  brand.init();
 });

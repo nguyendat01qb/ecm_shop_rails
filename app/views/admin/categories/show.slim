@@ -1,5 +1,5 @@
 .page-header
-  h1 Details for Category 
+  h1 Details for Category
 ol.breadcrumb
   li.dashboard
     a class="pjax" href="#{admin_url}" Dashboard
@@ -26,7 +26,7 @@ ul.nav.nav-tabs.action_items
     a class="pjax"
       i.fa.fa-share
       span Export
-    
+
 .col-lg-12.grid-margin.stretch-card.form-show
   .card
     .card-body
@@ -38,8 +38,8 @@ ul.nav.nav-tabs.action_items
 
           dt: span.label.label-warning Parent Category
           dd.well
-            - unless @category.parent_category.nil?
-              = @category.parent_category.title
+            - unless @category.parent.nil?
+              = @category.parent.title
 
           dt: span.label.label-warning Title
           dd.well = @category.title
@@ -58,4 +58,3 @@ ul.nav.nav-tabs.action_items
 
           dt: span.label.label-warning Updated At
           dd.well = @category.updated_at.strftime("%H:%M %d/%m/%Y")
-                  

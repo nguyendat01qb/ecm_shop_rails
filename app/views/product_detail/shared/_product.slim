@@ -12,7 +12,7 @@
               = image_tag(img)
               a[href="" rel="prettyPhoto"]
                 h3 ZOOM
-        
+
       #similar-product
         .product-dec-slider-small
           - @product.images.each do |img|
@@ -45,27 +45,27 @@
         .price.display-flex
           - if @product_attributes.present?
             - value_min = @product_attributes[0].attribute_values.min_by(&:price_attribute_product)
-            span.price_new 
+            span.price_new
               sup $
               = discount(value_min.price_attribute_product, @product.discount)
-            del.price_old 
+            del.price_old
               sup $
               = value_min.price_attribute_product
           - else
-            span.price_new 
+            span.price_new
               sup $
               = discount(@product.price, @product.discount)
-            del.price_old 
+            del.price_old
               sup $
               = @product.price
         .quantity
-          label Quantity: 
+          label Quantity:
           input.quantity.numberInput[type="number" value="1"]
-            - if get_stock_product(@product).to_i == 0 
+            - if get_stock_product(@product).to_i == 0
               a.btn.btn-danger.out-of-stock[href="javascript:void(0)"] Out of stock
             - else
               a.btn.btn-fefault.cart.add-to-cart[name="add-to-cart-detail"]
-                i.fa.fa-shopping-cart  
+                i.fa.fa-shopping-cart
                 |  Add to cart
         .attribute_product[style="display:#{@product_attributes.present? ? 'block': 'none'}"]
           .item
@@ -75,18 +75,18 @@
                   = @product_attributes[0].name
                 .select__items
                   - @product_attributes[0].attribute_values.uniq{ |el| el[:attribute_1] }.each do |value|
-                    button.attribute_item.item1[data-attribute="#{@product_attributes[0].id}"] 
+                    button.attribute_item.item1[data-attribute="#{@product_attributes[0].id}"]
                       = value.attribute_1
-            
+
             - if @product_attributes[1].present?
               .flex[style="align-items: baseline;"]
                 p.flex: b
                   = @product_attributes[1].name
                 .select__items
                   - @product_attributes[1].attribute_values.uniq{ |el| el[:attribute_2] }.each do |value|
-                    button.attribute_item.item2[data-attribute="#{@product_attributes[1].id}"] 
+                    button.attribute_item.item2[data-attribute="#{@product_attributes[1].id}"]
                       = value.attribute_2
-                    
+
         p.product__stock
           b Quantity in stock:
           - if @product.quantity.present?
@@ -95,19 +95,18 @@
           - elsif @product.quantity.nil?
             = @product_attributes[0].attribute_values.sum(&:stock)
         p
-          b Viewes: 
+          b Viewes:
           |40
-        p 
-          b Brand: 
+        p
+          b Brand:
           = @product.brand.title
         p
           b Categories:
           ul
             - @product.categories.each do |category|
-              li 
+              li
                 = category.title
         p
-          b Share: 
+          b Share:
           a.share_shop
             i.fa-brands.fa-facebook-f
-        
