@@ -2,7 +2,7 @@ li.item_comment
   a.pull-left
     img class="media-object" src="/assets/home/iframe3.png" alt=""
   .item_comment-user
-    p.item_comment-name 
+    p.item_comment-name
       = comment.user.name
     .rate-star
       i.fa.fa-star
@@ -10,7 +10,7 @@ li.item_comment
       i.fa.fa-star
       i.fa.fa-star
       i.fa.fa-star
-    p.item_comment-time 
+    p.item_comment-time
       = comment.created_at
     ul
       li
@@ -21,7 +21,7 @@ li.item_comment
         i.fa.fa-edit
       li
         i.fa-solid.fa-trash
-      
+
     .content_comment
       p = comment.content
 
@@ -32,5 +32,5 @@ li.item_comment
     .form-reply
       form#form_comment
         .mb-3
-          textarea.in-reply-comment[id="reply_comment #{comment.product.slug} #{comment.id}" placeholder="Write a comment..."]
+          textarea.in-reply-comment[id="reply_comment #{comment.product.id} #{comment.id}" placeholder="Write a comment..."]
           input.btn_reply_comment[type="button" value="Submit"]

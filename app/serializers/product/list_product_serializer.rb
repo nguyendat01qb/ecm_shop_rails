@@ -11,6 +11,11 @@ class Product::ListProductSerializer < ActiveModel::Serializer
     object.price.format
   end
 
+  def discount
+    return unless object.discount
+    "#{(object.discount * 100).round(2)} %"
+  end
+
   def categories
     return if object.categories.blank?
     object.categories.map(&:title)

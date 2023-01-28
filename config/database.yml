@@ -19,14 +19,14 @@ default: &default
 
 development:
   <<: *default
-  database: assignment_store_development
+  database: fashion_store_development
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: assignment_store_test
+  database: fashion_store_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -50,6 +50,6 @@ test:
 #
 production:
   <<: *default
-  database: assignment_store_production
-  username: assignment_store
-  password: <%= ENV['ASSIGNMENT_STORE_DATABASE_PASSWORD'] %>
+  database: fashion_store_production
+  username: fashion_store
+  password: <%= ENV['FASHION_STORE_DATABASE_PASSWORD'] %>

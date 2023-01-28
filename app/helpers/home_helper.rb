@@ -1,6 +1,6 @@
 module HomeHelper
   def discount(price, discount)
-    (price.to_f - discount.to_f).round(2)
+    (price.to_f * (1 - discount.to_f)).round(2)
   end
 
   def last_page?(_products, params, status)

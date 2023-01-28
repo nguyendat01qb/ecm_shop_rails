@@ -4,7 +4,7 @@ import { Ajax, redirect } from "../../lib/application";
 
 export default class StripeController {
   publicKey =
-    "pk_test_51LpSrFHh49tj9otcfpX0avnxrpcyZ2ymmqs4H3rXkl3nsdpcehThIr15ifYyKstVk6f4ezRl0yd0O27DDkRCAEYX00NhGPglqM";
+    "pk_test_51MQQDqAfM8SM9VlxjUWgvgCSUpGM0IGWbzdDQcj3cPae4OdH2WyK8jG3OXAqRGBs6TYAynE44wE8RMeQvvnk09RW00eayTBSlh";
 
   stripe = Stripe(this.publicKey, {
     apiVersion: "2022-08-01",

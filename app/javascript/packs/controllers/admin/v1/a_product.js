@@ -24,7 +24,7 @@ function AProduct(options) {
 
   module.loadProducts = function(callback) {
     return $.ajax({
-      url: module.settings.api.get_all,
+      url: module.settings.api.get_all + '?page=' + module.settings.page,
       type: 'GET',
       dataType: 'json',
       success: function (res) {
@@ -33,7 +33,7 @@ function AProduct(options) {
           module.settings.total_page = res.data.total_page;
           module.settings.total = res.data.total;
           module.settings.per_page = res.data.per_page;
-          if (module.settings.total_page == 1) {
+          if (module.settings.total_page > 1) {
             $('#paginate').show();
             module.initPaginate();
           } else {

@@ -5,7 +5,7 @@ class Client::Product::CommentService < ApplicationService
   end
 
   def call
-    product = Product.friendly.find_by(slug: comment_params[:slug])
+    product = Product.friendly.find_by(id: comment_params[:slug])
     comment = product.comments.build(
       user_id: user.id,
       content: comment_params[:content],

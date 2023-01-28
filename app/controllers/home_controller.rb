@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   def index
-    @categories = Category.show_categories.include_categories
+    @categories = Category.is_parent.include_categories
     @brands = Brand.all.include_products
 
     if params[:category].nil? && params[:brand].nil? && params[:page].nil? && params[:search].nil?
