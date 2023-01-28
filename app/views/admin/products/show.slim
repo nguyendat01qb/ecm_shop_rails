@@ -1,5 +1,5 @@
 .page-header
-  h1 Details for product 
+  h1 Details for product
 ol.breadcrumb
   li.dashboard
     a class="pjax" href="#{admin_url}" Dashboard
@@ -29,7 +29,8 @@ ul.nav.nav-tabs.action_items
     .card-body
       .table-responsive
         fieldset
-          h4 Basic info
+          legend
+            h4 Basic info
           dl
             dt: span.label.label-warning Id
             dd.well = @product.id
@@ -52,27 +53,27 @@ ul.nav.nav-tabs.action_items
             dt: span.label.label-warning Categories
             dd.well
               - @product.categories.each do |category|
-                a href=""
+                a href="/admin/categories/#{category.id}"
                   = category.title
                 br
 
-            dt: span.label.label-warning Price	
+            dt: span.label.label-warning Price
             dd.well = @product.price
 
-            dt: span.label.label-warning Discount	
+            dt: span.label.label-warning Discount
             dd.well = @product.discount
 
-            dt: span.label.label-warning Show home	
+            dt: span.label.label-warning Show home
             dd.well yes
 
-            dt: span.label.label-warning Sold	
+            dt: span.label.label-warning Sold
             dd.well 111
 
-            dt: span.label.label-warning Content	
+            dt: span.label.label-warning Content
             dd.well = raw @product.content
 
             dt: span.label.label-warning Created At
             dd.well = @product.created_at.strftime("%H:%M %d/%m/%Y")
-            
+
             dt: span.label.label-warning Updated At
             dd.well = @product.updated_at.strftime("%H:%M %d/%m/%Y")

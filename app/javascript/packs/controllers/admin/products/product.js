@@ -124,7 +124,6 @@ export default class ProductController {
             $('#product_price').parent().parent().parent().hide();
             $('#product_discount').parent().parent().parent().hide();
             $('#product_quantity').parent().parent().parent().hide();
-            $('#product_images').parent().parent().parent().hide();
             $(".product-edit__section").replaceWith(response.html);
           }
         },
@@ -141,7 +140,6 @@ export default class ProductController {
             $('#product_price').parent().parent().parent().show();
             $('#product_discount').parent().parent().parent().show();
             $('#product_quantity').parent().parent().parent().show();
-            $('#product_images').parent().parent().parent().show();
             $(".product-edit__section").replaceWith(res.html);
           }
         })
@@ -468,7 +466,6 @@ export default class ProductController {
         data: { id: id },
         dataType: "json",
         success: (response) => {
-          console.log(response);
           if (response.status == 200) {
             if (response.data != undefined) {
               const attributes = response.data.attributes;
@@ -501,6 +498,7 @@ export default class ProductController {
 
                   const htmlPriceAndStock = this.htmlPriceAndStock({
                     price: item.price_attribute_product,
+                    discount: item.discount_attribute_product,
                     stock: item.stock,
                     height: "129px",
                     dataItem: 1,
@@ -581,6 +579,7 @@ export default class ProductController {
                   count += 1;
                   const htmlPriceAndStock = this.htmlPriceAndStock({
                     price: item.price_attribute_product,
+                    discount: item.discount_attribute_product,
                     stock: item.stock,
                     height: "64px",
                     isValid: true,
@@ -666,9 +665,6 @@ export default class ProductController {
         inputAttribute.remove();
         $(`[data-body-attr2=${index}]`).remove();
         $(`[data-item-price=${index}]`).remove();
-        // $(".second-variation-wrapper")
-        //   .find(".table-cell")
-        //   .addClass("border-bottom-0");
         $(".variation-body").find(".table-cell").css("min-height", "65px");
         $(".variation-warp").find(".table-cell:last").css("min-height", "66px");
         if (
@@ -838,6 +834,7 @@ export default class ProductController {
 
   htmlPriceAndStock = ({
     price: price,
+    discount: discount,
     stock: stock,
     height: height,
     isValid: boolean,
@@ -860,14 +857,14 @@ export default class ProductController {
       </div>
       <div class="table-cell flex-grow-1 content-price" style="min-height:${height}">
         <div class="popover-wrap d-flex align-items-center" style="min-height:${height}">
-          <div class="form-group float optional product_product_attribute_values_price_attribute_product">
+          <div class="form-group float optional product_product_attribute_values_discount_attribute_product">
             <input class="form-control numeric float optional ${
               boolean == true ? "is-valid" : ""
             }" multiple="multiple"
-            placeholder="Enter price" type="number" step="any"
+            placeholder="Enter discount" type="number" step="any"
             name="product[product_attribute_1][attribute_value][discount_attribute_product][]"
-            id="product_product_attribute_1_attribute_value_price_attribute_product"
-            value="${price}">
+            id="product_product_attribute_1_attribute_value_discount_attribute_product"
+            value="${discount}">
           </div>
         </div>
       </div>

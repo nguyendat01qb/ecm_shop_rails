@@ -1,17 +1,17 @@
 header#header
   / ---------------------- header top ------------------------
   .header_top
-    .container 
+    .container
       .row
         .col-sm-6
           .header_info
-            ul.nav.nav-pills 
+            ul.nav.nav-pills
               li: a
                 i.fa.fa-phone
-                |  0984 235 062
+                |  0327 618 979
               li: a
                 i.fa.fa-envelope
-                |  vantung2102@gmail.com
+                |  nvdatdev@gmail.com
         .col-sm-6.header_top--right
           .social-icons
             ul.nav.nav-bar
@@ -35,7 +35,7 @@ header#header
   / --------------------- header middle ----------------------
   .header_middle
     .container
-      .row 
+      .row
         .col-sm-4.display-flex
           .logo
             a[herf="#{root_path}"]
@@ -61,48 +61,48 @@ header#header
                   li: a[href="#{admin_users_url}"]
                     i.fa.fa-user
                     |  Admin
-              li 
+              li
                 - if user_signed_in?
-                  = link_to logout_path 
+                  = link_to logout_path
                     i.fa.fa-lock &nbsp
                     = t "menu.logout"
-                - else 
+                - else
                   = link_to login_path
                     i.fa.fa-lock &nbsp
                     = t "menu.login"
   / --------------------- header bottom ----------------------
-  .header_bottom 
-    .container 
-      .row 
-        .col-sm-9 
+  .header_bottom
+    .container
+      .row
+        .col-sm-9
           .navbar-header
             button.navbar-toggle.collapsed[type="button" data-toggle="collapse" data-target=".navbar-collapse"]
               span.sr-only Toggle navigation
               span.icon-bar
               span.icon-bar
               span.icon-bar
-          .mainmenu 
+          .mainmenu
               ul.nav.navbar-nav.collapse.navbar-collapse
-                li  
+                li
                   a.active[href="#{root_path}"]
                     = t "menu.home"
                 li.dropdown
                     a
-                      = t "menu.shop" 
+                      = t "menu.shop"
                       i.fa.fa-angle-down
                       ul.sub-menu[role="menu"]
                         - if user_signed_in?
-                          li: a 
+                          li: a
                             = t "menu.cart"
                           li: a[href="#{user_order_url}"]
                             = t "menu.my_orders"
                           li: a[href="#{user_addresses_url}"]
                             = t "menu.address"
-                        li: a 
+                        li: a
                           = t "menu.contact"
                 li.dropdown
                   a
-                    | Blog 
+                    | Blog
                     i.fa.fa-angle-down
                     ul.sub-menu[role="menu"]
                       li: a Blog List

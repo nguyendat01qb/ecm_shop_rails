@@ -44,6 +44,10 @@ class User < ApplicationRecord
     end
   end
 
+  def current_admin
+    self.has_role? :admin
+  end
+
   private
 
   def set_default_role
