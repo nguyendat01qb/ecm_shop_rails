@@ -21,6 +21,9 @@ module AssignmentStore
     config.autoload_paths << config.root.join('lib')
     config.autoload_paths << config.root.join('lib/concerns')
     config.autoload_paths << config.root.join('app/serializers')
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
+    config.i18n.available_locales = %i[en ja]
+    config.i18n.default_locale = :en
 
     config.autoload_paths += %w(#{config.root}/app/models/ckeditor)
 
@@ -29,8 +32,8 @@ module AssignmentStore
       ENV[key.to_s] = value
     end unless config_file.nil?
 
-    Rails.application.configure do
-      config.hosts << 'b97a-222-253-42-176.ap.ngrok.io'
-    end
+    # Rails.application.configure do
+    #   config.hosts << 'b97a-222-253-42-176.ap.ngrok.io'
+    # end
   end
 end

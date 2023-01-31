@@ -1,0 +1,103 @@
+en:
+  list: &list List
+  show: &show Show
+  new: &new New
+  edit: &edit Edit
+  export: &export Export
+  dashboard: &dashboard Dashboard
+  categories: &categories Categories
+  layouts:
+    admin:
+      title_header: Admin | Fashion Store
+    application:
+      title_header: Fashion Store
+    header:
+      dev_phone: 0327 618 979
+      dev_email: nvdatdev@gmail.com
+      home: Home
+      admin_title: Admin
+      shop: Shop
+      blog: Blog
+      contact: Contact
+      checkout: Checkout
+      cart: Cart
+      my_orders: My Orders
+      address: Address
+      blog_list: Blog list
+      toggle_nav: Toggle navigation
+      notification: Notifications
+      login: Login
+      logout: Logout
+  admin:
+    categories:
+      index:
+        list_categories: List of Categories
+        dashboard: *dashboard
+        categories: *categories
+        list: *list
+        new: *new
+        export: *export
+        table:
+          stt: STT
+          id: ID
+          parent: Parent Category
+          title: Title
+          meta_title: Meta Title
+          slug: Slug
+          created_at: Created At
+          actions: Actions
+      edit:
+        title: 'Edit Category: '
+        user: 'User'
+        dashboard: *dashboard
+        list: *list
+        new: *new
+        edit: *edit
+        export: *export
+      new:
+        new_category: New Category
+        dashboard: *dashboard
+        category: Category
+        new: New
+        list: *list
+        new: *new
+        export: *export
+      show:
+        details: Details for Category
+        dashboard: *dashboard
+        categories: *categories
+        list: *list
+        show: *show
+        new: *new
+        export: *export
+        basic_info: Basic info
+        id: Id
+        parent: Parent Category
+        title: Title
+        meta_title: Meta title
+        slug: Slug
+        content: Content
+        created_at: Created At
+        updated_at: Updated At
+    products:
+      index:
+        list_products: List of Products
+        dashboard: *dashboard
+        products: Products
+        list: *list
+        new: *new
+        export: *export
+        stt: STT
+        id: ID
+        title: Title
+        price: Price
+        discount: Discount
+        quantity: Quantity
+        brand: Brand
+        category: Category
+        show_home: Show Home
+        created_at: Created At
+        actions: Actions
+  product:
+    see_detail: See Detail
+    quick_view: Quick View

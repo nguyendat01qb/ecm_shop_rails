@@ -29,7 +29,6 @@ function AUser(options) {
       dataType: 'json',
       success: function (res) {
         if (res.code === 200) {
-          debugger
           module.settings.data.list_admins = res.data.admins;
           module.settings.total_page = res.data.total_page;
           module.settings.total = res.data.total;
