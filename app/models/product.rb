@@ -3,6 +3,7 @@ class Product < ApplicationRecord
   extend SearchKeyword::QuerySearch
   friendly_id :title, use: :slugged
   monetize :price_cents
+  TYPES = { show: 1, hide: 2 }.freeze
 
   has_many :product_categories, dependent: :destroy
   has_many :categories, through: :product_categories, dependent: :destroy

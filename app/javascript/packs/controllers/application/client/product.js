@@ -11,7 +11,7 @@ export default class ProductController {
 
   api = {
     checkAmount: "/cart/check_amount",
-    getProduct: "/cart/select_attribute",
+    getProduct: "/v1/customer/select_attribute",
     showCart: "/cart/show_cart",
   };
 
@@ -108,65 +108,26 @@ export default class ProductController {
                   `<span class="price_new">${res.value.price_attribute_product}</span>`
                 );
                 if (parseInt(res.value.stock) > 0) {
-                  $(".out-of-stock").replaceWith(` 
+                  $(".out-of-stock").replaceWith(`
                     <a class="btn btn-fefault cart add-to-cart" name="add-to-cart-detail">
-                      <i class="fa fa-shopping-cart"></i> 
+                      <i class="fa fa-shopping-cart"></i>
                       Add to cart
                     </a>
                   `);
-                  $(".product__stock").replaceWith(` 
+                  $(".product__stock").replaceWith(`
                     <p class="product__stock"><b>Quantity in stock: </b> ${res.value.stock} </p>
                   `);
                 } else {
-                  $(".product__stock").replaceWith(` 
+                  $(".product__stock").replaceWith(`
                     <p class="product__stock"><b>Quantity in stock: </b> 0 </p>
                   `);
-                  $(".add-to-cart").replaceWith(` 
+                  $(".add-to-cart").replaceWith(`
                     <a class="btn btn-danger out-of-stock" href="javascript:void(0)">Out of stock</a>
                   `);
                 }
               }
             })
             .fail((res) => {});
-
-          // $.ajax({
-          //   url: "/cart/select_attribute",
-          //   type: "GET",
-          //   data: { data: data },
-          //   beforeSend: (xhr) => {
-          //     xhr.setRequestHeader(
-          //       "X-CSRF-Token",
-          //       $('meta[name="csrf-token"]').attr("content")
-          //     );
-          //   },
-          //   dataType: "json",
-          //   success: (response) => {
-          //     if (response.status == 200) {
-          //       $(".price_new").replaceWith(
-          //         `<span class="price_new">${response.value.price_attribute_product}</span>`
-          //       );
-          //       if (parseInt(response.value.stock) > 0) {
-          //         $(".out-of-stock").replaceWith(`
-          //           <a class="btn btn-fefault cart add-to-cart" name="add-to-cart-detail">
-          //             <i class="fa fa-shopping-cart"></i>
-          //             Add to cart
-          //           </a>
-          //         `);
-          //         $(".product__stock").replaceWith(`
-          //           <p class="product__stock"><b>Quantity in stock: </b> ${response.value.stock} </p>
-          //         `);
-          //       } else {
-          //         $(".product__stock").replaceWith(`
-          //           <p class="product__stock"><b>Quantity in stock: </b> 0 </p>
-          //         `);
-          //         $(".add-to-cart").replaceWith(`
-          //           <a class="btn btn-danger out-of-stock" href="javascript:void(0)">Out of stock</a>
-          //         `);
-          //       }
-          //     }
-          //   },
-          //   error: (response) => {},
-          // });
         }
       } else if ($(".select__items").length == 1) {
         const data = {
@@ -177,7 +138,7 @@ export default class ProductController {
         Ajax(this.api.getProduct, "GET", { data: data })
           .done((res) => {
             if (res.status == 200) {
-              $(".product__stock").replaceWith(` 
+              $(".product__stock").replaceWith(`
                 <p class="product__stock"><b>Quantity in stock: </b>${res.value.stock}</p>
               `);
 
@@ -187,31 +148,6 @@ export default class ProductController {
             }
           })
           .fail((res) => {});
-
-        // $.ajax({
-        //   url: "/cart/select_attribute",
-        //   type: "GET",
-        //   data: { data: data },
-        //   beforeSend: (xhr) => {
-        //     xhr.setRequestHeader(
-        //       "X-CSRF-Token",
-        //       $('meta[name="csrf-token"]').attr("content")
-        //     );
-        //   },
-        //   dataType: "json",
-        //   success: (response) => {
-        //     if (response.status == 200) {
-        //       $(".product__stock").replaceWith(`
-        //         <p class="product__stock"><b>Quantity in stock: </b>${response.value.stock}</p>
-        //       `);
-
-        //       $(".price_new").replaceWith(
-        //         `<span class="price_new">${response.value.price_attribute_product}</span>`
-        //       );
-        //     }
-        //   },
-        //   error: (response) => {},
-        // });
       }
     });
   };

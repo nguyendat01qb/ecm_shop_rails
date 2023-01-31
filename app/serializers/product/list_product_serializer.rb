@@ -1,10 +1,5 @@
 class Product::ListProductSerializer < ActiveModel::Serializer
-  attributes :id, :title, :price, :discount, :quantity, :price_cents, :brand, :categories, :created_at
-
-  def brand
-    return unless object.brand
-    object.brand.title
-  end
+  attributes :id, :title, :price, :discount, :quantity, :price_cents, :show_home, :brand, :categories, :created_at
 
   def price
     return unless object.price
@@ -14,6 +9,16 @@ class Product::ListProductSerializer < ActiveModel::Serializer
   def discount
     return unless object.discount
     "#{(object.discount * 100).round(2)} %"
+  end
+
+  def show_home
+    return true if object.product_type == Product::TYPES[:show]
+    false
+  end
+
+  def brand
+    return unless object.brand
+    object.brand.title
   end
 
   def categories
