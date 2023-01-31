@@ -52,23 +52,23 @@ ul.nav.nav-tabs.action_items
 script#admin_user_template[type='text/template']
   | <%_.each(options, function(option) { %>
   |   <tr>
-  |     <td> <%- option.idx %></td>
-  |     <td> <%- option.id %></td>
+  |     <td><%- option.idx %></td>
+  |     <td><%- option.id %></td>
   / |     <% if (option.avatar.attached?) { %>
-  / |       <td> <img src='<%- option.avatar_url %>'/></td>
+  / |       <td><img src='<%- option.avatar_url %>'/></td>
   / |     <% } else { %>
-  |       <td> <img src='/assets/admin/avatars/user'/></td>
+  |       <td><img src='/assets/admin/avatars/user'/></td>
   / |     <% } %>
-  |     <td> <%- option.name %></td>
-  |     <td> <%- option.phone %></td>
-  |     <td> <%- option.email %></td>
+  |     <td><%- option.name %></td>
+  |     <td><%- option.phone %></td>
+  |     <td><%- option.email %></td>
   |     <td>
   |       <label class="badge badge-info">
   |         Admin
   |       </label>
   |     </td>
-  |     <td> <%- option.sign_in_count %></td>
-  |     <td> <%- option.created_at %></td>
+  |     <td><%- option.sign_in_count %></td>
+  |     <td><%- option.created_at %></td>
   |     <td style='width: 80px'>
   |       <ul class='others'>
   |         <li>

@@ -222,6 +222,7 @@ size2 = [36, 37, 39, 40, 41, 42]
 #   discount: 0.62,
 #   content: Faker::Lorem.paragraphs,
 #   brand_id: 2,
+#   product_type: Product::TYPES[:show]
 # )
 # (2..7).each do |i|
 #   pr1.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr1/#{i}.jpeg"), filename: "#{i}.jpeg"])
@@ -260,6 +261,7 @@ size2 = [36, 37, 39, 40, 41, 42]
 #   discount: 0.6,
 #   content: Faker::Lorem.paragraphs,
 #   brand_id: 2,
+#   product_type: Product::TYPES[:show]
 # )
 # (2..5).each do |i|
 #   pr2.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr2/#{i}.jpeg"), filename: "#{i}.jpeg"])
@@ -298,6 +300,7 @@ size2 = [36, 37, 39, 40, 41, 42]
 #   discount: 0.5,
 #   content: Faker::Lorem.paragraphs,
 #   brand_id: 2,
+#   product_type: Product::TYPES[:hide]
 # )
 # (2..5).each do |i|
 #   pr3.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr3/#{i}.jpeg"), filename: "#{i}.jpeg"])
@@ -336,6 +339,7 @@ size2 = [36, 37, 39, 40, 41, 42]
 #   discount: 0.45,
 #   content: Faker::Lorem.paragraphs,
 #   brand_id: 2,
+#   product_type: Product::TYPES[:show]
 # )
 # (2..6).each do |i|
 #   pr4.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr4/#{i}.jpeg"), filename: "#{i}.jpeg"])
@@ -374,6 +378,7 @@ size2 = [36, 37, 39, 40, 41, 42]
 #   discount: 0.58,
 #   content: Faker::Lorem.paragraphs,
 #   brand_id: 2,
+#   product_type: Product::TYPES[:show]
 # )
 # (2..4).each do |i|
 #   pr5.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr5/black_#{i}.jpeg"), filename: "black_#{i}.jpeg"])
@@ -423,6 +428,7 @@ size2 = [36, 37, 39, 40, 41, 42]
 #   discount: 0.6,
 #   content: Faker::Lorem.paragraphs,
 #   brand_id: 2,
+#   product_type: Product::TYPES[:show]
 # )
 # (2..4).each do |i|
 #   pr6.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr6/black_#{i}.jpeg"), filename: "black_#{i}.jpeg"])
@@ -469,6 +475,7 @@ size2 = [36, 37, 39, 40, 41, 42]
 #   discount: 0.7,
 #   content: Faker::Lorem.paragraphs,
 #   brand_id: 2,
+#   product_type: Product::TYPES[:hide]
 # )
 # (2..5).each do |i|
 #   pr7.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr7/black_#{i}.jpeg"), filename: "black_#{i}.jpeg"])

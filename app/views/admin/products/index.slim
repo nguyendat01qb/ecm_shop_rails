@@ -49,16 +49,27 @@ ul.nav.nav-tabs.action_items
 script#admin_product_template[type='text/template']
   | <%_.each(options, function(option) { %>
   |   <tr>
-  |     <td> <%- option.idx %></td>
-  |     <td> <%- option.id %></td>
-  |     <td> <%- option.title %></td>
-  |     <td> <%- option.price %></td>
-  |     <td> <%- option.discount %></td>
-  |     <td> <%- option.quantity %></td>
-  |     <td> <%- option.brand %></td>
-  |     <td> <%- option.categories %></td>
-  |     <td> <%- option.categories %></td>
-  |     <td> <%- option.created_at %></td>
+  |     <td><%- option.idx %></td>
+  |     <td><%- option.id %></td>
+  |     <td><%- option.title %></td>
+  |     <td><%- option.price %></td>
+  |     <td><%- option.discount %></td>
+  |     <td><%- option.quantity %></td>
+  |     <td><%- option.brand %></td>
+  |     <td><%- option.categories %></td>
+  |     <td>
+  |       <% show_home = option.show_home %>
+  |         <% if (show_home) { %>
+  |           <label class="badge badge-info">
+  |             True
+  |           </label>
+  |         <% } else { %>
+  |           <label class="badge badge-success">
+  |             False
+  |           </label>
+  |         <% } %>
+  |     </td>
+  |     <td><%- option.created_at %></td>
   |     <td style='width: 80px'>
   |       <ul class='others'>
   |         <li>
