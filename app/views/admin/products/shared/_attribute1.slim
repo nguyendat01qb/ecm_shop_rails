@@ -1,8 +1,8 @@
 .variation-edit-panel.variation-option-panel.d-flex
-  .variation-edit-left Value
+  .variation-edit-left = t('.value')
   i.fa-solid.fa-plus.add_attribute
   .d-flex.flex-wrap
-    .variation-edit-right.d-flex[data-index=1]
+    .variation-edit-right.d-flex data-index=1
       .variation-edit-right-content
         .form-group.string.optional.product_product_attribute_1_attribute_value_attribute_1
           input.form-control.string.optional.input_attribute-product#product_product_attribute_1_attribute_value_attribute_1 multiple='multiple' placeholder='example: red, blue v.v' type='text' name='product[product_attribute_1][attribute_value][attribute][]'

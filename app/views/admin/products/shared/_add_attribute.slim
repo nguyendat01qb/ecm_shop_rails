@@ -3,26 +3,25 @@ section.product-edit__section.product-add__attribute
     .panel-content-wrapper
       .panel-content
         .variation-container
-          .edit-row[style="align-items: baseline;"]
+          .edit-row style='align-items: baseline;'
             .edit-row-left.edit-label.edit-row-left2
-              span Product classification
+              span = t('.title')
             .edit-row-right-full
               .variation-edit-item
                 span.options-close-btn
                   i.fa-solid.fa-xmark
                 .variation-edit-panel.d-flex
-                  .variation-edit-left Classification group 1
+                  .variation-edit-left = t('.class_group_1')
                   .variation-edit-right
-                    div[class="form-group string required product_product_attribute_1_name"]
-                      <input class="form-control string required title_attribute_1" multiple="multiple" placeholder="example: Color v.v" type="text" name="product[product_attribute_1][name]" id="product_product_attribute_1_name">
-                = render "admin/products/shared/attribute1"
+                    .form-group.string.required.product_product_attribute_1_name
+                      input.form-control.string.required.title_attribute_1#product_product_attribute_1_name multiple='multiple' placeholder='example: Color v.v' type='text' name='product[product_attribute_1][name]'
+                = render 'admin/products/shared/attribute1'
 
               .variation-add-2
-                .variation-add-2-left Classification group 2
+                .variation-add-2-left = t('.class_group_2')
                 .variation-add-2-right
-                  button.btn-add__attribute-2[type="button"]
+                  button.btn-add__attribute-2 type='button'
                     i.fa-solid.fa-plus
-                    span Add classification group 2
+                    span = t('.add_class_group_2')
 
-        = render "admin/products/shared/list_attribute"
-          
+        = render 'admin/products/shared/list_attribute'

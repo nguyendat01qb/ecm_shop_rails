@@ -1,0 +1,208 @@
+en:
+  list: &list List
+  show: &show Show
+  new: &new New
+  edit: &edit Edit
+  export: &export Export
+  dashboard: &dashboard Dashboard
+  categories: &categories Categories
+  layouts:
+    admin:
+      title_header: Admin | Fashion Store
+    application:
+      title_header: Fashion Store
+    header:
+      dev_phone: 0327 618 979
+      dev_email: nvdatdev@gmail.com
+      home: Home
+      admin_title: Admin
+      shop: Shop
+      blog: Blog
+      contact: Contact
+      checkout: Checkout
+      cart: Cart
+      my_orders: My Orders
+      address: Address
+      blog_list: Blog list
+      toggle_nav: Toggle navigation
+      notification: Notifications
+      login: Login
+      logout: Logout
+  admin:
+    categories:
+      index:
+        list_categories: List of Categories
+        dashboard: *dashboard
+        categories: *categories
+        list: *list
+        new: *new
+        export: *export
+        table:
+          stt: STT
+          id: ID
+          parent: Parent Category
+          title: Title
+          meta_title: Meta Title
+          slug: Slug
+          created_at: Created At
+          actions: Actions
+      edit:
+        title: 'Edit Category: '
+        user: 'User'
+        dashboard: *dashboard
+        list: *list
+        new: *new
+        edit: *edit
+        export: *export
+      new:
+        new_category: New Category
+        dashboard: *dashboard
+        category: Category
+        new: New
+        list: *list
+        new: *new
+        export: *export
+      show:
+        details: Details for Category
+        dashboard: *dashboard
+        categories: *categories
+        list: *list
+        show: *show
+        new: *new
+        export: *export
+        basic_info: Basic info
+        id: Id
+        parent: Parent Category
+        title: Title
+        meta_title: Meta title
+        slug: Slug
+        content: Content
+        created_at: Created At
+        updated_at: Updated At
+    products:
+      index:
+        list_products: List of Products
+        dashboard: *dashboard
+        products: Products
+        list: *list
+        new: *new
+        export: *export
+        stt: STT
+        id: ID
+        title: Title
+        price: Price
+        discount: Discount
+        quantity: Quantity
+        brand: Brand
+        category: Category
+        show_home: Show Home
+        created_at: Created At
+        actions: Actions
+      edit:
+        title: 'Edit Product: '
+        dashboard: *dashboard
+        product: Product
+        list: *list
+        new: *new
+        edit: *edit
+        export: *export
+      new:
+        title: 'New Product'
+        dashboard: *dashboard
+        product: Product
+        list: *list
+        new: *new
+        export: *export
+      show:
+        title_header: 'Details for product'
+        dashboard: *dashboard
+        products: Products
+        list: *list
+        show: *show
+        new: *new
+        export: *export
+        basic_info: Basic Info
+        id: Id
+        images: Images
+        title: Title
+        meta_title: Meta Title
+        brand: Brand
+        categories: Categories
+        price: Price
+        discount: Discount
+        show_home: Show Home
+        sold: Sold
+        content: Content
+        created_at: Created At
+        updated_at: Updated At
+      shared:
+        add_attribute:
+          title: Product classification
+          class_group_1: Classification group 1
+          class_group_2: Classification group 2
+          add_class_group_2: Add classification group 2
+        attribute_form:
+          product_class: Product classification
+          add_item_product_class: Add item classification group
+        attribute1:
+          value: Value
+        attribute2:
+          class_group_2: Classification group 2
+          value: Value
+        list_attribute:
+          title: List of Product Categories
+          attribute1: Attribute 1
+          price: Price
+          discount: Discount
+          stock: Stock
+    brands:
+      edit:
+        title_header: 'Edit Brand: '
+        dashboard: *dashboard
+        brand: Brand
+        list: *list
+        new: *new
+        edit: *edit
+        export: *export
+      index:
+        title_header: List of Brands
+        dashboard: *dashboard
+        brands: Brands
+        list: *list
+        new: *new
+        export: *export
+        stt: STT
+        id: ID
+        title: Title
+        product_quantity: Product Quantity
+        created_at: Created At
+        updated_at: Updated At
+        actions: Actions
+      new:
+        title_header: New Brand
+        dashboard: *dashboard
+        brand: Brand
+        list: *list
+        new: *new
+        export: *export
+      show:
+        title_header: Details for Brand
+        dashboard: *dashboard
+        brand: Brand
+        show: *show
+        list: *list
+        new: *new
+        export: *export
+        basic_info: Basic info
+        id: Id
+        title: Title
+        slug: Slug
+        created_at: Created At
+        updated_at: Updated At
+    dashboards:
+
+    orders:
+    shared:
+    users:
+    vouchers:
+

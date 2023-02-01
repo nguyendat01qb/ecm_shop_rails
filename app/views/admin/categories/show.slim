@@ -1,60 +1,60 @@
 .page-header
-  h1 Details for Category
+  h1 = t('.details')
 ol.breadcrumb
   li.dashboard
-    a class="pjax" href="#{admin_url}" Dashboard
+    a.pjax href="#{admin_url}" Dashboard
   li.dashboard.active
-    a class="pjax" href="#{admin_categories_url}" Categories
+    a.pjax href="#{admin_categories_url}" = t('.categories')
   li.active Show
 
-= render "admin/shared/flash_message_errors"
+= render 'admin/shared/flash_message_errors'
 
 ul.nav.nav-tabs.action_items
   li
-    a class="pjax" href="#{admin_categories_url}"
+    a.pjax href="#{admin_categories_url}"
       i.fa.fa-list
-      span List
+      span = t('.list')
   li.active
-    a class="pjax"
+    a.pjax
       i.fa.fa-info
-      span Show
+      span = t('.show')
   li
-    a class="pjax" href="#{new_admin_category_url}"
+    a.pjax href="#{new_admin_category_url}"
       i.fa.fa-plus
-      span New
+      span = t('.new')
   li
-    a class="pjax"
+    a.pjax
       i.fa.fa-share
-      span Export
+      span = t('.export')
 
 .col-lg-12.grid-margin.stretch-card.form-show
   .card
     .card-body
       .table-responsive
-        h4 Basic info
+        h4 = t('.basic_info')
         dl
-          dt: span.label.label-warning Id
+          dt: span.label.label-warning = t('.id')
           dd.well = @category.id
 
-          dt: span.label.label-warning Parent Category
+          dt: span.label.label-warning = t('.parent')
           dd.well
             - unless @category.parent.nil?
               = @category.parent.title
 
-          dt: span.label.label-warning Title
+          dt: span.label.label-warning = t('.title')
           dd.well = @category.title
 
-          dt: span.label.label-warning Meta Title
+          dt: span.label.label-warning = t('.meta_title')
           dd.well = @category.meta_title
 
-          dt: span.label.label-warning Slug
+          dt: span.label.label-warning = t('.slug')
           dd.well = @category.slug
 
-          dt: span.label.label-warning Content
+          dt: span.label.label-warning = t('.content')
           dd.well = raw @category.content
 
-          dt: span.label.label-warning Created At
+          dt: span.label.label-warning = t('.created_at')
           dd.well = @category.created_at.strftime("%H:%M %d/%m/%Y")
 
-          dt: span.label.label-warning Updated At
+          dt: span.label.label-warning = t('.updated_at')
           dd.well = @category.updated_at.strftime("%H:%M %d/%m/%Y")

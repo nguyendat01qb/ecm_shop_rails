@@ -1,32 +1,31 @@
 .page-header
-  h1 
-    |Edit Brand : 
-    = @brand.title 
+  h1
+    = t('.title_header')
+    = @brand.title
 
-= render "admin/shared/flash_message_errors"
-
+= render 'admin/shared/flash_message_errors'
 ol.breadcrumb
   li.dashboard
-    a class="pjax" href="#{admin_url}" Dashboard
+    a.pjax href="#{admin_url}" = t('.dashboard')
   li.dashboard.active
-    a class="pjax" href="#{admin_brands_url}" User
-  li.active Edit
+    a.pjax href="#{admin_brands_url}" = t('.brand')
+  li.active = t('.edit')
 ul.nav.nav-tabs.action_items
   li
-    a class="pjax" href="#{admin_brands_url}"
+    a.pjax href="#{admin_brands_url}"
       i.fa.fa-list
-      span List
+      span = t('.list')
   li
-    a class="pjax" href="#{new_admin_brand_url}"
+    a.pjax href="#{new_admin_brand_url}"
       i.fa.fa-plus
-      span New
+      span = t('.new')
   li.active
-    a class="pjax"
+    a.pjax
       i.fa.fa-edit
-      span Edit
+      span = t('.edit')
   li
-    a class="pjax"
+    a.pjax
       i.fa.fa-share
-      span Export
+      span = t('.export')
 
-= render "admin/brands/form", url: admin_brand_path
+= render 'admin/brands/form', url: admin_brand_path

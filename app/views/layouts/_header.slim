@@ -7,11 +7,11 @@ header#header
           .header_info
             ul.nav.nav-pills
               li: a
-                i.fa.fa-phone
-                |  0327 618 979
+                i.fa.fa-phone &nbsp
+                = t('.dev_phone')
               li: a
-                i.fa.fa-envelope
-                |  nvdatdev@gmail.com
+                i.fa.fa-envelope &nbsp
+                = t('.dev_email')
         .col-sm-6.header_top--right
           .social-icons
             ul.nav.nav-bar
@@ -26,7 +26,7 @@ header#header
               li: a
                 i.fa-brands.fa-instagram
           .btn-group.pull-right.language
-            button.btn.btn-default.dropdown-toggle.usa[type="button" data-toggle="dropdown"]
+            button.btn.btn-default.dropdown-toggle.usa type='button' data-toggle='dropdown'
               = link_to "#{locale(params[:locale], '🇬🇧 English', '🇻🇳 Vietnamese')}", locale:"#{locale(params[:locale], 'en', 'vi')}"
               span.caret
             ul.dropdown-menu
@@ -38,77 +38,77 @@ header#header
       .row
         .col-sm-4.display-flex
           .logo
-            a[herf="#{root_path}"]
+            a href="#{root_path}"
                 = image_tag('home/logo')
         .col-sm-8
           .shop-menu
             ul.nav.navbar-nav
-              li: a.cart.sendCart[href="#{show_cart_cart_url}"]
+              li: a.cart.sendCart href="#{show_cart_cart_url}"
                 span.badge.count-product
                 i.fa.fa-shopping-cart &nbsp
-                = t "menu.cart"
+                = t('.cart')
               - if user_signed_in?
                 li: a
                   i.fa.fa-bell &nbsp
-                  = t "menu.notification"
-                li: a[href="#{checkout_url}"]
+                  = t('.notification')
+                li: a href="#{checkout_url}"
                   i.fa.fa-credit-card &nbsp
-                  = t "menu.checkout"
-                li: a[href="#{profile_edit_user_url}"]
+                  = t('.checkout')
+                li: a href="#{profile_edit_user_url}"
                   i.fa.fa-user
                   |  #{current_user.name}
                 - if current_user.has_role?(:admin)
-                  li: a[href="#{admin_users_url}"]
-                    i.fa.fa-user
-                    |  Admin
+                  li: a href="#{admin_users_url}"
+                    i.fa.fa-user &nbsp
+                    = t('.admin_title')
               li
                 - if user_signed_in?
                   = link_to logout_path
                     i.fa.fa-lock &nbsp
-                    = t "menu.logout"
+                    = t('.logout')
                 - else
                   = link_to login_path
                     i.fa.fa-lock &nbsp
-                    = t "menu.login"
+                    = t('.login')
   / --------------------- header bottom ----------------------
   .header_bottom
     .container
       .row
         .col-sm-9
           .navbar-header
-            button.navbar-toggle.collapsed[type="button" data-toggle="collapse" data-target=".navbar-collapse"]
-              span.sr-only Toggle navigation
+            button.navbar-toggle.collapsed type='button' data-toggle='collapse' data-target='.navbar-collapse'
+              span.sr-only = t('.toggle_nav')
               span.icon-bar
               span.icon-bar
               span.icon-bar
           .mainmenu
               ul.nav.navbar-nav.collapse.navbar-collapse
                 li
-                  a.active[href="#{root_path}"]
-                    = t "menu.home"
+                  a.active href="#{root_path}"
+                    = t('.home')
                 li.dropdown
                     a
-                      = t "menu.shop"
+                      = t('.shop')
                       i.fa.fa-angle-down
-                      ul.sub-menu[role="menu"]
+                      ul.sub-menu role='menu'
                         - if user_signed_in?
                           li: a
-                            = t "menu.cart"
-                          li: a[href="#{user_order_url}"]
-                            = t "menu.my_orders"
-                          li: a[href="#{user_addresses_url}"]
-                            = t "menu.address"
+                            = t('.cart')
+                          li: a href="#{user_order_url}"
+                            = t('.my_orders')
+                          li: a href="#{user_addresses_url}"
+                            = t('.address')
                         li: a
-                          = t "menu.contact"
+                          = t('.contact')
                 li.dropdown
                   a
-                    | Blog
+                    = t('.blog')
                     i.fa.fa-angle-down
-                    ul.sub-menu[role="menu"]
-                      li: a Blog List
-                      li: a = t "menu.contact"
-                li: a = t "menu.contact"
+                    ul.sub-menu role='menu'
+                      li: a = t('.blog_list')
+                      li: a = t('.contact')
+                li: a = t('.contact')
         .col-sm-3
           .search
             .search_box
-              input.input_search[type="text" placeholder="Enter Name Product"]
+              input.input_search type='text' placeholder='Enter Name Product'
