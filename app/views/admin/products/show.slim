@@ -1,28 +1,28 @@
 .page-header
-  h1 Details for product
+  h1 = t('.title_header')
 ol.breadcrumb
   li.dashboard
-    a class="pjax" href="#{admin_url}" Dashboard
+    a.pjax href="#{admin_url}" = t('.dashboard')
   li.dashboard
-    a class="pjax" href="#{admin_products_url}" Products
-  li.active Show
+    a.pjax href="#{admin_products_url}" = t('.products')
+  li.active = t('.show')
 ul.nav.nav-tabs.action_items
   li
-    a class="pjax" href="#{admin_products_url}"
+    a.pjax href="#{admin_products_url}"
       i.fa.fa-list
-      span List
+      span = t('.list')
   li.active
-    a class="pjax"
+    a.pjax
       i.fa.fa-info
-      span Show
+      span = t('.show')
   li
-    a class="pjax" href="#{new_admin_product_url}"
+    a.pjax href="#{new_admin_product_url}"
       i.fa.fa-plus
-      span New
+      span = t('.new')
   li
-    a class="pjax"
+    a.pjax
       i.fa.fa-share
-      span Export
+      span = t('.export')
 
 .col-lg-12.grid-margin.stretch-card.form-show
   .card
@@ -30,50 +30,50 @@ ul.nav.nav-tabs.action_items
       .table-responsive
         fieldset
           legend
-            h4 Basic info
+            h4 = t('.basic_info')
           dl
-            dt: span.label.label-warning Id
+            dt: span.label.label-warning = t('.id')
             dd.well = @product.id
 
-            dt: span.label.label-warning Images
+            dt: span.label.label-warning = t('.images')
             dd.well
               - @product.images.each do |image|
                 a href="#{url_for(image)}"
-                  img class="preview img-thumbnail" src="#{url_for(image)}" height="250px" width="250px"
+                  img.preview.img-thumbnail src="#{url_for(image)}" height='250px' width='250px'
 
-            dt: span.label.label-warning Title
+            dt: span.label.label-warning = t('.title')
             dd.well = @product.title
 
-            dt: span.label.label-warning Meta Title
+            dt: span.label.label-warning = t('.meta_title')
             dd.well = @product.meta_title
 
-            dt: span.label.label-warning Brand
+            dt: span.label.label-warning = t('.brand')
             dd.well 111
 
-            dt: span.label.label-warning Categories
+            dt: span.label.label-warning = t('.categories')
             dd.well
               - @product.categories.each do |category|
                 a href="/admin/categories/#{category.id}"
                   = category.title
                 br
 
-            dt: span.label.label-warning Price
+            dt: span.label.label-warning = t('.price')
             dd.well = @product.price
 
-            dt: span.label.label-warning Discount
+            dt: span.label.label-warning = t('discount')
             dd.well = @product.discount
 
-            dt: span.label.label-warning Show home
+            dt: span.label.label-warning = t('.show_home')
             dd.well yes
 
-            dt: span.label.label-warning Sold
+            dt: span.label.label-warning = t('.sold')
             dd.well 111
 
-            dt: span.label.label-warning Content
+            dt: span.label.label-warning = t('.content')
             dd.well = raw @product.content
 
-            dt: span.label.label-warning Created At
+            dt: span.label.label-warning = t('.created_at')
             dd.well = @product.created_at.strftime("%H:%M %d/%m/%Y")
 
-            dt: span.label.label-warning Updated At
+            dt: span.label.label-warning = t('.updated_at')
             dd.well = @product.updated_at.strftime("%H:%M %d/%m/%Y")

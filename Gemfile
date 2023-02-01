@@ -116,7 +116,7 @@ gem 'kaminari'
 gem 'stripe-rails'
 gem 'money-rails'
 
-gem 'rails-i18n'
+gem 'i18n-js', '>= 3.0.0.rc11'
 
 gem 'httparty'
 

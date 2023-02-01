@@ -2,27 +2,27 @@
   = javascript_pack_tag 'controllers/admin/v1/a_brand', 'data-turbolinks-track': 'reload'
 
 .page-header
-  h1 List of Brands
+  h1 = t('.title_header')
 ol.breadcrumb
   li.dashboard
-    a.pjax href="#{admin_url}" Dashboard
-  li.active Brands
+    a.pjax href="#{admin_url}" = t('.dashboard')
+  li.active = t('.brands')
 
-= render "admin/shared/flash_message_errors"
+= render 'admin/shared/flash_message_errors'
 
 ul.nav.nav-tabs.action_items
   li.active
-    a class="pjax" href="#{admin_brands_url}"
+    a.pjax href="#{admin_brands_url}"
       i.fa.fa-list
-      span List
+      span = t('.list')
   li
     a.pjax href="#{new_admin_brand_url}"
       i.fa.fa-plus
-      span New
+      span = t('.new')
   li
     a.pjax
       i.fa.fa-share
-      span Export
+      span = t('.export')
 
 .col-lg-12.grid-margin.stretch-card
   .card
@@ -31,13 +31,13 @@ ul.nav.nav-tabs.action_items
           table.table.table-striped
             thead
               tr
-                th STT
-                th ID
-                th Title
-                th Product Quantity
-                th Created At
-                th Updated At
-                th Action
+                th = t('.stt')
+                th = t('.id')
+                th = t('.title')
+                th = t('.product_quantity')
+                th = t('.created_at')
+                th = t('.updated_at')
+                th = t('.actions')
             tbody#brands_list
           #paginate.paginatestext-center
         = render 'admin/shared/paginate'

@@ -1,13 +1,13 @@
 .edit-row
   .edit-label.edit-row-left2
-    span List of Product Categories
+    span = t('.title')
   .edit-row-right-full
     .variation-model-table-container.variation-model-table
       .variation-model-table-fixed-left
         .variation-model-table-header
           .d-flex
             .table-cell.table-header.d-flex.header_title_attr1 style='background-color: #f5f5f5;'
-              .popover-cell-content.tittle_1 Attribute 1
+              .popover-cell-content.tittle_1 = t('.attribute1')
         .variation-model-table-body.d-flex.variation-header style='min-height: 70px;' data-index-attribute=1
           .d-flex style='min-height: 70px;'
             .table-cell.content-img.border-top-0
@@ -16,8 +16,7 @@
                 label.label_image_value for='product_product_attribute_1_images'
                   i.fa-regular.fa-image.add_image_value aria-hidden='true'
                   .img_val
-                  input.form-control.file.optional.input_image_val#product_product_attribute_1_images[type='file'
-                        name='product[product_attribute_1][images][]' style='display:none']
+                  input.form-control.file.optional.input_image_val#product_product_attribute_1_images type='file' name='product[product_attribute_1][images][]' style='display:none'
                   i.fa-sharp.fa-solid.fa-circle-plus
 
       .middle-scroll-container
@@ -25,12 +24,12 @@
           .variation-model-table-header
             .variation-model-table-body.d-flex
               .table-cell.table-header.price-column
-                .popover-cell-content Price
+                .popover-cell-content = t('.price')
               .table-cell.table-header.price-column
-                .popover-cell-content Discount
+                .popover-cell-content = t('.discount')
               .table-cell.table-header.stock-column
-                .popover-cell-content Stock
-          .variation-warp[data-price-stock=1]
+                .popover-cell-content = t('.stock')
+          .variation-warp data-price-stock=1
             .variation-model-table-body.d-flex.variation-body style='min-height:130px' data-item-price=1
               .table-cell.flex-grow-1.content-price
                 .popover-wrap.d-flex.align-items-center
