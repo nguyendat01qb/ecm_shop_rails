@@ -7,5 +7,9 @@ Rails.application.routes.draw do
       get 'load_brands', to: 'brands#load_brands'
       get 'load_products', to: 'products#load_products'
     end
+
+    namespace :customer do
+      post 'select_attribute', to: 'product_detail#select_attribute'
+    end
   end
 end

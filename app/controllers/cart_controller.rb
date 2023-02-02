@@ -19,19 +19,19 @@ class CartController < ApplicationController
     end
   end
 
-  def select_attribute
-    product_attributes = ProductAttribute.includes(:attribute_values)
-    product_attribute = product_attributes.find_by(id: params[:data][:id_attr1])
-    attribute_values = product_attribute.attribute_values
+  # def select_attribute
+  #   product_attributes = ProductAttribute.includes(:attribute_values)
+  #   product_attribute = product_attributes.find_by(id: params[:data][:id_attr1])
+  #   attribute_values = product_attribute.attribute_values
 
-    if params[:data][:id_attr2].nil?
-      value = attribute_values.find_by(attribute_1: params[:data][:value_attr1])
-    else
-      value = attribute_values.where(attribute_1: params[:data][:value_attr1]).find_by(attribute_2: params[:data][:value_attr2])
-    end
+  #   if params[:data][:id_attr2].nil?
+  #     value = attribute_values.find_by(attribute_1: params[:data][:value_attr1])
+  #   else
+  #     value = attribute_values.where(attribute_1: params[:data][:value_attr1]).find_by(attribute_2: params[:data][:value_attr2])
+  #   end
 
-    render json: { status: 200, message: 'Successfully', value: value }
-  end
+  #   render json: { status: 200, message: 'Successfully', value: value }
+  # end
 
   def check_amount
     product = Product.find_by(id: params[:cart][:id])

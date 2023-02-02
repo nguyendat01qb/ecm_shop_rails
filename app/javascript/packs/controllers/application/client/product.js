@@ -101,13 +101,13 @@ export default class ProductController {
             value_attr2: $(".item2.active").html(),
           };
 
-          Ajax(this.api.getProduct, "GET", { data: data })
+          Ajax(this.api.getProduct, "POST", { data: data })
             .done((res) => {
-              if (res.status == 200) {
+              if (res.code == 200) {
                 $(".price_new").replaceWith(
-                  `<span class="price_new">${res.value.price_attribute_product}</span>`
+                  `<span class="price_new"><sup>$</sup>${res.data.product_attr.discount}</span>`
                 );
-                if (parseInt(res.value.stock) > 0) {
+                if (parseInt(res.data.product_attr.quantity) > 0) {
                   $(".out-of-stock").replaceWith(`
                     <a class="btn btn-fefault cart add-to-cart" name="add-to-cart-detail">
                       <i class="fa fa-shopping-cart"></i>
@@ -115,7 +115,7 @@ export default class ProductController {
                     </a>
                   `);
                   $(".product__stock").replaceWith(`
-                    <p class="product__stock"><b>Quantity in stock: </b> ${res.value.stock} </p>
+                    <p class="product__stock"><b>Quantity in stock: </b> ${res.data.product_attr.quantity} </p>
                   `);
                 } else {
                   $(".product__stock").replaceWith(`
