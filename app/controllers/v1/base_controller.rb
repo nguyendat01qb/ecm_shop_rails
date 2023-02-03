@@ -1,6 +1,7 @@
 class V1::BaseController < ActionController::Base
   include Pundit::Authorization
   include Pagy::Backend
+  protect_from_forgery with: :null_session
 
   protected
 

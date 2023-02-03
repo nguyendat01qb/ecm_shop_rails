@@ -7,12 +7,14 @@ import Rails from '@rails/ujs';
 import Turbolinks from 'turbolinks';
 import * as ActiveStorage from '@rails/activestorage';
 import 'channels';
+import _ from 'underscore';
 
 Rails.start();
 Turbolinks.start();
 ActiveStorage.start();
 
 window.jQuery = window.$ = require('jquery');
+window._ = _;
 import 'bootstrap';
 
 import Swal from 'sweetalert2';

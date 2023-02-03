@@ -2,23 +2,24 @@ doctype html
 html
   head
     title = t('.title_header')
-    meta[name="viewport" content="width=device-width,initial-scale=1"]
+    meta name='viewport' content='width=device-width,initial-scale=1'
     = csrf_meta_tags
     = csp_meta_tag
-    = stripe_javascript_tag
-    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', :defer => "defer"
-    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
+    / = stripe_javascript_tag
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', :defer => 'defer'
+    = javascript_pack_tag 'controllers/application/v1/c_home', 'data-turbolinks-track': 'reload'
+    / <script src='https://www.paypal.com/sdk/js?client-id=test&currency=USD'></script>
   body *raicon_data_attributes
     = render 'layouts/header'
     - if flash
       - flash.each do |message_type, message|
-        .alert.alert-dismissible[class="alert-#{message_type}" style="font-size: 15px; align-items: center;text-align: center;"]
-          button.close[data-dismiss="alert" type="button"] ×
+        .alert.alert-dismissible class="alert-#{message_type}" style='font-size: 15px; align-items: center;text-align: center;'
+          button.close data-dismiss='alert' type='button' ×
           = message
     / ==== loader ====
     #loader.display-flex
       .position-center-center
         .ldr
-    .show_body[style="display:block"]
+    .show_body style='display:block'
       = yield
     = render 'layouts/footer'
