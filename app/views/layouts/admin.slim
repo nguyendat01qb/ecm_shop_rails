@@ -1,17 +1,17 @@
 doctype html
-html[lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../assets/" data-template="vertical-menu-template-free"]
+html lang='en' class='light-style layout-menu-fixed' dir='ltr' data-theme='theme-default' data-assets-path='../assets/' data-template='vertical-menu-template-free'
   head
     title = t('.title_header')
-    meta[name="viewport" content="width=device-width,initial-scale=1"]
+    meta name='viewport' content='width=device-width,initial-scale=1'
     = csrf_meta_tags
     = csp_meta_tag
     = javascript_pack_tag 'admin', 'data-turbolinks-track': 'reload'
     = javascript_include_tag Ckeditor.cdn_url
   body
     .container-scroller
-      = render "admin/shared/navbar"
+      = render 'admin/shared/navbar'
       .container-fluid.page-body-wrapper
-          = render "admin/shared/sidebar"
+          = render 'admin/shared/sidebar'
           .main-panel
             .content-wrapper
               .row

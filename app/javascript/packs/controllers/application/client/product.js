@@ -1,68 +1,68 @@
-import { data } from "jquery";
-import Raicon from "raicon";
-import "../../lib/slick";
-import "../../lib/jquery.cookie";
-import CommentController from "./comment";
+import { data } from 'jquery';
+import Raicon from 'raicon';
+import '../../lib/slick';
+import '../../lib/jquery.cookie';
+import CommentController from './comment';
 
-import { Ajax, getLocale, popupFire } from "../../lib/application";
+import { Ajax, getLocale, popupFire } from '../../lib/application';
 
 export default class ProductController {
   locale = getLocale();
 
   api = {
-    checkAmount: "/cart/check_amount",
-    getProduct: "/v1/customer/select_attribute",
-    showCart: "/cart/show_cart",
+    checkAmount: '/cart/check_amount',
+    getProduct: '/v1/customer/product/select_attribute',
+    showCart: '/cart/show_cart',
   };
 
   handleSliderSlick = () => {
-    $(".pro-dec-big-img-slider").slick({
+    $('.pro-dec-big-img-slider').slick({
       slidesToShow: 1,
       slidesToScroll: 1,
       arrows: false,
       draggable: false,
       fade: false,
-      asNavFor: ".product-dec-slider-small",
+      asNavFor: '.product-dec-slider-small',
     });
 
-    $(".product-dec-slider-small").slick({
+    $('.product-dec-slider-small').slick({
       slidesToShow: 3,
       slidesToScroll: 1,
-      asNavFor: ".pro-dec-big-img-slider",
+      asNavFor: '.pro-dec-big-img-slider',
       dots: false,
       focusOnSelect: true,
       fade: false,
       prevArrow:
-        '<a class="left item-control"><i class="fa fa-angle-left"></i></a>',
+        "<a class='left item-control'><i class='fa fa-angle-left'></i></a>",
       nextArrow:
-        '<a class="right item-control"><i class="fa fa-angle-right"></i></a>',
+        "<a class='right item-control'><i class='fa fa-angle-right'></i></a>",
     });
 
-    $(".item-control:not(.slick-arrow)")
-      .closest(".slick-slide:not(.slick-cloned)")
+    $('.item-control:not(.slick-arrow)')
+      .closest('.slick-slide:not(.slick-cloned)')
       .remove();
   };
 
   setCart = (data) => {
     $.cookie.json = true;
-    $.cookie("add_to_cart", data, { path: "/" });
+    $.cookie('add_to_cart', data, { path: '/' });
   };
 
   getCart = () => {
     $.cookie.json = true;
-    return $.cookie("add_to_cart") ? $.cookie("add_to_cart") : [];
+    return $.cookie('add_to_cart') ? $.cookie('add_to_cart') : [];
   };
 
   showIconCart = () => {
     const carts = this.getCart();
-    $(".count-product").get(0).innerText =
-      carts?.length > 0 ? carts.length : "";
+    $('.count-product').get(0).innerText =
+      carts?.length > 0 ? carts.length : '';
   };
 
   checkInput = () => {
-    $("body").on("input", ".numberInput", (e) => {
+    $('body').on('input', '.numberInput', (e) => {
       if (
-        typeof parseInt($(e.target).val()) == "string" ||
+        typeof parseInt($(e.target).val()) == 'string' ||
         parseInt($(e.target).val()) <= 0
       ) {
         $(e.target).val(1);
@@ -72,78 +72,78 @@ export default class ProductController {
   };
 
   checkAttribute = () => {
-    const attribute = $(".attribute_product").css("display");
-    if (attribute == "none") $(".attribute_product").remove();
+    const attribute = $('.attribute_product').css('display');
+    if (attribute == 'none') $('.attribute_product').remove();
   };
 
   clickAttribute = () => {
-    $("body").on("click", ".attribute_item", ({ target }) => {
+    $('body').on('click', '.attribute_item', ({ target }) => {
       const attribute = $(target);
-      const attributeOld = $(target).closest(".select__items").find(".active");
-      const attributeDanger = $(".attribute_error");
+      const attributeOld = $(target).closest('.select__items').find('.active');
+      const attributeDanger = $('.attribute_error');
 
-      if (attribute.hasClass("active") == false) attribute.addClass("active");
-      else attribute.removeClass("active");
+      if (attribute.hasClass('active') == false) attribute.addClass('active');
+      else attribute.removeClass('active');
 
-      if (attributeOld.length != 0) attributeOld.removeClass("active");
+      if (attributeOld.length != 0) attributeOld.removeClass('active');
 
       if (attributeDanger.length != 0) {
         attributeDanger.remove();
-        $(".attribute_product").css("background-color", "#fff");
+        $('.attribute_product').css('background-color', '#fff');
       }
 
-      if ($(".select__items").length == 2) {
-        if ($(".select__items").find(".active").length == 2) {
+      if ($('.select__items').length == 2) {
+        if ($('.select__items').find('.active').length == 2) {
           const data = {
-            id_attr1: $(".item1.active").data("attribute"),
-            value_attr1: $(".item1.active").html(),
-            id_attr2: $(".item2.active").data("attribute"),
-            value_attr2: $(".item2.active").html(),
+            id_attr1: $('.item1.active').data('attribute'),
+            value_attr1: $('.item1.active').html(),
+            id_attr2: $('.item2.active').data('attribute'),
+            value_attr2: $('.item2.active').html(),
           };
 
-          Ajax(this.api.getProduct, "POST", { data: data })
+          Ajax(this.api.getProduct, 'POST', { data: data })
             .done((res) => {
               if (res.code == 200) {
-                $(".price_new").replaceWith(
-                  `<span class="price_new"><sup>$</sup>${res.data.product_attr.discount}</span>`
+                $('.price_new').replaceWith(
+                  `<span class='price_new'><sup>$</sup>${res.data.product_attr.discount}</span>`
                 );
                 if (parseInt(res.data.product_attr.quantity) > 0) {
-                  $(".out-of-stock").replaceWith(`
-                    <a class="btn btn-fefault cart add-to-cart" name="add-to-cart-detail">
-                      <i class="fa fa-shopping-cart"></i>
+                  $('.out-of-stock').replaceWith(`
+                    <a class='btn btn-fefault cart add-to-cart' name='add-to-cart-detail'>
+                      <i class='fa fa-shopping-cart'></i>
                       Add to cart
                     </a>
                   `);
-                  $(".product__stock").replaceWith(`
-                    <p class="product__stock"><b>Quantity in stock: </b> ${res.data.product_attr.quantity} </p>
+                  $('.product__stock').replaceWith(`
+                    <p class='product__stock'><b>Quantity in stock: </b> ${res.data.product_attr.quantity} </p>
                   `);
                 } else {
-                  $(".product__stock").replaceWith(`
-                    <p class="product__stock"><b>Quantity in stock: </b> 0 </p>
+                  $('.product__stock').replaceWith(`
+                    <p class='product__stock'><b>Quantity in stock: </b> 0 </p>
                   `);
-                  $(".add-to-cart").replaceWith(`
-                    <a class="btn btn-danger out-of-stock" href="javascript:void(0)">Out of stock</a>
+                  $('.add-to-cart').replaceWith(`
+                    <a class='btn btn-danger out-of-stock' href='javascript:void(0)'>Out of stock</a>
                   `);
                 }
               }
             })
             .fail((res) => {});
         }
-      } else if ($(".select__items").length == 1) {
+      } else if ($('.select__items').length == 1) {
         const data = {
-          id_attr1: $(".item1.active").data("attribute"),
-          value_attr1: $(".item1.active").html(),
+          id_attr1: $('.item1.active').data('attribute'),
+          value_attr1: $('.item1.active').html(),
         };
 
-        Ajax(this.api.getProduct, "GET", { data: data })
+        Ajax(this.api.getProduct, 'GET', { data: data })
           .done((res) => {
             if (res.status == 200) {
-              $(".product__stock").replaceWith(`
-                <p class="product__stock"><b>Quantity in stock: </b>${res.value.stock}</p>
+              $('.product__stock').replaceWith(`
+                <p class='product__stock'><b>Quantity in stock: </b>${res.value.stock}</p>
               `);
 
-              $(".price_new").replaceWith(
-                `<span class="price_new">${res.value.price_attribute_product}</span>`
+              $('.price_new').replaceWith(
+                `<span class='price_new'>${res.value.price_attribute_product}</span>`
               );
             }
           })
@@ -153,18 +153,18 @@ export default class ProductController {
   };
 
   checkAttributeAddCart = () => {
-    const amountAttribute = $(".select__items").length;
-    const amountAttributeItem = $(".attribute_item.active").length;
+    const amountAttribute = $('.select__items').length;
+    const amountAttributeItem = $('.attribute_item.active').length;
 
     if (amountAttribute != amountAttributeItem) {
-      if ($(".attribute_error").length == 0) {
-        $(".attribute_product").css("background-color", "#fff5f5");
+      if ($('.attribute_error').length == 0) {
+        $('.attribute_product').css('background-color', '#fff5f5');
 
-        const html = document.createElement("div");
+        const html = document.createElement('div');
         $(html)
-          .addClass("attribute_error")
-          .html("Please select attribute product")
-          .appendTo($(".attribute_product .item"));
+          .addClass('attribute_error')
+          .html('Please select attribute product')
+          .appendTo($('.attribute_product .item'));
       }
 
       return false;
@@ -173,15 +173,15 @@ export default class ProductController {
   };
 
   handleAddCart = () => {
-    $("body").on("click", ".add-to-cart", ({ target }) => {
+    $('body').on('click', '.add-to-cart', ({ target }) => {
       if (this.checkAttributeAddCart() == true) {
         let carts = this.getCart();
 
-        const product = $(target).closest(".add_product");
-        const id = product.attr("id").split(" ")[0];
-        const amount = parseInt($(".numberInput").val());
+        const product = $(target).closest('.add_product');
+        const id = product.attr('id').split(' ')[0];
+        const amount = parseInt($('.numberInput').val());
 
-        if ($(".select__items").length == 0) {
+        if ($('.select__items').length == 0) {
           const addItem = carts.find((res) => res.id === id);
           if (addItem) {
             addItem.amount = parseInt(addItem.amount) + 1;
@@ -191,7 +191,7 @@ export default class ProductController {
               amount: 1,
             };
 
-            Ajax(this.api.checkAmount, "GET", { cart: data })
+            Ajax(this.api.checkAmount, 'GET', { cart: data })
               .done((res) => {
                 if (res.status == 200) {
                   if (addItem) {
@@ -200,9 +200,9 @@ export default class ProductController {
                       parseInt(res.data.stock)
                     ) {
                       Swal.fire(
-                        "Sorry, the quantity is larger than the quantity in stock.",
-                        "",
-                        "error"
+                        'Sorry, the quantity is larger than the quantity in stock.',
+                        '',
+                        'error'
                       );
                     } else {
                       addItem.amount = parseInt(addItem.amount) + amount;
@@ -211,9 +211,9 @@ export default class ProductController {
                   } else {
                     if (amount > res.product.quantity) {
                       Swal.fire(
-                        "Sorry, the quantity is larger than the quantity in stock.",
-                        "",
-                        "error"
+                        'Sorry, the quantity is larger than the quantity in stock.',
+                        '',
+                        'error'
                       );
                     } else {
                       const data = {
@@ -225,9 +225,9 @@ export default class ProductController {
                       this.showIconCart();
 
                       popupFire(
-                        "top-right",
-                        "success",
-                        "The product has been added successfully",
+                        'top-right',
+                        'success',
+                        'The product has been added successfully',
                         2000
                       );
                     }
@@ -236,9 +236,9 @@ export default class ProductController {
               })
               .fail((res) => {});
           }
-        } else if ($(".select__items").length == 1) {
-          const id_attr1 = $(".item1.active").data("attribute");
-          const value_attr1 = $(".item1.active").html();
+        } else if ($('.select__items').length == 1) {
+          const id_attr1 = $('.item1.active').data('attribute');
+          const value_attr1 = $('.item1.active').html();
 
           const data = {
             id_attr1: id_attr1,
@@ -249,7 +249,7 @@ export default class ProductController {
             (res) => res.id === id && value_attr1 == res.val_1
           );
 
-          Ajax(this.api.checkAmount, "GET", { cart: data })
+          Ajax(this.api.checkAmount, 'GET', { cart: data })
             .done((res) => {
               if (res.status == 200) {
                 if (addItem) {
@@ -258,9 +258,9 @@ export default class ProductController {
                     parseInt(res.data.stock)
                   ) {
                     Swal.fire(
-                      "Sorry, the quantity is larger than the quantity in stock.",
-                      "",
-                      "error"
+                      'Sorry, the quantity is larger than the quantity in stock.',
+                      '',
+                      'error'
                     );
                   } else {
                     addItem.amount = parseInt(addItem.amount) + amount;
@@ -269,9 +269,9 @@ export default class ProductController {
                 } else {
                   if (amount > res.data.stock) {
                     Swal.fire(
-                      "Sorry, the quantity is larger than the quantity in stock.",
-                      "",
-                      "error"
+                      'Sorry, the quantity is larger than the quantity in stock.',
+                      '',
+                      'error'
                     );
                   } else {
                     const data = {
@@ -285,9 +285,9 @@ export default class ProductController {
                     this.showIconCart();
 
                     popupFire(
-                      "top-right",
-                      "success",
-                      "The product has been added successfully",
+                      'top-right',
+                      'success',
+                      'The product has been added successfully',
                       2000
                     );
                   }
@@ -296,10 +296,10 @@ export default class ProductController {
             })
             .fail((res) => {});
         } else {
-          const id_attr1 = $(".item1.active").data("attribute");
-          const id_attr2 = $(".item2.active").data("attribute");
-          const value_attr1 = $(".item1.active").html();
-          const value_attr2 = $(".item2.active").html();
+          const id_attr1 = $('.item1.active').data('attribute');
+          const id_attr2 = $('.item2.active').data('attribute');
+          const value_attr1 = $('.item1.active').html();
+          const value_attr2 = $('.item2.active').html();
 
           const data = {
             id_attr1: id_attr1,
@@ -315,15 +315,15 @@ export default class ProductController {
               value_attr2 == res.val_2
           );
 
-          Ajax(this.api.checkAmount, "GET", { cart: data })
+          Ajax(this.api.checkAmount, 'GET', { cart: data })
             .done((res) => {
               if (res.status == 200) {
                 if (addItem) {
                   if (parseInt(addItem.amount) + 1 > parseInt(res.stock)) {
                     Swal.fire(
-                      "Sorry, the quantity is larger than the quantity in stock.",
-                      "",
-                      "error"
+                      'Sorry, the quantity is larger than the quantity in stock.',
+                      '',
+                      'error'
                     );
                   } else {
                     addItem.amount = parseInt(addItem.amount) + 1;
@@ -343,9 +343,9 @@ export default class ProductController {
                   this.showIconCart();
 
                   popupFire(
-                    "top-right",
-                    "success",
-                    "The product has been added successfully",
+                    'top-right',
+                    'success',
+                    'The product has been added successfully',
                     2000
                   );
                 }
@@ -358,7 +358,7 @@ export default class ProductController {
   };
 
   show = () => {
-    document.addEventListener("raicon:after:productDetail#show", () => {
+    document.addEventListener('raicon:after:productDetail#show', () => {
       this.handleSliderSlick();
       this.checkInput();
       this.checkAttribute();
