@@ -9,7 +9,6 @@ Rails.application.routes.draw do
     end
 
     namespace :customer do
-      post 'select_attribute', to: 'product_detail#select_attribute'
       resources :product do
         collection do
           post :search

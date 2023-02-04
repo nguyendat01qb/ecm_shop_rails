@@ -71,7 +71,7 @@
           .item
             - if @product_attributes[0].present?
               .flex style='align-items: baseline;'
-                p.flex: b
+                span.flex#item_1: b name="#{@product_attributes[0].name}"
                   = @product_attributes[0].name
                 .select__items
                   - @product_attributes[0].attribute_values.uniq{ |el| el[:attribute_1] }.each do |value|
@@ -80,25 +80,23 @@
 
             - if @product_attributes[1].present?
               .flex style='align-items: baseline;'
-                p.flex: b
+                span.flex#item_2: b name="#{@product_attributes[1].name}"
                   = @product_attributes[1].name
                 .select__items
                   - @product_attributes[1].attribute_values.uniq{ |el| el[:attribute_2] }.each do |value|
                     button.attribute_item.item2 data-attribute="#{@product_attributes[1].id}"
                       = value.attribute_2
 
-        p.product__stock
+        .product__stock
           b Quantity in stock:
-          - if @product.quantity.present?
-            - if @product.quantity > 0
-              = @product.quantity
-          - elsif @product.quantity.nil?
-            = @product_attributes[0].attribute_values.sum(&:stock)
+          span#stock value="#{@product.quantity}"
+            | &nbsp
+            = @product.quantity
         p
-          b Viewes:
-          |40
+          b Viewes:&nbsp
+          | 40
         p
-          b Brand:
+          b Brand:&nbsp
           = @product.brand.title
         p
           b Categories:

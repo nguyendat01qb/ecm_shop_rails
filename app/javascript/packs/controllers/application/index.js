@@ -3,7 +3,7 @@ import '../lib/select2.min';
 import '../../controllers/lib/jquery.cookie';
 
 import './client/user';
-import './client/product';
+// import './client/product';
 import './client/comment';
 import './client/cart';
 import './client/address';

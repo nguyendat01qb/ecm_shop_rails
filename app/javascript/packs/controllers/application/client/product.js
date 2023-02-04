@@ -5,6 +5,7 @@ import '../../lib/jquery.cookie';
 import CommentController from './comment';
 
 import { Ajax, getLocale, popupFire } from '../../lib/application';
+import _ from 'underscore';
 
 export default class ProductController {
   locale = getLocale();
@@ -66,7 +67,10 @@ export default class ProductController {
         parseInt($(e.target).val()) <= 0
       ) {
         $(e.target).val(1);
-        return;
+      }
+      const stock = parseInt($('#stock').text());
+      if (parseInt($(e.target).val()) >= stock) {
+        $(e.target).val(stock);
       }
     });
   };
@@ -115,11 +119,11 @@ export default class ProductController {
                     </a>
                   `);
                   $('.product__stock').replaceWith(`
-                    <p class='product__stock'><b>Quantity in stock: </b> ${res.data.product_attr.quantity} </p>
+                    <div class='product__stock'><b>Quantity in stock: </b><span id='stock' value='${res.data.product_attr.quantity}'>${res.data.product_attr.quantity}</span></div>
                   `);
                 } else {
                   $('.product__stock').replaceWith(`
-                    <p class='product__stock'><b>Quantity in stock: </b> 0 </p>
+                    <div class='product__stock'><b>Quantity in stock: </b><span id='stock' value='0'>0</span></div>
                   `);
                   $('.add-to-cart').replaceWith(`
                     <a class='btn btn-danger out-of-stock' href='javascript:void(0)'>Out of stock</a>

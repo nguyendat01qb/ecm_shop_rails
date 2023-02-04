@@ -8,7 +8,7 @@ class Product::ProductDetailSerializer < ActiveModel::Serializer
 
   def discount
     return 0 unless object.discount_attribute_product
-    object.price_attribute_product * (1 - object.discount_attribute_product)
+    (object.price_attribute_product * (1 - object.discount_attribute_product)).round(2)
   end
 
   def quantity
