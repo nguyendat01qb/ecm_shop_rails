@@ -26,20 +26,20 @@ class V1::Customer::ProductController < V1::BaseController
   end
 
   def select_attribute
-    product_attribute = ProductAttribute.includes(:attribute_values).find_by(id: params[:data][:id_attr1])
+    product_attribute = ProductAttribute.includes(:attribute_values).find_by(id: params[:id_attr1])
     attribute_values = product_attribute.attribute_values
 
-    product_attr =
-      if params[:data][:id_attr2].nil?
-        attribute_values.find_by(attribute_1: params[:data][:value_attr1])
+    attribute_value =
+      if params[:id_attr2].nil?
+        attribute_values.find_by(attribute_1: params[:value_attr1])
       else
-        attribute_values.where(attribute_1: params[:data][:value_attr1]).find_by(attribute_2: params[:data][:value_attr2])
+        attribute_values.where(attribute_1: params[:value_attr1]).find_by(attribute_2: params[:value_attr2])
       end
 
     render json: success_message(
-      I18n.t('messages.success.product.list_products'),
-      product_attr: ActiveModelSerializers::SerializableResource.new(
-        product_attr,
+      I18n.t('messages.success.product.attributes'),
+      attribute_value: ActiveModelSerializers::SerializableResource.new(
+        attribute_value,
         each_serializer: Product::ProductDetailSerializer
       )
     )

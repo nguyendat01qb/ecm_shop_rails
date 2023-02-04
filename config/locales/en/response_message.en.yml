@@ -5,6 +5,7 @@ en:
         list_categories: Get list categories successfully
       product:
         list_products: Get list products successfully
+        attributes: Get attribute value successfully
       user:
         list_admins: Get list admins successfully
         list_users: Get list users successfully

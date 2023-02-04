@@ -1,3 +1,6 @@
+= content_for :js_pages
+  = javascript_pack_tag 'controllers/application/v1/c_home', 'data-turbolinks-track': 'reload'
+
 = render 'home/shared/slider'
 section
   .container.home-page

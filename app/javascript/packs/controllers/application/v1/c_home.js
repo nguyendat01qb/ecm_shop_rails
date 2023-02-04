@@ -1,21 +1,15 @@
-import _ from 'underscore';
 import '../../lib/notify';
 
 function CHome(options) {
   var module = this;
   var defaults = {
-    pagination_template: $('#pagination-template'),
-    pagination_content: $('#paginate'),
     page: 1,
     per_page: 6,
     api: {
       search: '/v1/customer/product/search',
       filter_products: '/v1/customer/home/filter_products',
       load_more: '/v1/customer/product/load_more'
-    },
-    data: {
-      list_admins: {},
-    },
+    }
   };
 
   module.settings = $.extend({}, defaults, options);
