@@ -11,7 +11,7 @@ class User < ApplicationRecord
   has_many :vouchers, through: :user_vouchers, dependent: :destroy
   has_many :orders, dependent: :destroy
 
-  has_one :cart, dependent: :destroy
+  has_many :carts, dependent: :destroy
   has_one_attached :avatar
 
   # Include default devise modules. Others available are:
@@ -24,6 +24,18 @@ class User < ApplicationRecord
   validates :phone, phone_number: true, presence: true, unless: -> { from_omniauth? }
   validates :name, presence: true, length: { minimum: 6, maximum: 30 }, unless: -> { from_omniauth? }
   validates :email, presence: true, uniqueness: true
+
+  class << self
+    def new_token
+      SecureRandom.urlsafe_base64
+    end
+  end
+
+  def generate_token
+    api_token = User.new_token
+    update_attribute(:api_token_digest, api_token)
+    api_token
+  end
 
   def display_image
     avatar.variant resize_to_limit: [300, 200]

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     end
 
     namespace :customer do
-      resources :product do
+      resources :products do
         collection do
           post :search
           post :load_more
@@ -19,6 +19,11 @@ Rails.application.routes.draw do
       resources :home do
         collection do
           post :filter_products
+        end
+      end
+      resources :carts do
+        collection do
+          post :get_all
         end
       end
     end

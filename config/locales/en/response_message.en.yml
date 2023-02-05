@@ -11,3 +11,14 @@ en:
         list_users: Get list users successfully
       brand:
         list_brands: Get list brands successfully
+      cart:
+        list_carts: Get list cart items successfully
+    warning:
+      cart:
+        empty_cart: Shopping cart is empty
+    error:
+      missing_api_token: Api token is not present
+      please_sign_in: Please sign in before continuing
+      assets:
+        admin: You need admin privileges to access
+        customer: You need customer permission to access

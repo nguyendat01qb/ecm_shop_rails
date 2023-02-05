@@ -1,4 +1,4 @@
-class V1::Admin::UsersController < V1::BaseController
+class V1::Admin::UsersController < V1::BaseAuthController
   before_action :authorize_admin!
 
   def load_admins
@@ -23,12 +23,19 @@ class V1::Admin::UsersController < V1::BaseController
     page = params[:page].to_i
     per_page = 10
     users = User.all.select(:id, :name, :phone, :email, :sign_in_count, :created_at).page(page).per(per_page)
+    users_new = users.map do |user|
+      avatar_url = url_for(user.avatar).presence
+      {
+        user: ActiveModelSerializers::SerializableResource.new(
+          user,
+          each_serializer: User::ListUserSerializer
+        ),
+        avatar_url: avatar_url
+      }
+    end
     render json: success_message(
       I18n.t('messages.success.user.list_users'),
-      users: ActiveModelSerializers::SerializableResource.new(
-        users,
-        each_serializer: User::ListUserSerializer
-      ),
+      users: users_new,
       total_page: users.total_pages,
       per_page: per_page,
       page: page,

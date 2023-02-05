@@ -108,5 +108,5 @@ export {
   popupConform,
   redirect,
   getLocale,
-  actionController,
+  actionController
 };

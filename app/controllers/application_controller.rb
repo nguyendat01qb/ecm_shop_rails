@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   include Pagy::Backend
 
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :check_current_login
   # before_action :switch_locale
 
   # def switch_locale
@@ -32,12 +33,31 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
+    set_api_token(current_user)
     if is_admin?
       stored_location_for(resource) || admin_path
     else
       previous_path = session[:previous_url]
       session[:previous_url] = nil
       previous_path || root_path
+    end
+  end
+
+  def after_sign_out_path_for(resource)
+    cookies.delete(:api_token)
+    root_path
+  end
+
+  def check_current_login
+    cookies.delete(:api_token) unless user_signed_in?
+  end
+
+  private
+
+  def set_api_token(current_user)
+    if user_signed_in?
+      payload = current_user.generate_token
+      cookies.permanent[:api_token] = payload
     end
   end
 end

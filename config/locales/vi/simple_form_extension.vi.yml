@@ -1,0 +1,26 @@
+vi:
+  simple_form:
+    extension:
+      file:
+        select: Chọn tập tin
+        change: Thay đổi tập tin
+        existing_file: Tập tin hiện có
+      image:
+        select: Chọn ảnh
+        change: Thay đổi hình ảnh
+      date:
+        format:
+          js: 'd/m/Y'
+          rails: '%d/%m/%Y'
+      time:
+        format:
+          js: 'H:i'
+          rails: '%H:%M'
+      datetime:
+        format:
+          js: 'd/m/Y H:i'
+          rails: '%d/%m/%Y %H:%M'
+      shared:
+        week_start_day: 0
+      selectize:
+        add: Add

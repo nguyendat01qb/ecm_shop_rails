@@ -1,0 +1,12 @@
+vi:
+  messages:
+    success:
+      category:
+        list_categories: Get list categories successfully
+      product:
+        list_products: Get list products successfully
+      user:
+        list_admins: Get list admins successfully
+        list_users: Get list users successfully
+      brand:
+        list_brands: Get list brands successfully

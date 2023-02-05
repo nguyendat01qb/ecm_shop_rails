@@ -3,84 +3,78 @@
     .breadcrumbs
       ol.breadcrumb
         li
-          a[href="#"] Home
-        li.active Shopping Cart
+          a href="/" = t('.home')
+        li.active = t('.shoping_cart')
     .table-responsive.cart_info
       table.table.table-condensed.m-0
-        - if @cart.present?
-          thead
-            tr.cart_menu
-              td.image[colspan="2"] Item
-              td.price Price
-              td.quantity Quantity
-              td.total Total
-              td
-          tbody
-            - total = 0
-            - @cart.each do |item|
-              - product = Product.find(item['id'])
-              - productDetail = get_product_cart(product, item)
-              tr.list-cart[id="#{product.id}_#{product.slug}"]
-                td.cart_product
-                  a
-                    = image_tag(product.display_image, class:"img_product")
-                td.cart_name 
-                  h4
-                    a[href=""] = product.title
-                    - if item['id_1'].present? && item['id_2'].present?
-                      p.item_attr1[id="#{ item['id_1'] }_#{ item['val_1'] }"]
-                        | #{ productDetail[:name][:attr1] } : #{ productDetail[:attribute_value][:attr1] }
+        thead
+          tr.cart_menu
+            td.image = t('.image')
+            td.name = t('.product_name')
+            td.price = t('.price')
+            td.discount = t('.discount')
+            td.quantity = t('.quantity')
+            td.total = t('.total')
+            td.action = t('.action')
+        tbody#a_list_cart_items
 
-                      p.item_attr2[id="#{ item['id_2'] }_#{ item['val_2'] }"]
-                        | #{ productDetail[:name][:attr2] } : #{ productDetail[:attribute_value][:attr2] }
-
-                    - if item['id_1'].present? && item['id_2'].nil?
-                      p.item_attr1[id=" #{item['id_1'] }_#{ item['val_1'] }"]
-                        | #{ productDetail[:name] } : #{ productDetail[:attribute_value] }
-                td.cart_price
-                  del
-                    sup $
-                    = productDetail[:price]
-                  |&nbsp&nbsp&nbsp
-                  - price = (productDetail[:price].to_f - productDetail[:discount].to_f).round(2)
-                  span
-                    sup $
-                    = price
-                td.cart_quantity
-                  .cart_quantity_button
-                    button.cart_quantity_down
-                      i.fa-solid.fa-minus
-                    - quantiny = item['amount']
-                    - total = total + price * quantiny.to_f
-                    input.cart_quantity_input[type="text" name="quantity" value="#{quantiny}"]
-                    button.cart_quantity_up
-                      i.fa-solid.fa-plus
-                  div 
-                    | There are #{productDetail[:stock]} products left 
-                td.cart_total
-                  p.cart_total_price
-                    sup $
-                    = price * quantiny.to_i
-                td.cart_delete
-                  a.cart_quantity_delete
-                    i.fa.fa-times
-            tr 
-              td[colspan="3"]
-              td.sum_total
-                span.price_sum
-                  p Total payment: &nbsp;
-                  sup $
-                  span
-                    = total
-              td
-                a.btn-checkout[href="#{checkout_url}"] checkout
-        - else
-          thead[style="display: none"]
-            tr.cart_menu
-              td.image[colspan="2"] Item
-              td.price Price
-              td.quantity Quantity
-              td.total Total
-              td
-          tbody
-            h2.cart_empty Shopping cart is empty
+script#template-cart[type="text/template"]
+  | <%_.each(options, function(option) { %>
+  |   <tr class='list-cart' id="<%- option.product.id %>_<%- option.product.slug %>">
+  |     <td class='cart_product'>
+  |       <a href='#'>
+  |         <img class='img_product' src="<%- option.pro_images[0] %>" alt='' />
+  |       </a>
+  |     </td>
+  |     <td class='cart_name'>
+  |       <a href='#'>
+  |         <%- option.product.title %>
+  |         <p class='item_attr1'>
+  |           <%- option.name[0] %> : <%- option.attribute_value[0] %>
+  |         </p>
+  |         <p class='item_attr2'>
+  |           <%- option.name[1] %> : <%- option.attribute_value[1] %>
+  |         </p>
+  |       </a>
+  |     </td>
+  |     <td class='cart_price'>
+  |       <sup>$</sup>
+  |       <%- option.price %>
+  |     </td>
+  |     <td class='cart_discount'>
+  |       <%- option.discount %> %
+  |     </td>
+  |     <td class='cart_quantity'>
+  |       <div class='cart_quantity_button' stock="<%- option.stock %>">
+  |         <button id='cart_quantity_down'>
+  |           <i class='fa-solid fa-minus'></i>
+  |         </button>
+  |         <input id='cart_quantity_input' aria-label='quantity' type='number' min='0' max="<%- option.stock %>" value="<%- option.quantity %>" disabled />
+  |         <button id='cart_quantity_up'>
+  |           <i class='fa-solid fa-plus'></i>
+  |         </button>
+  |       </div>
+  |     </td>
+  |     <td class='cart_total'>
+  |       <p class='cart_total_price'></p>
+  |     </td>
+  |     <td class='cart_delete'>
+  |       <button id='cart_quantity_delete' cart_id="<%- option.id %>" product_id="<%- option.product.id %>" attr_id="<%- option.attr_id %>">
+  |         <i class='fa fa-times'></i>
+  |       </button>
+  |     </td>
+  |   </tr>
+  | <% }) %>
+  | <tr class='sum_total'>
+  |   <td colspan='3'>
+  |   </td>
+  |   <td>
+  |     <span class='price_sum'>
+  |       <p>Total payment: </p>
+  |       <div id='total_amount'></div>
+  |     </span>
+  |   </td>
+  |   <td>
+  |     <a class='btn-checkout' href="#{checkout_url}">Checkout</a>
+  |   </td>
+  | </tr>

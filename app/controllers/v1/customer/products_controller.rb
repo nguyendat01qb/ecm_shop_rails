@@ -1,4 +1,7 @@
-class V1::Customer::ProductController < V1::BaseController
+class V1::Customer::ProductsController < V1::BaseController
+  # include Pundit::Authorization
+  # before_action :authenticate_user!, only: :select_attribute
+
   def search
     @products = Product.query_search(:title, params[:search]).order(created_at: :desc)
 
@@ -12,12 +15,12 @@ class V1::Customer::ProductController < V1::BaseController
     products = Product.all.page(page).per(per_page)
     total_pages = products.total_pages
 
-    if (page >= 1) && (page <= total_page)
+    if (page >= 1) && (page <= total_pages)
       offset = page.to_i * Product::PER_PAGE
       @products = Product.limit(Product::PER_PAGE).offset(offset)
       html = render_to_string partial: 'home/shared/list_products', layout: false
 
-      next_page = page + 1 == total_page ? 'last_page' : ''
+      next_page = page + 1 == total_pages ? 'last_page' : ''
     else
       next_page = 'error_page'
     end

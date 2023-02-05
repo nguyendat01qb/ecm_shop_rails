@@ -16,9 +16,9 @@ ActiveStorage.start();
 window.jQuery = window.$ = require('jquery');
 window._ = _;
 import 'bootstrap';
-
 import Swal from 'sweetalert2';
 window.Swal = Swal;
+
 import '@fortawesome/fontawesome-free/css/all';
 import '../packs/controllers/application';
 import './stylesheet/application/application';

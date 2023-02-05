@@ -1,4 +1,5 @@
 import '../../lib/notify';
+import { loadPage } from '../../lib/application';
 
 function CHome(options) {
   var module = this;
@@ -6,9 +7,9 @@ function CHome(options) {
     page: 1,
     per_page: 6,
     api: {
-      search: '/v1/customer/product/search',
+      search: '/v1/customer/products/search',
       filter_products: '/v1/customer/home/filter_products',
-      load_more: '/v1/customer/product/load_more'
+      load_more: '/v1/customer/products/load_more'
     }
   };
 
@@ -45,8 +46,8 @@ function CHome(options) {
 
   module.loadMoreProducts = function() {
     $('.btn-load_more').on('click', function(){
-      const page = _.isEmpty(localStorage.getItem('page')) ? 1 : localStorage.getItem('page');
-      var data = { page: page, per_page: module.settings.per_page };
+      const current_page = _.isEmpty(localStorage.getItem('current_page')) ? 1 : localStorage.getItem('current_page');
+      var data = { page: current_page, per_page: module.settings.per_page };
       $.ajax({
         url: module.settings.api.load_more,
         type: 'POST',
@@ -56,8 +57,8 @@ function CHome(options) {
           if (res.status == 200) {
             if (res.page != 'error_page') {
               $('.features_items').append(res.html);
-              const next_page = parseInt(page) + 1;
-              localStorage.setItem('page', next_page);
+              const next_page = parseInt(current_page) + 1;
+              localStorage.setItem('current_page', next_page);
 
               if (res.page == 'last_page') {
                 $('.load_more').hide();
@@ -131,6 +132,15 @@ function CHome(options) {
         },
       });
     });
+  };
+
+  module.handleKeyPress = function() {
+    $(window).on('load', function() {
+      const itemsStorage = ['current_page']
+      _.map(itemsStorage, function(el) {
+        localStorage.removeItem(el);
+      });
+    });
   }
 
   module.init = function () {
@@ -141,6 +151,7 @@ function CHome(options) {
 
     module.handleCategory();
     module.handleCategory();
+    module.handleKeyPress();
   };
 }
 
