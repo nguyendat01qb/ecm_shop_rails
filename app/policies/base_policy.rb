@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ApplicationPolicy
+class BasePolicy
   attr_reader :user, :record
 
   def initialize(user, record)
@@ -50,4 +50,14 @@ class ApplicationPolicy
 
     attr_reader :user, :scope
   end
+
+  private
+
+  def authenticate_admin
+		self.record.has_role?(:admin)
+	end
+
+	def authenticate_customer
+		self.record.has_role?(:admin) || self.record.has_role?(:customer)
+	end
 end

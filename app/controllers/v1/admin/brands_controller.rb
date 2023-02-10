@@ -1,4 +1,4 @@
-class V1::Admin::BrandsController < V1::BaseController
+class V1::Admin::BrandsController < V1::BaseAuthController
   before_action :authorize_admin!
 
   def load_brands

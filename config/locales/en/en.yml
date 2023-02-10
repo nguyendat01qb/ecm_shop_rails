@@ -205,4 +205,15 @@ en:
     shared:
     users:
     vouchers:
-
+  cart:
+    shared:
+      list_product_cart:
+        home: Home
+        shoping_cart: Shopping Cart
+        image: Image
+        product_name: Product name
+        price: Price
+        discount: Discount
+        quantity: Quantity
+        total: Total amount
+        action: Action

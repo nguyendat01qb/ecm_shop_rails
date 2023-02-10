@@ -1,1 +1,4 @@
-= render "cart/shared/list_product_cart"
+= content_for :js_pages
+  = javascript_pack_tag 'controllers/application/v1/c_cart', 'data-turbolinks-track': 'reload'
+
+= render 'cart/shared/list_product_cart'

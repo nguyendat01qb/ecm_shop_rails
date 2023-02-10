@@ -1,0 +1,17 @@
+vi:
+  menu:
+    home: Trang chủ
+    shop: Cửa hàng
+    contact: Liên hệ
+    profile: Trang cá nhân
+    checkout: Thanh toán
+    cart: Giỏ hàng
+    my_orders: Đơn hàng của tôi
+    account: Tài khoản
+    notification: NotificThông báoations
+    login: Đăng nhập
+    logout: Đăng xuất
+    address: Địa chỉ
+  product:
+    see_detail: Xem chi tiết
+    quick_view: Xem nhanh

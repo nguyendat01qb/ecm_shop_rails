@@ -1,4 +1,4 @@
-class UserPolicy < ApplicationPolicy
+class UserPolicy < BasePolicy
 	def index?
 		authenticate_admin
 	end
@@ -48,12 +48,10 @@ class UserPolicy < ApplicationPolicy
 	end
 
 	def destroy?
-		authenticate_admin
+	  authenticate_admin
 	end
 
-	private
-
-	def authenticate_admin
-		user.has_role?(:admin)
+	def select_attribute?
+		authenticate_customer
 	end
 end

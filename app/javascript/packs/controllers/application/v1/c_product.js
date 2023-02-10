@@ -1,5 +1,6 @@
 import '../../lib/notify';
 import '../../lib/slick';
+// import '../../lib/jquery.cookie';
 import { popupFire } from '../../lib/application';
 
 function CProduct(options) {
@@ -7,8 +8,9 @@ function CProduct(options) {
   var defaults = {
     page: 1,
     per_page: 6,
+    // headers: { 'Api-Token': $.cookie("api_token") },
     api: {
-      get_attributes: '/v1/customer/product/select_attribute'
+      get_attributes: '/v1/customer/products/select_attribute'
     }
   };
 
@@ -42,6 +44,7 @@ function CProduct(options) {
           $.ajax({
             url: module.settings.api.get_attributes,
             type: 'POST',
+            // headers: module.settings.headers,
             data: data,
             dataType: 'json',
             success: function (res) {
@@ -124,7 +127,7 @@ function CProduct(options) {
         success: function (res) {
           if (res.code === 200) {
             const attr_val_id = res.data.attribute_value.id;
-            const carts = JSON.parse(localStorage.getItem('carts'));
+            let carts = JSON.parse(localStorage.getItem('carts'));
             const cart_params = { product_id: product_id, amount: amount, attr_val_id: attr_val_id }
             const cart_present = false;
             if(_.isEmpty(carts)){

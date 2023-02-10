@@ -1,4 +1,4 @@
-import '../../lib/notify';
+import '../../../lib/notify';
 
 function AUser(options) {
   var module = this;

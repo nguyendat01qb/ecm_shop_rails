@@ -1,4 +1,4 @@
-class AddressPolicy < ApplicationPolicy
+class AddressPolicy < BasePolicy
   def index?
     record.map { |el| el.user_id == user.id }.include?(false) == false
   end

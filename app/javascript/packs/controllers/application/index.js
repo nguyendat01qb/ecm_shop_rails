@@ -1,6 +1,6 @@
 import '../lib/bootstrap.min';
 import '../lib/select2.min';
-import '../../controllers/lib/jquery.cookie';
+// import '../../controllers/lib/jquery.cookie';
 
 import './client/user';
 // import './client/product';
