@@ -9,7 +9,7 @@ size = [ 'S', 'M', 'L', 'XL' ]
 size2 = [36, 37, 39, 40, 41, 42]
 
 # Admin
-# admin1 = User.create(
+# admin1 = User.new(
 #   email: 'nvdatdev@gmail.com',
 #   name: 'Nguyen Van Dat',
 #   phone: '0327618979',
@@ -18,9 +18,11 @@ size2 = [36, 37, 39, 40, 41, 42]
 #   password_confirmation: 'd@T24022001@',
 #   is_admin: true
 # )
+# admin1.avatar.attach({io: File.open(Rails.root + "app/assets/images/admin/avatars/user.jpg"), filename: "user.jpg"})
+# admin1.save
 # admin1.roles.create!(name: 'admin')
 
-# admin2 = User.create(
+# admin2 = User.new(
 #   email: 'datrepost01@gmail.com',
 #   name: 'Nguyen Quang Dat',
 #   phone: '0372300544',
@@ -29,6 +31,8 @@ size2 = [36, 37, 39, 40, 41, 42]
 #   password_confirmation: 'd@T24022001@',
 #   is_admin: true
 # )
+# admin2.avatar.attach({io: File.open(Rails.root + "app/assets/images/admin/avatars/user.jpg"), filename: "user.jpg"})
+# admin2.save
 # admin2.roles.create!(name: 'admin')
 
 # User
@@ -42,6 +46,7 @@ size2 = [36, 37, 39, 40, 41, 42]
 #     password_confirmation: 'd@T24022001@',
 #   )
 #   user.skip_confirmation!
+#   user.avatar.attach({io: File.open(Rails.root + "app/assets/images/admin/avatars/user.jpg"), filename: "user.jpg"})
 #   user.save
 # end
 

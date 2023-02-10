@@ -54,4 +54,8 @@ class UserPolicy < BasePolicy
 	def select_attribute?
 		authenticate_customer
 	end
+
+	def get_product_cart?
+		authenticate_customer
+	end
 end

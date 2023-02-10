@@ -5,7 +5,6 @@ import '../lib/select2.min';
 import './client/user';
 // import './client/product';
 import './client/comment';
-import './client/cart';
 import './client/address';
 import './client/checkout';
 import './client/order';

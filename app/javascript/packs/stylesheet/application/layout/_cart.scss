@@ -144,7 +144,7 @@
           border-bottom: 1px solid rgba(255, 255, 255, 0.13);
           text-transform: capitalize;
           margin: 0 15px;
-          padding: 15px 35px;
+          padding: 9px 35px;
           background: #e7e7ff;
           font-weight: bold;
           font-size: 15px;
@@ -176,4 +176,13 @@
       text-align: center;
     }
   }
+}
+
+.cart_price, .cart_discount {
+  font-size: 18px;
+}
+
+#total_amount, #total_amount>sup {
+  font-size: 15px;
+  font-weight: 600;
 }

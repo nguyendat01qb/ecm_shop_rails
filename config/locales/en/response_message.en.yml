@@ -6,6 +6,7 @@ en:
       product:
         list_products: Get list products successfully
         attributes: Get attribute value successfully
+        add_cart: Add to cart successfully
       user:
         list_admins: Get list admins successfully
         list_users: Get list users successfully
@@ -13,9 +14,11 @@ en:
         list_brands: Get list brands successfully
       cart:
         list_carts: Get list cart items successfully
+        destroy: Cart item deleted successfully
     warning:
       cart:
         empty_cart: Shopping cart is empty
+        destroy: You can not delete shopping cart
     error:
       missing_api_token: Api token is not present
       please_sign_in: Please sign in before continuing

@@ -4,7 +4,6 @@ export default class MainController {
   constructor() {
     this.handleLoader();
     this.handleScrollUp();
-    this.showIconCart();
   }
 
   handleLoader = () => {
@@ -31,10 +30,5 @@ export default class MainController {
         zIndex: 2147483647, // Z-Index for the overlay
       });
     });
-  };
-
-  showIconCart = () => {
-    const product_ids = _.uniq(_.map(JSON.parse(localStorage.getItem('carts')), function(attr) { return attr.product_id}))
-    $('.count-product').get(0).innerText = product_ids.length > 0 ? product_ids.length : '';
   };
 }

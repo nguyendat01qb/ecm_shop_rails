@@ -60,13 +60,17 @@
               = @product.price
         .quantity
           label Quantity:
-          input.quantity.numberInput type='number' value='1'
-            - if get_stock_product(@product).to_i == 0
-              a.btn.btn-danger.out-of-stock href='javascript:void(0)' Out of stock
-            - else
-              a.btn.btn-fefault.cart.add-to-cart name='add-to-cart-detail'
-                i.fa.fa-shopping-cart
-                | Add to cart
+          button#cart_quantity_down
+            i.fa-solid.fa-minus
+          input id='cart_quantity_input' aria-label='quantity' type='number' min='0' max="#{@product.quantity}" value="1" disabled='disabled'
+          button#cart_quantity_up
+            i.fa-solid.fa-plus
+          - if get_stock_product(@product).to_i == 0
+            a.btn.btn-danger.out-of-stock href='javascript:void(0)' Out of stock
+          - else
+            a.btn.btn-fefault.cart.add-to-cart name='add-to-cart-detail'
+              i.fa.fa-shopping-cart
+              | Add to cart
         .attribute_product style="display:#{@product_attributes.present? ? 'block': 'none'}"
           .item
             - if @product_attributes[0].present?
