@@ -1,8 +1,11 @@
+import "../../lib/notify";
+
 function CMain(options) {
   var module = this;
   var defaults = {
     api: {
       getProductCart: "/v1/customer/home/get_product_cart",
+      cart: "/v1/customer/checkouts/check_cart",
     },
     elements: {
       cart_icon: $(".count-product"),
@@ -33,8 +36,26 @@ function CMain(options) {
     });
   };
 
+  module.beforeCheckout = function () {
+    $("#c_checkout").on("click", function (e) {
+      return $.ajax({
+        url: module.settings.api.cart,
+        type: "POST",
+        dataType: "json",
+        success: function (res) {
+          if (res.code === 200) {
+            window.location = 'http://localhost:3000/checkout'
+          } else {
+            $.notify(res.message);
+          }
+        },
+      });
+    });
+  };
+
   module.init = function () {
     module.loadProductCart();
+    module.beforeCheckout();
   };
 }
 

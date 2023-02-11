@@ -18,4 +18,5 @@ class Voucher < ApplicationRecord
   validates :start_time, presence: true
   validates :end_time, presence: true
   validates_datetime :end_time, after: :start_time
+  # Ex:- scope :active, -> {where(:active => true)}
 end

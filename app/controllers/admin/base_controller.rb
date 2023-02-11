@@ -20,6 +20,7 @@ class Admin::BaseController < ActionController::Base
   end
 
   def authenticate_admin!
+    return redirect_to root_path unless current_user
     return if admin?
 
     redirect_to root_path

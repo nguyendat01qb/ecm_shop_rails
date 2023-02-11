@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_230_129_094_826) do
+ActiveRecord::Schema.define(version: 20_230_212_074_252) do
   create_table 'active_storage_attachments', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
     t.string 'name', null: false
     t.string 'record_type', null: false
@@ -286,6 +286,7 @@ ActiveRecord::Schema.define(version: 20_230_129_094_826) do
     t.boolean 'checked'
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
+    t.integer 'status', default: 0
     t.index ['user_id'], name: 'index_user_vouchers_on_user_id'
     t.index ['voucher_id'], name: 'index_user_vouchers_on_voucher_id'
   end

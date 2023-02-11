@@ -9,4 +9,6 @@ class Address < ApplicationRecord
   validates :addressDetail, presence: true
   validates :province_id, presence: true
   validates :district_id, presence: true
+
+  scope :current_address, -> { find_by(status: true) }
 end

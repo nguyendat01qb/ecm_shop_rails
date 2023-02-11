@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   end
 
   resource :checkout do
-    post 'payment', to: 'checkouts#payment'
+    post '/payment', to: 'checkouts#payment'
     get '/stripe', to: 'checkouts#stripe_payment'
     post '/payment_with_stripe', to: 'checkouts#payment_with_stripe'
     post '/create_order_stripe', to: 'checkouts#create_order_stripe'

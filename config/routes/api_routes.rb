@@ -30,6 +30,14 @@ Rails.application.routes.draw do
           post 'delete', to: 'carts#delete_cart_item'
         end
       end
+      resources :checkouts do
+        collection do
+          get :get_order
+          post :check_cart
+          post :voucher
+          post :address
+        end
+      end
     end
   end
 end

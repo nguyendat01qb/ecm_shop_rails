@@ -15,6 +15,8 @@ en:
       cart:
         list_carts: Get list cart items successfully
         destroy: Cart item deleted successfully
+      address:
+        changed: Your address changed successfully
     warning:
       cart:
         empty_cart: Shopping cart is empty
@@ -25,3 +27,14 @@ en:
       assets:
         admin: You need admin privileges to access
         customer: You need customer permission to access
+      checkout:
+        required_sign_in: You need to sign in before checkout
+        empty_cart: You can't checkout because you don't have products in cart or order
+      voucher:
+        empty: Voucher code invaild. Try again
+        expired: Voucher code is expired. Please apply another voucher
+        sold_out: Discounted items are sold out
+        used_another: You have used another voucher
+        used_this: You have used this voucher
+      address:
+        not_found: Can't find your address
