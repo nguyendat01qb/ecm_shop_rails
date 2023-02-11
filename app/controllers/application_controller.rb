@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
   include Pagy::Backend
 
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :check_current_login
   # before_action :switch_locale
 
   # def switch_locale
@@ -46,10 +45,6 @@ class ApplicationController < ActionController::Base
   def after_sign_out_path_for(resource)
     cookies.delete(:api_token)
     root_path
-  end
-
-  def check_current_login
-    cookies.delete(:api_token) unless user_signed_in?
   end
 
   private

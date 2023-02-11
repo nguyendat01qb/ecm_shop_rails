@@ -28,7 +28,9 @@ class V1::BaseController < ApplicationController
   private
 
   def session_api_token
-    request.headers['Api-Token'].present? ? request.headers['Api-Token'] : cookies[:api_token]
+    cookies_values = request.cookies.to_a.flatten
+    index_of_token_key = cookies_values.find_index('api_token');
+    request.headers['Api-Token'] || cookies[:api_token] || cookies_values[index_of_token_key.next]
   end
 
   def token_invalid_json
@@ -44,7 +46,7 @@ class V1::BaseController < ApplicationController
   end
 
   def api_token?
-    request.headers['Api-Token'].present? || cookies[:api_token].present?
+    request.headers['Api-Token'].present? || cookies[:api_token].present? || !request.cookies.to_a.flatten.find_index('api_token').nil?
   end
 
   def authorize_admin!

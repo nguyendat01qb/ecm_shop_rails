@@ -7,6 +7,7 @@ html
     = csp_meta_tag
     / = stripe_javascript_tag
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', :defer => 'defer'
+    = javascript_pack_tag 'controllers/application/v1/c_main', 'data-turbolinks-track': 'reload'
     / <script src='https://www.paypal.com/sdk/js?client-id=test&currency=USD'></script>
   body *raicon_data_attributes
     = render 'layouts/header'

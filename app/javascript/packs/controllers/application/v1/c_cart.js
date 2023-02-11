@@ -1,100 +1,238 @@
-import '../../lib/notify';
-import '../../lib/jquery.cookie';
-import { loadPage } from '../../lib/application';
-import _ from 'underscore';
+import "../../lib/notify";
 
 function CCart(options) {
   var module = this;
   var defaults = {
-    headers: { 'Api-Token': $.cookie("api_token") },
     api: {
-      default: '/v1/customer/carts/get_all',
+      default: "/v1/customer/carts/get_all",
+      update: "/v1/customer/carts",
+      delete: "/v1/customer/carts/delete",
     },
     templates: {
-      cart: $('#template-cart')
+      cart: $("#template-cart"),
     },
     elements: {
-      cart: $('#a_list_cart_items'),
-      decrease: $('cart_quantity_down'),
-      increase: $('#cart_quantity_up'),
-      quantityItem: $('#cart_quantity_input'),
-      deleteBtn: $('#cart_quantity_delete'),
-      totalAmount: $('#total_amount')
-    }
+      cart: $("#a_list_cart_items"),
+    },
   };
 
   module.settings = $.extend({}, defaults, options);
 
-  module.loadDefaultData = function() {
-    const data = { cart: JSON.parse(localStorage.getItem('carts')) };
+  module.loadDefaultData = function () {
+    const data = { cart: JSON.parse(localStorage.getItem("carts")) };
     return $.ajax({
       url: module.settings.api.default,
-      type: 'POST',
-      headers: module.settings.headers,
+      type: "POST",
       data: data,
-      dataType: 'json',
+      dataType: "json",
       success: function (res) {
         if (res.code === 200) {
-          module.renderCart(res.data.products_cart);
+          module.renderCart(res.data);
+          if (res.data.is_current === true) {
+            localStorage.removeItem("carts");
+          }
         } else {
-          $('.list-cart').hide();
-          $('.sum_total').hide();
-          $('.cart_menu').hide();
-          $('.cart_info').append("<h2 class='cart_empty'>" + res.message + '</h2>');
+          $(".list-cart").hide();
+          $(".sum_total").hide();
+          $(".cart_menu").hide();
+          $(".cart_info").append(
+            "<h2 class='cart_empty'>" + res.message + "</h2>"
+          );
         }
       },
     });
   };
 
-  module.renderCart = function(cart_items) {
+  module.renderCart = function (res) {
     var template = _.template(module.settings.templates.cart.html());
-    $(module.settings.elements.cart).html(template({ options: cart_items }));
-  }
+    $(module.settings.elements.cart).html(
+      template({ options: res.products_cart })
+    );
+    $("#total_amount").replaceWith(
+      "<div id='total_amount'><sup>$</sup>" + res.total_amount + "</div>"
+    );
+  };
 
-  module.handleIncrement = function() {
-    $(document).on('click', '#cart_quantity_up', function() {
-      var stock = parseInt($(this).parent().attr('stock'));
-      var input = $(this).siblings('#cart_quantity_input');
-      var quantity = parseInt(input.attr('value'));
-      if(quantity < stock) {
-        input.attr('value', (quantity + 1));
-      } else {
-        $.notify('Out of stock quantity');
-      }
-    })
-  }
-
-  module.handleDecrement = function() {
-    $(document).on('click', '#cart_quantity_down', function() {
-      var input = $(this).siblings('#cart_quantity_input');
-      var quantity = parseInt(input.attr('value'));
-      if(quantity > 0) {
-        input.attr('value', (quantity - 1));
-      } else {
-        $.notify('Quantity cannot be continue down');
-      }
-    })
-  }
-
-  module.handleDelete = function() {
-    $(document).on('click', '#cart_quantity_delete', function() {
-      var cart_id = $(this).attr('cart_id');
-      var product_id = parseInt($(this).attr('product_id'));
-      var attr_id = parseInt($(this).attr('attr_id'));
-      if(_.isEmpty(cart_id)) {
-        var results = [];
-        var cart_items = JSON.parse(localStorage.getItem('carts'));
-        $.map(cart_items, function(cart_item) {
-          if (parseInt(cart_item.product_id) !== product_id || cart_item.attr_val_id !== attr_id){
-            results.push(cart_item)
+  module.handleIncrement = function () {
+    $(document).on("click", "#cart_quantity_up", function () {
+      var input = $(this).siblings("#cart_quantity_input");
+      var stock = parseInt(input.attr("max"));
+      var quantity = parseInt(input.attr("value"));
+      var cart_item_id = parseInt(input.attr("cart_id"));
+      var product_id = parseInt(input.attr("product_id"));
+      var attr_id = parseInt(input.attr("attr_id"));
+      var price = parseFloat($(".cart_price").attr("price"));
+      var discount = parseInt($(".cart_discount").attr("discount"));
+      if (quantity < stock) {
+        quantity = quantity + 1;
+        input.attr("value", quantity);
+        if (cart_item_id >= 0) {
+          module.handleUpdate(cart_item_id, quantity);
+        } else {
+          let carts = JSON.parse(localStorage.getItem("carts"));
+          var cart_present = false;
+          if (_.isEmpty(carts)) {
+            carts = [
+              {
+                product_id: product_id,
+                amount: quantity,
+                attr_val_id: attr_id,
+              },
+            ];
+          } else {
+            _.map(carts, function (cart) {
+              if (
+                parseInt(cart.product_id) === product_id &&
+                cart.attr_val_id === attr_id
+              ) {
+                cart_present = true;
+                cart.amount += 1;
+                return cart;
+              }
+            });
+            if (cart_present === false) {
+              carts.push({
+                product_id: product_id,
+                amount: quantity,
+                attr_val_id: attr_id,
+              });
+            }
           }
-        })
-        localStorage.setItem('carts' ,JSON.stringify(results));
-        module.loadDefaultData();
-        $.notify('Cart item deleted successfully', 'success')
+          localStorage.setItem("carts", JSON.stringify(carts));
+        }
+        var totalAmount = parseFloat((price * discount * quantity) / 100);
+        $(".cart_total_price_" + attr_id).replaceWith(
+          "<p class='cart_total_price cart_total_price_" +
+            attr_id +
+            "'><sup>$</sup>" +
+            totalAmount +
+            "</p>"
+        );
+        $("#total_amount").replaceWith(
+          "<div id='total_amount'><sup>$</sup>" + totalAmount + "</div>"
+        );
+      } else {
+        $.notify("Out of stock quantity");
       }
-    })
-  }
+    });
+  };
+
+  module.handleDecrement = function () {
+    $(document).on("click", "#cart_quantity_down", function () {
+      var input = $(this).siblings("#cart_quantity_input");
+      var quantity = parseInt(input.attr("value"));
+      var cart_item_id = parseInt(input.attr("cart_id"));
+      var product_id = parseInt(input.attr("product_id"));
+      var attr_id = parseInt(input.attr("attr_id"));
+      var price = parseFloat($(".cart_price").attr("price"));
+      var discount = parseInt($(".cart_discount").attr("discount"));
+      if (quantity > 1) {
+        quantity = quantity - 1;
+        input.attr("value", quantity);
+        if (cart_item_id >= 0) {
+          module.handleUpdate(cart_item_id, quantity);
+        } else {
+          let carts = JSON.parse(localStorage.getItem("carts"));
+          var cart_present = false;
+          if (_.isEmpty(carts)) {
+            carts = [
+              {
+                product_id: product_id,
+                amount: quantity,
+                attr_val_id: attr_id,
+              },
+            ];
+          } else {
+            _.map(carts, function (cart) {
+              if (
+                parseInt(cart.product_id) === product_id &&
+                cart.attr_val_id === attr_id
+              ) {
+                cart_present = true;
+                cart.amount -= 1;
+                return cart;
+              }
+            });
+            if (cart_present === false) {
+              carts.push({
+                product_id: product_id,
+                amount: quantity,
+                attr_val_id: attr_id,
+              });
+            }
+          }
+          localStorage.setItem("carts", JSON.stringify(carts));
+        }
+        var totalAmount = parseFloat((price * discount * quantity) / 100);
+        $(".cart_total_price_" + attr_id).replaceWith(
+          "<p class='cart_total_price cart_total_price_" +
+            attr_id +
+            "'><sup>$</sup>" +
+            totalAmount +
+            "</p>"
+        );
+        $("#total_amount").replaceWith(
+          "<div id='total_amount'><sup>$</sup>" + totalAmount + "</div>"
+        );
+      } else {
+        $.notify("Quantity cannot be continue down");
+      }
+    });
+  };
+
+  module.handleUpdate = function (cart_item_id, quantity) {
+    var data = { cart_item_id: cart_item_id, quantity: quantity };
+    return $.ajax({
+      url: module.settings.api.update,
+      type: "PUT",
+      data: data,
+      dataType: "json",
+      success: function (res) {},
+    });
+  };
+
+  module.handleDelete = function () {
+    $(document).on("click", "#cart_quantity_delete", function () {
+      var cart_item_id = $(this).attr("cart_id");
+      var product_id = parseInt($(this).attr("product_id"));
+      var attr_id = parseInt($(this).attr("attr_id"));
+      if (_.isEmpty(cart_item_id)) {
+        var results = [];
+        var cart_items = JSON.parse(localStorage.getItem("carts"));
+        $.map(cart_items, function (cart_item) {
+          if (
+            parseInt(cart_item.product_id) !== product_id ||
+            cart_item.attr_val_id !== attr_id
+          ) {
+            results.push(cart_item);
+          }
+        });
+        localStorage.setItem("carts", JSON.stringify(results));
+        module.loadDefaultData();
+        $.notify("Cart item deleted successfully", "success");
+      } else {
+        module.deleteCartItem(cart_item_id);
+      }
+    });
+  };
+
+  module.deleteCartItem = function (cart_item_id) {
+    var data = { cart_item_id: cart_item_id };
+    return $.ajax({
+      url: module.settings.api.delete,
+      type: "POST",
+      data: data,
+      dataType: "json",
+      success: function (res) {
+        if (res.code === 200) {
+          module.loadDefaultData();
+          $.notify(res.message, "success");
+        } else {
+          $.notify(res.message);
+        }
+      },
+    });
+  };
 
   module.init = function () {
     module.loadDefaultData();

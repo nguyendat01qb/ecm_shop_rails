@@ -14,16 +14,20 @@ Rails.application.routes.draw do
           post :search
           post :load_more
           post :select_attribute
+          post :add_to_cart
         end
       end
       resources :home do
         collection do
           post :filter_products
+          get :get_product_cart
         end
       end
       resources :carts do
         collection do
           post :get_all
+          put :update
+          post 'delete', to: 'carts#delete_cart_item'
         end
       end
     end
