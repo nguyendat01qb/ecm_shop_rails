@@ -167,7 +167,7 @@ function CProduct(options) {
             amount: amount,
             attr_val_id: attr_val_id,
           };
-          if(_.isEmpty(module.settings.headers["Api-Token"])) {
+          if (_.isEmpty(module.settings.headers["Api-Token"])) {
             const cart_present = false;
             if (_.isEmpty(carts)) {
               carts = [cart_params];

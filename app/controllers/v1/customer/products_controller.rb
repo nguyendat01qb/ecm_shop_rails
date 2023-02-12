@@ -49,8 +49,9 @@ class V1::Customer::ProductsController < V1::BaseController
 
   def add_to_cart
     return render json: error_message(I18n.t('messages.warning.cart.empty_cart')) unless current_user
+
     cart = current_user.carts.is_pending.first
-    cart = current.carts.create!(status: Cart::STATUSES[:pending]) unless cart
+    cart ||= current.carts.create!(status: Cart::STATUSES[:pending])
     params = request.params
     product_id = request.params[:product_id].to_i
     attr_value_id = AttributeValue.find_by(attribute_1: params[:value_attr1], attribute_2: params[:value_attr2]).id
@@ -59,7 +60,8 @@ class V1::Customer::ProductsController < V1::BaseController
       quantity = cart_item.quantity + params[:quantity].to_i
       cart_item.update!(quantity: quantity)
     else
-      cart_item = cart.cart_items.create!(product_id: product_id, attribute_value_id: attr_value_id, quantity: params[:quantity])
+      cart_item = cart.cart_items.create!(product_id: product_id, attribute_value_id: attr_value_id,
+                                          quantity: params[:quantity])
     end
     render json: success_message(
       I18n.t('messages.success.product.add_cart'),

@@ -1,4 +1,3 @@
-
 function AUserEdit() {
   var module = this;
   // var defaults = {
@@ -14,25 +13,25 @@ function AUserEdit() {
   //   },
   // };
 
-  module.handleImageInput = function() {
-    $('#user_avatar').on('change', () => {
-      const preview = $('.preview');
-      const file = $('#user_avatar')[0].files[0];
+  module.handleImageInput = function () {
+    $("#user_avatar").on("change", () => {
+      const preview = $(".preview");
+      const file = $("#user_avatar")[0].files[0];
       const reader = new FileReader();
 
-      $(reader).on('load', ({ target }) => {
+      $(reader).on("load", ({ target }) => {
         preview.empty();
         preview.append(
-          $('<img/>', {
+          $("<img/>", {
             src: target.result,
-            class: 'preview img-thumbnail',
+            class: "preview img-thumbnail",
           })
         );
       });
 
       reader.readAsDataURL(file);
     });
-  }
+  };
 
   module.init = function () {
     module.handleImageInput();

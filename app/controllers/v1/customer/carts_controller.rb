@@ -65,6 +65,7 @@ class V1::Customer::CartsController < V1::BaseController
   def update
     cart = current_user.carts.is_pending.first
     return render json: error_message(I18n.t('messages.warning.cart.empty_cart')) unless cart
+
     cart_item_ids = cart.cart_items.pluck(:id)
     params = request.params
     if cart_item_ids.include?(params[:cart_item_id].to_i)
@@ -91,6 +92,7 @@ class V1::Customer::CartsController < V1::BaseController
   def product_values(cart)
     total_amount = 0.0
     return render json: error_message(I18n.t('messages.warning.cart.empty_cart')) if cart.cart_items.blank?
+
     products_cart = cart.cart_items.map do |cart_item|
       product = cart_item.product
       images = product.images.map { |img| { image: url_for(img) } }.map(&:values).flatten
