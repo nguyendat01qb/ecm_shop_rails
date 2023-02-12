@@ -1,16 +1,8 @@
 class CheckoutsController < ApplicationController
   include Stud
-  before_action :authenticate_user!
   before_action :authenticate_user
-  before_action :check_cart
 
-  def show
-    @cart = exists_product?(JSON.parse(cookies[:add_to_cart]))
-    @addresses = current_user.addresses
-    @address_default = @addresses.find_by(status: true)
-
-    Client::Cart::SaveCartService.call(JSON.parse(cookies[:add_to_cart]), current_user)
-  end
+  def show; end
 
   def success; end
 
@@ -101,19 +93,5 @@ class CheckoutsController < ApplicationController
 
     html = render_to_string partial: 'checkouts/success', layout: false
     render json: { status: status, html: html }
-  end
-
-  private
-
-  def check_cart
-    return if cookies[:add_to_cart].present?
-
-    redirect_to root_path
-  end
-
-  def exists_product?(cart)
-    ids = cart.map { |item| item['id'].to_i }.uniq
-    products = Product.where(id: ids).group_by(&:id).keys
-    cart.select { |el| products.include?(el['id'].to_i) }
   end
 end

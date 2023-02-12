@@ -90,6 +90,7 @@ class V1::Customer::CartsController < V1::BaseController
 
   def product_values(cart)
     total_amount = 0.0
+    return render json: error_message(I18n.t('messages.warning.cart.empty_cart')) if cart.cart_items.blank?
     products_cart = cart.cart_items.map do |cart_item|
       product = cart_item.product
       images = product.images.map { |img| { image: url_for(img) } }.map(&:values).flatten
@@ -99,7 +100,7 @@ class V1::Customer::CartsController < V1::BaseController
       quantity = cart_item.quantity
       price = attr_value.price_attribute_product
       discount = attr_value.discount_attribute_product * 100
-      amount = (price * quantity * discount).to_f / 100.to_f
+      amount = ((price * quantity * discount).to_f / 100.to_f).round(2)
       total_amount += amount
       {
         product: product,
@@ -118,7 +119,7 @@ class V1::Customer::CartsController < V1::BaseController
     render json: success_message(
       I18n.t('messages.success.cart.list_carts'),
       products_cart: products_cart,
-      total_amount: total_amount,
+      total_amount: total_amount.round(2),
       is_current: true
     )
   end
