@@ -44,7 +44,7 @@ function CMain(options) {
         dataType: "json",
         success: function (res) {
           if (res.code === 200) {
-            window.location = 'http://localhost:3000/checkout'
+            window.location = "http://localhost:3000/checkout";
           } else {
             $.notify(res.message);
           }

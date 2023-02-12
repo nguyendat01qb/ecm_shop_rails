@@ -1,14 +1,14 @@
-import '../../../lib/notify';
+import "../../../lib/notify";
 
 function AUser(options) {
   var module = this;
   var defaults = {
-    pagination_template: $('#pagination-template'),
-    pagination_content: $('#paginate'),
+    pagination_template: $("#pagination-template"),
+    pagination_content: $("#paginate"),
     page: 1,
     per_page: 10,
     api: {
-      get_all: '/v1/admin/load_users',
+      get_all: "/v1/admin/load_users",
     },
     data: {
       list_users: {},
@@ -16,17 +16,17 @@ function AUser(options) {
   };
 
   var elements = {
-    container: $('#users_list'),
-    list_users: $('#admin_user_template')
-  }
+    container: $("#users_list"),
+    list_users: $("#admin_user_template"),
+  };
 
   module.settings = $.extend({}, defaults, options);
 
-  module.loadUsers = function(callback) {
+  module.loadUsers = function (callback) {
     return $.ajax({
-      url: module.settings.api.get_all + '?page=' + module.settings.page,
-      type: 'GET',
-      dataType: 'json',
+      url: module.settings.api.get_all + "?page=" + module.settings.page,
+      type: "GET",
+      dataType: "json",
       success: function (res) {
         if (res.code === 200) {
           module.settings.data.list_users = res.data.users;
@@ -34,10 +34,10 @@ function AUser(options) {
           module.settings.total = res.data.total;
           module.settings.per_page = res.data.per_page;
           if (module.settings.total_page > 1) {
-            $('#paginate').show();
+            $("#paginate").show();
             module.initPaginate();
           } else {
-            $('#paginate').hide();
+            $("#paginate").hide();
           }
           if (callback) {
             callback();
@@ -51,32 +51,36 @@ function AUser(options) {
     var users = module.settings.data.list_users;
     var template = _.template(elements.list_users.html());
     _.each(users, (user, idx) => {
-      user.idx = (module.settings.page - 1) * module.settings.per_page + idx + 1;
+      user.idx =
+        (module.settings.page - 1) * module.settings.per_page + idx + 1;
     });
     $(elements.container).html(template({ options: users }));
     module.eventGoPage();
   };
 
-  module.eventGoPage = function() {
-    $('.pagination span a').on('click', function(){
-      if ($(this).closest('.page').hasClass('current')) return;
-      module.settings.page = $(this).data('page');
+  module.eventGoPage = function () {
+    $(".pagination span a").on("click", function () {
+      if ($(this).closest(".page").hasClass("current")) return;
+      module.settings.page = $(this).data("page");
       module.loadUsers(module.renderUsers);
     });
   };
 
-  module.initPaginate = function() {
+  module.initPaginate = function () {
     var pagination = _.template(module.settings.pagination_template.html());
-    var totalpage_info = 1 + (module.settings.page - 1) * module.settings.per_page;
-    module.settings.pagination_content.html('');
+    var totalpage_info =
+      1 + (module.settings.page - 1) * module.settings.per_page;
+    module.settings.pagination_content.html("");
     module.settings.pagination_content.append(pagination(module.settings));
-    totalpage_info += ' - ';
+    totalpage_info += " - ";
     if (module.settings.per_page == module.settings.data.list_users.length)
       totalpage_info += module.settings.per_page * module.settings.page;
     else
-      totalpage_info += (module.settings.per_page * (module.settings.page - 1) + module.settings.data.list_users.length);
+      totalpage_info +=
+        module.settings.per_page * (module.settings.page - 1) +
+        module.settings.data.list_users.length;
 
-    $('.totalpage_info').html(totalpage_info);
+    $(".totalpage_info").html(totalpage_info);
   };
 
   module.init = function () {

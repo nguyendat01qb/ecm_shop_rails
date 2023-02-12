@@ -6,7 +6,7 @@ function CCheckout(options) {
     api: {
       getOrder: "/v1/customer/checkouts/get_order",
       voucher: "/v1/customer/checkouts/voucher",
-      address: '/v1/customer/checkouts/address'
+      address: "/v1/customer/checkouts/address",
     },
     templates: {
       address_default: $("#address_default_template"),
@@ -129,7 +129,7 @@ function CCheckout(options) {
       data: data,
       dataType: "json",
       success: function (res) {
-        $("input[name=apply_voucher]").val('')
+        $("input[name=apply_voucher]").val("");
         if (res.code === 200) {
           var data = res.data;
           data.voucher_id = res.data.voucher.id;
@@ -144,17 +144,17 @@ function CCheckout(options) {
     });
   };
 
-  module.changeAddress = function() {
-    $(document).on('click', '#btn-confirm_address', function() {
+  module.changeAddress = function () {
+    $(document).on("click", "#btn-confirm_address", function () {
       var address_id = $("input[name=address]").filter(":checked").val();
-      var data = { id: address_id }
+      var data = { id: address_id };
       return $.ajax({
         url: module.settings.api.address,
         type: "POST",
         data: data,
         dataType: "json",
         success: function (res) {
-          if(res.code === 200) {
+          if (res.code === 200) {
             var data = res.data;
             var addressDefault = data.address_default;
             var addresses = data.addresses;
@@ -162,28 +162,26 @@ function CCheckout(options) {
             $(".list-address_content").toggle();
             module.renderAddressDefault(addressDefault);
             module.renderAddresses(addresses);
-            Swal.fire(
-              {
-                position: "center",
-                icon: "success",
-                title: res.message,
-                showConfirmButton: false,
-                timer: 1000,
-              }
-            );
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: res.message,
+              showConfirmButton: false,
+              timer: 1000,
+            });
           } else {
             $.notify(res.message);
           }
         },
       });
-    })
-  }
+    });
+  };
 
-  module.handleInputAddress = function() {
-    $(document).on("click", "#back_address, #change_address", function() {
+  module.handleInputAddress = function () {
+    $(document).on("click", "#back_address, #change_address", function () {
       $(".address_content").toggle();
       $(".list-address_content").toggle();
-    })
+    });
   };
 
   module.init = function () {

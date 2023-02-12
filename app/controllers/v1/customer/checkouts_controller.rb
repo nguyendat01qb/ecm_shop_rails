@@ -1,23 +1,28 @@
 class V1::Customer::CheckoutsController < V1::BaseController
   def get_order
-    if current_user
-      cart = current_user&.carts&.is_pending&.first
-      voucher = current_user.user_vouchers.applying.voucher
-      product_values(cart, voucher)
-    end
+    return unless current_user
+
+    cart = current_user&.carts&.is_pending&.first
+    voucher = current_user.user_vouchers.applying.voucher
+    product_values(cart, voucher)
   end
 
   def voucher
     if current_user.user_vouchers.applying.present?
       return render json: error_message(I18n.t('messages.error.voucher.used_another'))
     end
+
     voucher = Voucher.find_by(code: request.params[:voucher_code])
     return render json: error_message(I18n.t('messages.error.voucher.empty')) if voucher.blank?
     return render json: error_message(I18n.t('messages.error.voucher.expired')) if voucher.end_time < DateTime.now
-    return render json: error_message(I18n.t('messages.error.voucher.sold_out')) if voucher.discount_mount <= voucher.apply_amount
-    if current_user.user_vouchers.present? && current_user.user_vouchers.by_voucher_id_and_status(voucher.id, UserVoucher::STATUSES[:applying])
+    if voucher.discount_mount <= voucher.apply_amount
+      return render json: error_message(I18n.t('messages.error.voucher.sold_out'))
+    end
+    if current_user.user_vouchers.present? && current_user.user_vouchers.by_voucher_id_and_status(voucher.id,
+                                                                                                  UserVoucher::STATUSES[:applying])
       return render json: error_message(I18n.t('messages.error.voucher.used_this'))
     end
+
     cart = current_user&.carts&.is_pending&.first
     current_user.user_vouchers.create!(voucher_id: voucher.id, status: UserVoucher::STATUSES[:applying])
     product_values(cart, voucher)
@@ -28,6 +33,7 @@ class V1::Customer::CheckoutsController < V1::BaseController
     if current_user.carts.is_pending.blank? || current_user.carts.is_pending.first.cart_items.blank?
       return render json: error_message(I18n.t('messages.error.checkout.empty_cart'))
     end
+
     render json: success_message('OK')
   end
 
@@ -35,6 +41,7 @@ class V1::Customer::CheckoutsController < V1::BaseController
     addresses = current_user.addresses
     current_address = addresses.find_by(id: request.params[:id])
     return render json: error_message(I18n.t('messages.error.address.not_found')) unless current_address
+
     addresses.update_all(status: false)
     current_address.update!(status: true)
     addresses = current_user.addresses
@@ -42,7 +49,7 @@ class V1::Customer::CheckoutsController < V1::BaseController
     render json: success_message(
       I18n.t('messages.success.address.changed'),
       addresses: addresses,
-      address_default: address_default,
+      address_default: address_default
     )
   end
 
