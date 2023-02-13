@@ -18,16 +18,16 @@
             td.action = t('.action')
         tbody#a_list_cart_items
 
-script#template-cart[type="text/template"]
+script#template-cart[type='text/template']
   | <%_.each(options, function(option) { %>
-  |   <tr class='list-cart' id="<%- option.product.id %>_<%- option.product.slug %>">
+  |   <tr class='list-cart' id='<%- option.product.id %>_<%- option.product.slug %>'>
   |     <td class='cart_product'>
-  |       <a href="/product_detail/<%- option.product.id %>.<%- option.product.slug %>">
-  |         <img class='img_product' src="<%- option.pro_images[0] %>" alt='' />
+  |       <a href='/product_detail/<%- option.product.id %>.<%- option.product.slug %>'>
+  |         <img class='img_product' src='<%- option.pro_images[0] %>' alt='' />
   |       </a>
   |     </td>
   |     <td class='cart_name'>
-  |       <a href="/product_detail/<%- option.product.id %>.<%- option.product.slug %>">
+  |       <a href='/product_detail/<%- option.product.id %>.<%- option.product.slug %>'>
   |         <%- option.product.title %>
   |         <p class='item_attr1'>
   |           <%- option.name[0] %> : <%- option.attribute_value[0] %>
@@ -37,11 +37,11 @@ script#template-cart[type="text/template"]
   |         </p>
   |       </a>
   |     </td>
-  |     <td class='cart_price' price="<%- option.price %>">
+  |     <td class='cart_price' price='<%- option.price %>'>
   |       <sup>$</sup>
   |       <%- option.price %>
   |     </td>
-  |     <td class='cart_discount' discount="<%- option.discount %>">
+  |     <td class='cart_discount' discount='<%- option.discount %>'>
   |       <%- option.discount %> %
   |     </td>
   |     <td class='cart_quantity'>
@@ -49,17 +49,17 @@ script#template-cart[type="text/template"]
   |         <button id='cart_quantity_down'>
   |           <i class='fa-solid fa-minus'></i>
   |         </button>
-  |         <input id='cart_quantity_input' cart_id="<%- option.id %>" product_id="<%- option.product.id %>" attr_id="<%- option.attr_id %>" aria-label='quantity' type='number' min='1' max="<%- option.stock %>" value="<%- option.quantity %>" disabled />
+  |         <input id='cart_quantity_input' cart_id='<%- option.id %>' product_id='<%- option.product.id %>' attr_id='<%- option.attr_id %>' aria-label='quantity' type='number' min='1' max='<%- option.stock %>' value='<%- option.quantity %>' disabled />
   |         <button id='cart_quantity_up'>
   |           <i class='fa-solid fa-plus'></i>
   |         </button>
   |       </div>
   |     </td>
   |     <td class='cart_total'>
-  |       <p class="cart_total_price cart_total_price_<%- option.attr_id %>"><sup>$</sup><%- option.amount %></p>
+  |       <p class='cart_total_price cart_total_price_<%- option.attr_id %>'><sup>$</sup><%- option.amount %></p>
   |     </td>
   |     <td class='cart_delete'>
-  |       <button id='cart_quantity_delete' cart_id="<%- option.id %>" product_id="<%- option.product.id %>" attr_id="<%- option.attr_id %>">
+  |       <button id='cart_quantity_delete' cart_id='<%- option.id %>' product_id='<%- option.product.id %>' attr_id='<%- option.attr_id %>'>
   |         <i class='fa fa-times'></i>
   |       </button>
   |     </td>

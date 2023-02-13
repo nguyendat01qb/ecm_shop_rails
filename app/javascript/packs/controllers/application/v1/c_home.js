@@ -1,5 +1,5 @@
-import "../../lib/notify";
-import { loadPage } from "../../lib/application";
+import '../../lib/notify';
+import { loadPage } from '../../lib/application';
 
 function CHome(options) {
   var module = this;
@@ -7,32 +7,104 @@ function CHome(options) {
     page: 1,
     per_page: 6,
     api: {
-      search: "/v1/customer/products/search",
-      filter_products: "/v1/customer/home/filter_products",
-      load_more: "/v1/customer/products/load_more",
+      category: '/v1/customer/home/categories',
+      brand: '/v1/customer/home/brands',
+      search: '/v1/customer/products/search',
+      filter_products: '/v1/customer/home/filter_products',
+      load_default_products: '/v1/customer/home/load_default_products',
+      load_more: '/v1/customer/products/load_more',
     },
+    templates: {
+      category: $('#list_categories_template'),
+      brand: $('#list_brands_template'),
+      list_products: $('#list_products_template')
+    },
+    elements: {
+      category: $('#list_categories'),
+      brand: $('#list_brands'),
+      product: $('#list_products')
+    },
+    data: {},
   };
 
   module.settings = $.extend({}, defaults, options);
 
+  module.loadCategories = function () {
+    return $.ajax({
+      url: module.settings.api.category,
+      type: 'GET',
+      dataType: 'json',
+      success: function (res) {
+        if (res.code == 200) {
+          module.renderCategories(res.data);
+        }
+      },
+    });
+  };
+
+  module.renderCategories = function (data) {
+    var template = _.template(module.settings.templates.category.html());
+    module.settings.elements.category.html(template({ options: data }));
+    $(document).on('click', '.category-heading', function () {
+      $('.category').removeClass('active');
+      $('.badge').removeClass('active');
+      $('.panel-collapse').removeClass('in');
+      $(this).find('.category').toggleClass('active');
+      $(this).find('.badge').toggleClass('active');
+      $(this).siblings().toggleClass('in');
+    });
+    $(document).on('click', '.sub-category', function () {
+      module.settings.data.category_id = parseInt($(this).attr('category_id'));
+      $('.sub-category').removeClass('active');
+      $(this).toggleClass('active');
+      module.filterProducts();
+    });
+  };
+
+  module.loadBrands = function () {
+    return $.ajax({
+      url: module.settings.api.brand,
+      type: 'GET',
+      dataType: 'json',
+      success: function (res) {
+        if (res.code == 200) {
+          module.renderBrand(res.data.brands);
+        }
+      },
+    });
+  };
+
+  module.renderBrand = function (data) {
+    var template = _.template(module.settings.templates.brand.html());
+    module.settings.elements.brand.html(template({ options: data }));
+    $(document).on('click', '.brand-heading', function () {
+      module.settings.data.brand_id = parseInt($(this).attr('brand_id'));
+      $('.brand__item').removeClass('active');
+      $('.pull-right').removeClass('active');
+      $(this).find('.brand__item').toggleClass('active');
+      $(this).find('.pull-right').toggleClass('active');
+      module.filterProducts();
+    });
+  };
+
   module.handleSearch = function () {
-    $("body").on("keypress", ".input_search", (e) => {
+    $('body').on('keypress', '.input_search', (e) => {
       if (e.keyCode == 13) {
         const keyword = $(e.target).val();
         var data = { keyword: keyword };
         $.ajax({
           url: module.settings.api.search,
-          type: "POST",
+          type: 'POST',
           data: data,
-          dataType: "json",
+          dataType: 'json',
           success: function (res) {
             if (res.code === 200) {
               loadPage({ time: 200 });
-              $(".features_items").replaceWith(res.html);
-              $(".btn-load_more").remove();
-              $("html, body").animate(
+              $('.features_items').replaceWith(res.html);
+              $('.btn-load_more').remove();
+              $('html, body').animate(
                 {
-                  scrollTop: $(".features_items").offset().top,
+                  scrollTop: $('.features_items').offset().top,
                 },
                 1000
               );
@@ -45,30 +117,30 @@ function CHome(options) {
   };
 
   module.loadMoreProducts = function () {
-    $(".btn-load_more").on("click", function () {
-      const current_page = _.isEmpty(localStorage.getItem("current_page"))
+    $('.btn-load_more').on('click', function () {
+      const current_page = _.isEmpty(localStorage.getItem('current_page'))
         ? 1
-        : localStorage.getItem("current_page");
+        : localStorage.getItem('current_page');
       var data = { page: current_page, per_page: module.settings.per_page };
       $.ajax({
         url: module.settings.api.load_more,
-        type: "POST",
+        type: 'POST',
         data: data,
-        dataType: "json",
+        dataType: 'json',
         success: function (res) {
           if (res.status == 200) {
-            if (res.page != "error_page") {
-              $(".features_items").append(res.html);
+            if (res.page != 'error_page') {
+              $('.features_items').append(res.html);
               const next_page = parseInt(current_page) + 1;
-              localStorage.setItem("current_page", next_page);
+              localStorage.setItem('current_page', next_page);
 
-              if (res.page == "last_page") {
-                $(".load_more").hide();
+              if (res.page == 'last_page') {
+                $('.load_more').hide();
               } else {
-                $(".load_more").show();
+                $('.load_more').show();
               }
-            } else if (res.page == "error_page") {
-              $.notify("cc");
+            } else if (res.page == 'error_page') {
+              $.notify('cc');
             }
             loadPage({ time: 200 });
           }
@@ -77,68 +149,47 @@ function CHome(options) {
     });
   };
 
-  module.loadProductsByCategory = function () {
-    $(".category").on("click", ({ target }) => {
-      const category_id = $(target).attr("id").split("_")[1];
-      const data = { category_id: category_id };
-      const category = $(target);
-      $.ajax({
-        url: module.settings.api.filter_products,
-        type: "POST",
-        data: data,
-        dataType: "json",
-        success: function (res) {
-          if (res.status == 200) {
-            $(".category").removeClass("active");
-            category.addClass("active");
+  module.loadDefaultProducts = function() {
+    return $.ajax({
+      url: module.settings.api.load_default_products,
+      type: 'GET',
+      dataType: 'json',
+      success: function (res) {
+        if (res.code == 200) {
+          module.renderProducts(res.data);
+        }
+      },
+    });
+  }
 
-            $(".features_items").replaceWith(res.html);
-            $(".btn-load_more").remove();
-          } else {
-            console.log(res);
-          }
-        },
-      });
+  module.filterProducts = function () {
+    const data = {
+      category_id: module.settings.data.category_id,
+      brand_id: module.settings.data.brand_id,
+    };
+    return $.ajax({
+      url: module.settings.api.filter_products,
+      type: 'POST',
+      data: data,
+      dataType: 'json',
+      success: function (res) {
+        if (res.code == 200) {
+          module.renderProducts(res.data);
+        } else {
+          module.settings.elements.product.replaceWith(`<h4 class='error_message'>${res.message}</h4>`);
+        }
+      },
     });
   };
 
-  module.handleCategory = () => {
-    const panel = $(".panel.panel-default").find(".category.active");
-    if (panel) {
-      panel.closest(".panel-collapse").addClass("in");
-    }
-  };
-
-  module.loadProductsByBrand = function () {
-    $(".brand__item").on("click", ({ target }) => {
-      const brand = $(target);
-      const category_id = null;
-      if (!$(".category.active").length === 0) {
-        category_id = $(".category.active")[0].id.split("_")[1];
-      }
-      const brand_id = $(target).attr("id").split("_")[1];
-      const data = { category_id: category_id, brand_id: brand_id };
-      $.ajax({
-        url: module.settings.api.filter_products,
-        type: "POST",
-        data: data,
-        dataType: "json",
-        success: function (res) {
-          if (res.status == 200) {
-            $(".brand__item").removeClass("active");
-            brand.addClass("active");
-
-            $(".features_items").replaceWith(res.html);
-            $(".btn-load_more").remove();
-          }
-        },
-      });
-    });
+  module.renderProducts = function (data) {
+    var template = _.template(module.settings.templates.list_products.html());
+    module.settings.elements.product.html(template({ option: data }));
   };
 
   module.handleKeyPress = function () {
-    $(window).on("load", function () {
-      const itemsStorage = ["current_page"];
+    $(window).on('load', function () {
+      const itemsStorage = ['current_page'];
       _.map(itemsStorage, function (el) {
         localStorage.removeItem(el);
       });
@@ -146,13 +197,12 @@ function CHome(options) {
   };
 
   module.init = function () {
+    module.loadCategories();
+    module.loadBrands();
+    module.loadDefaultProducts();
     module.handleSearch();
     module.loadMoreProducts();
-    module.loadProductsByCategory();
-    module.loadProductsByBrand();
 
-    module.handleCategory();
-    module.handleCategory();
     module.handleKeyPress();
   };
 }

@@ -1,0 +1,9 @@
+form#form_comment
+  .mb-3
+    .comment_body
+      textarea.in-comment#comment pr_id="#{@product.id}" placeholder='Write a comment...'
+      .upload_file
+        label for='rv_image'
+          = image_tag  'home/upload.png'
+        input#rv_image type='file' accept='image/*' multiple='true'
+    input#btn_send_comment type='button' value='Submit'

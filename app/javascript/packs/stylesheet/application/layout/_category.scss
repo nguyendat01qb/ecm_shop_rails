@@ -281,6 +281,7 @@
       margin: 0 0 30px;
       padding: 0;
       width: 100%;
+      cursor: pointer;
     }
 
     ul li a {
@@ -318,4 +319,18 @@
       padding: 4px 10px;
     }
   }
+}
+
+.sub-category {
+  cursor: pointer;
+
+  &:hover {
+    color: #fe980f !important;
+  }
+}
+
+.error_message {
+  display: flex;
+  justify-content: center;
+  color: red;
 }

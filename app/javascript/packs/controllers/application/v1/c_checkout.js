@@ -1,24 +1,24 @@
-import "../../lib/notify";
+import '../../lib/notify';
 
 function CCheckout(options) {
   var module = this;
   var defaults = {
     api: {
-      getOrder: "/v1/customer/checkouts/get_order",
-      voucher: "/v1/customer/checkouts/voucher",
-      address: "/v1/customer/checkouts/address",
+      getOrder: '/v1/customer/checkouts/get_order',
+      voucher: '/v1/customer/checkouts/voucher',
+      address: '/v1/customer/checkouts/address',
     },
     templates: {
-      address_default: $("#address_default_template"),
-      list_addresses: $("#addresses_template"),
-      list_order: $("#list_order_template"),
-      list_order_checkout: $("#list_order_checkout_template"),
+      address_default: $('#address_default_template'),
+      list_addresses: $('#addresses_template'),
+      list_order: $('#list_order_template'),
+      list_order_checkout: $('#list_order_checkout_template'),
     },
     elements: {
-      address_default: $(".address_content"),
-      list_addresses: $(".list-address_content"),
-      list_order: $(".list_order"),
-      list_order_checkout: $(".list_order_checkout"),
+      address_default: $('.address_content'),
+      list_addresses: $('.list-address_content'),
+      list_order: $('.list_order'),
+      list_order_checkout: $('.list_order_checkout'),
     },
   };
 
@@ -27,8 +27,8 @@ function CCheckout(options) {
   module.getOrder = function () {
     return $.ajax({
       url: module.settings.api.getOrder,
-      type: "GET",
-      dataType: "json",
+      type: 'GET',
+      dataType: 'json',
       success: function (res) {
         if (res.code === 200) {
           var data = res.data;
@@ -50,7 +50,7 @@ function CCheckout(options) {
 
   module.renderAddressDefault = function (addressDefault) {
     if (_.isEmpty(addressDefault)) {
-      $(".address_content-name").replaceWith(
+      $('.address_content-name').replaceWith(
         "<div class='address_content-name' style='display:block;'><p>Please choose an address</p></div>"
       );
     } else {
@@ -92,18 +92,18 @@ function CCheckout(options) {
   };
 
   module.checkVoucherCode = function () {
-    $(document).on("input", ".apply_voucher", function () {
-      if ($(this).val() != "") {
-        $(".btn-apply_voucher").addClass("btn-apply");
+    $(document).on('input', '.apply_voucher', function () {
+      if ($(this).val() != '') {
+        $('.btn-apply_voucher').addClass('btn-apply');
       } else {
-        $(".btn-apply_voucher").removeClass("btn-apply");
+        $('.btn-apply_voucher').removeClass('btn-apply');
       }
     });
   };
 
   module.handleApplyVoucher = function () {
-    $(document).on("click", ".btn-apply", function () {
-      var voucher_code = $("input[name=apply_voucher]").val();
+    $(document).on('click', '.btn-apply', function () {
+      var voucher_code = $('input[name=apply_voucher]').val();
       if (voucher_code.length > 0) {
         module.loadVoucherByAjax({ voucher_code: voucher_code });
       }
@@ -111,9 +111,9 @@ function CCheckout(options) {
   };
 
   module.handleSubmitVoucher = function () {
-    $(document).on("keypress", ".apply_voucher", function (e) {
+    $(document).on('keypress', '.apply_voucher', function (e) {
       var keycode = e.keyCode ? e.keyCode : e.which;
-      if (keycode == "13") {
+      if (keycode == '13') {
         var voucher_code = $(this).val();
         if (voucher_code.length > 0) {
           module.loadVoucherByAjax({ voucher_code: voucher_code });
@@ -125,11 +125,11 @@ function CCheckout(options) {
   module.loadVoucherByAjax = function (data) {
     return $.ajax({
       url: module.settings.api.voucher,
-      type: "POST",
+      type: 'POST',
       data: data,
-      dataType: "json",
+      dataType: 'json',
       success: function (res) {
-        $("input[name=apply_voucher]").val("");
+        $('input[name=apply_voucher]').val('');
         if (res.code === 200) {
           var data = res.data;
           data.voucher_id = res.data.voucher.id;
@@ -145,26 +145,26 @@ function CCheckout(options) {
   };
 
   module.changeAddress = function () {
-    $(document).on("click", "#btn-confirm_address", function () {
-      var address_id = $("input[name=address]").filter(":checked").val();
+    $(document).on('click', '#btn-confirm_address', function () {
+      var address_id = $('input[name=address]').filter(':checked').val();
       var data = { id: address_id };
       return $.ajax({
         url: module.settings.api.address,
-        type: "POST",
+        type: 'POST',
         data: data,
-        dataType: "json",
+        dataType: 'json',
         success: function (res) {
           if (res.code === 200) {
             var data = res.data;
             var addressDefault = data.address_default;
             var addresses = data.addresses;
-            $(".address_content").toggle();
-            $(".list-address_content").toggle();
+            $('.address_content').toggle();
+            $('.list-address_content').toggle();
             module.renderAddressDefault(addressDefault);
             module.renderAddresses(addresses);
             Swal.fire({
-              position: "center",
-              icon: "success",
+              position: 'center',
+              icon: 'success',
               title: res.message,
               showConfirmButton: false,
               timer: 1000,
@@ -178,9 +178,9 @@ function CCheckout(options) {
   };
 
   module.handleInputAddress = function () {
-    $(document).on("click", "#back_address, #change_address", function () {
-      $(".address_content").toggle();
-      $(".list-address_content").toggle();
+    $(document).on('click', '#back_address, #change_address', function () {
+      $('.address_content').toggle();
+      $('.list-address_content').toggle();
     });
   };
 

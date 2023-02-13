@@ -1,27 +1,31 @@
 h2.title_sidebar Category
-.panel-group.category-products
-  - @categories.each do |category|
-    .panel.panel-default
-      - child_category = category.childs
-      - if child_category.nil?
-        .panel-heading
-          h4.panel-title
-            a href="#"
-              = category.title
-      - else
-        .panel-heading
-          h4.panel-title
-            a[data-toggle="collapse" data-parent="#accordian" href="##{category.id}"
-            aria-expanded="#{params[:category] != category.slug ? "false" : "true"}"]
-              span.badge.pull-right
-                i.fa.fa-plus
-                a[class="category #{params[:category] == category.slug ? "active" : nil}"
-                  id="#{category.slug}_#{category.id}"]
-                  = category.title
-        .panel-collapse[class="collapse" id="#{category.id}"]
-          .panel-body
-            ul
-              - category.childs.each do |child_category|
-                li: a[class="category #{params[:category] == child_category.slug ? "active" : nil}"
-                      id="#{child_category.slug}_#{child_category.id}"]
-                  = child_category.title
+.panel-group.category-products#list_categories
+
+script#list_categories_template[type='text/template']
+  | <% _.each(options.categories, function(option) { %>
+  |   <div class='panel panel-default'>
+  |     <div class='panel-heading category-heading'>
+  |       <h4 class='panel-title'>
+  |         <% if (_.isEmpty(options.childs[option.id])) { %>
+  |           <a class='category' category_id='<%- option.id %>'><%- option.title %></a>
+  |         <% } else { %>
+  |           <a>
+  |             <span class='badge pull-right'>
+  |              <i class='fa fa-plus'></i>
+  |              <a class='category' data-toggle='collapse' category_id='<%- option.id %>' aria-expanded='true'><%- option.title %></a>
+  |             </span>
+  |           </a>
+  |         <% } %>
+  |       </h4>
+  |     </div>
+  |     <div class='collapse panel-collapse' category_id='<%- option.id %>'>
+  |       <div class='panel-body'>
+  |         <ul>
+  |           <% _.each(options.childs[option.id], function(suboption) { %>
+  |             <li class='sub-category' category_id='<%- suboption.id %>'><%- suboption.title %></li>
+  |           <% }); %>
+  |         </ul
+  |       </div>
+  |     </div>
+  |   </div>
+  | <% }) %>

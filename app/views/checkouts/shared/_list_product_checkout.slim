@@ -8,7 +8,9 @@ script#list_order_template[type='text/template']
   | <%_.each(options, function(option) { %>
   |   <div class='item_order'>
   |     <div class='thumb_order'>
-  |       <img src="<%- option.pro_images[0] %>"/>
+  |       <a href='/product_detail/<%- option.product.id %>.<%- option.product.slug %>'>
+  |         <img src='<%- option.pro_images[0] %>'/>
+  |       </a>
   |     </div>
   |     <div class='info_order'>
   |       <div class='title_product_order'>

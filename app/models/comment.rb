@@ -5,4 +5,6 @@ class Comment < ApplicationRecord
   belongs_to :user
 
   validates :content, presence: true, length: { minimum: 6, maximum: 500 }
+
+  has_many_attached :images
 end

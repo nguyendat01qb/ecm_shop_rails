@@ -50,18 +50,18 @@ script#admin_user_template[type='text/template']
   |   <tr>
   |     <td><%- option.idx %></td>
   |     <td><%- option.user.id %></td>
-  |       <td><img src="<%- option.avatar_url %>"/></td>
+  |       <td><img src='<%- option.avatar_url %>'/></td>
   |     <td><%- option.user.name %></td>
   |     <td><%- option.user.phone %></td>
   |     <td><%- option.user.email %></td>
   |     <td>
   |       <% is_admin = option.user.is_admin %>
   |         <% if (is_admin) { %>
-  |           <label class="badge badge-info">
+  |           <label class='badge badge-info'>
   |             Admin
   |           </label>
   |         <% } else { %>
-  |           <label class="badge badge-success">
+  |           <label class='badge badge-success'>
   |             Customer
   |           </label>
   |         <% } %>

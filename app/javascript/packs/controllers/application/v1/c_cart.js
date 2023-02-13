@@ -1,42 +1,42 @@
-import "../../lib/notify";
+import '../../lib/notify';
 
 function CCart(options) {
   var module = this;
   var defaults = {
     api: {
-      default: "/v1/customer/carts/get_all",
-      update: "/v1/customer/carts",
-      delete: "/v1/customer/carts/delete",
+      default: '/v1/customer/carts/get_all',
+      update: '/v1/customer/carts',
+      delete: '/v1/customer/carts/delete',
     },
     templates: {
-      cart: $("#template-cart"),
+      cart: $('#template-cart'),
     },
     elements: {
-      cart: $("#a_list_cart_items"),
+      cart: $('#a_list_cart_items'),
     },
   };
 
   module.settings = $.extend({}, defaults, options);
 
   module.loadDefaultData = function () {
-    const data = { cart: JSON.parse(localStorage.getItem("carts")) };
+    const data = { cart: JSON.parse(localStorage.getItem('carts')) };
     return $.ajax({
       url: module.settings.api.default,
-      type: "POST",
+      type: 'POST',
       data: data,
-      dataType: "json",
+      dataType: 'json',
       success: function (res) {
         if (res.code === 200) {
           module.renderCart(res.data);
           if (res.data.is_current === true) {
-            localStorage.removeItem("carts");
+            localStorage.removeItem('carts');
           }
         } else {
-          $(".list-cart").hide();
-          $(".sum_total").hide();
-          $(".cart_menu").hide();
-          $(".cart_info").append(
-            "<h2 class='cart_empty'>" + res.message + "</h2>"
+          $('.list-cart').hide();
+          $('.sum_total').hide();
+          $('.cart_menu').hide();
+          $('.cart_info').append(
+            `<h2 class='cart_empty'>${res.message}</h2>`
           );
         }
       },
@@ -48,28 +48,28 @@ function CCart(options) {
     $(module.settings.elements.cart).html(
       template({ options: res.products_cart })
     );
-    $("#total_amount").replaceWith(
-      "<div id='total_amount'><sup>$</sup>" + res.total_amount + "</div>"
+    $('#total_amount').replaceWith(
+      `<div id='total_amount'><sup>$</sup>${res.total_amount}</div>`
     );
   };
 
   module.handleIncrement = function () {
-    $(document).on("click", "#cart_quantity_up", function () {
-      var input = $(this).siblings("#cart_quantity_input");
-      var stock = parseInt(input.attr("max"));
-      var quantity = parseInt(input.attr("value"));
-      var cart_item_id = parseInt(input.attr("cart_id"));
-      var product_id = parseInt(input.attr("product_id"));
-      var attr_id = parseInt(input.attr("attr_id"));
-      var price = parseFloat($(".cart_price").attr("price"));
-      var discount = parseInt($(".cart_discount").attr("discount"));
+    $(document).on('click', '#cart_quantity_up', function () {
+      var input = $(this).siblings('#cart_quantity_input');
+      var stock = parseInt(input.attr('max'));
+      var quantity = parseInt(input.attr('value'));
+      var cart_item_id = parseInt(input.attr('cart_id'));
+      var product_id = parseInt(input.attr('product_id'));
+      var attr_id = parseInt(input.attr('attr_id'));
+      var price = parseFloat($('.cart_price').attr('price'));
+      var discount = parseInt($('.cart_discount').attr('discount'));
       if (quantity < stock) {
         quantity = quantity + 1;
-        input.attr("value", quantity);
+        input.attr('value', quantity);
         if (cart_item_id >= 0) {
           module.handleUpdate(cart_item_id, quantity);
         } else {
-          let carts = JSON.parse(localStorage.getItem("carts"));
+          let carts = JSON.parse(localStorage.getItem('carts'));
           var cart_present = false;
           if (_.isEmpty(carts)) {
             carts = [
@@ -98,41 +98,37 @@ function CCart(options) {
               });
             }
           }
-          localStorage.setItem("carts", JSON.stringify(carts));
+          localStorage.setItem('carts', JSON.stringify(carts));
         }
         var totalAmount = parseFloat((price * discount * quantity) / 100);
-        $(".cart_total_price_" + attr_id).replaceWith(
-          "<p class='cart_total_price cart_total_price_" +
-            attr_id +
-            "'><sup>$</sup>" +
-            totalAmount +
-            "</p>"
+        $('.cart_total_price_' + attr_id).replaceWith(
+          `<p class='cart_total_price cart_total_price_${attr_id}'><sup>$</sup>${totalAmount}</p>`
         );
-        $("#total_amount").replaceWith(
-          "<div id='total_amount'><sup>$</sup>" + totalAmount + "</div>"
+        $('#total_amount').replaceWith(
+          `<div id='total_amount'><sup>$</sup>${totalAmount}</div>`
         );
       } else {
-        $.notify("Out of stock quantity");
+        $.notify('Out of stock quantity');
       }
     });
   };
 
   module.handleDecrement = function () {
-    $(document).on("click", "#cart_quantity_down", function () {
-      var input = $(this).siblings("#cart_quantity_input");
-      var quantity = parseInt(input.attr("value"));
-      var cart_item_id = parseInt(input.attr("cart_id"));
-      var product_id = parseInt(input.attr("product_id"));
-      var attr_id = parseInt(input.attr("attr_id"));
-      var price = parseFloat($(".cart_price").attr("price"));
-      var discount = parseInt($(".cart_discount").attr("discount"));
+    $(document).on('click', '#cart_quantity_down', function () {
+      var input = $(this).siblings('#cart_quantity_input');
+      var quantity = parseInt(input.attr('value'));
+      var cart_item_id = parseInt(input.attr('cart_id'));
+      var product_id = parseInt(input.attr('product_id'));
+      var attr_id = parseInt(input.attr('attr_id'));
+      var price = parseFloat($('.cart_price').attr('price'));
+      var discount = parseInt($('.cart_discount').attr('discount'));
       if (quantity > 1) {
         quantity = quantity - 1;
-        input.attr("value", quantity);
+        input.attr('value', quantity);
         if (cart_item_id >= 0) {
           module.handleUpdate(cart_item_id, quantity);
         } else {
-          let carts = JSON.parse(localStorage.getItem("carts"));
+          let carts = JSON.parse(localStorage.getItem('carts'));
           var cart_present = false;
           if (_.isEmpty(carts)) {
             carts = [
@@ -161,21 +157,17 @@ function CCart(options) {
               });
             }
           }
-          localStorage.setItem("carts", JSON.stringify(carts));
+          localStorage.setItem('carts', JSON.stringify(carts));
         }
         var totalAmount = parseFloat((price * discount * quantity) / 100);
-        $(".cart_total_price_" + attr_id).replaceWith(
-          "<p class='cart_total_price cart_total_price_" +
-            attr_id +
-            "'><sup>$</sup>" +
-            totalAmount +
-            "</p>"
+        $('.cart_total_price_' + attr_id).replaceWith(
+          `<p class='cart_total_price cart_total_price_${attr_id}><sup>$</sup>${totalAmount}</p>`
         );
-        $("#total_amount").replaceWith(
-          "<div id='total_amount'><sup>$</sup>" + totalAmount + "</div>"
+        $('#total_amount').replaceWith(
+          `<div id='total_amount'><sup>$</sup>${totalAmount}</div>`
         );
       } else {
-        $.notify("Quantity cannot be continue down");
+        $.notify('Quantity cannot be continue down');
       }
     });
   };
@@ -184,21 +176,21 @@ function CCart(options) {
     var data = { cart_item_id: cart_item_id, quantity: quantity };
     return $.ajax({
       url: module.settings.api.update,
-      type: "PUT",
+      type: 'PUT',
       data: data,
-      dataType: "json",
+      dataType: 'json',
       success: function (res) {},
     });
   };
 
   module.handleDelete = function () {
-    $(document).on("click", "#cart_quantity_delete", function () {
-      var cart_item_id = $(this).attr("cart_id");
-      var product_id = parseInt($(this).attr("product_id"));
-      var attr_id = parseInt($(this).attr("attr_id"));
+    $(document).on('click', '#cart_quantity_delete', function () {
+      var cart_item_id = $(this).attr('cart_id');
+      var product_id = parseInt($(this).attr('product_id'));
+      var attr_id = parseInt($(this).attr('attr_id'));
       if (_.isEmpty(cart_item_id)) {
         var results = [];
-        var cart_items = JSON.parse(localStorage.getItem("carts"));
+        var cart_items = JSON.parse(localStorage.getItem('carts'));
         $.map(cart_items, function (cart_item) {
           if (
             parseInt(cart_item.product_id) !== product_id ||
@@ -207,9 +199,9 @@ function CCart(options) {
             results.push(cart_item);
           }
         });
-        localStorage.setItem("carts", JSON.stringify(results));
+        localStorage.setItem('carts', JSON.stringify(results));
         module.loadDefaultData();
-        $.notify("Cart item deleted successfully", "success");
+        $.notify('Cart item deleted successfully', 'success');
       } else {
         module.deleteCartItem(cart_item_id);
       }
@@ -220,13 +212,13 @@ function CCart(options) {
     var data = { cart_item_id: cart_item_id };
     return $.ajax({
       url: module.settings.api.delete,
-      type: "POST",
+      type: 'POST',
       data: data,
-      dataType: "json",
+      dataType: 'json',
       success: function (res) {
         if (res.code === 200) {
           module.loadDefaultData();
-          $.notify(res.message, "success");
+          $.notify(res.message, 'success');
         } else {
           $.notify(res.message);
         }

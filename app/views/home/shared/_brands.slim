@@ -1,12 +1,14 @@
 h2.title_sidebar Brands
-.panel-group.brands_products
-  - @brands.each do |brand|
-    .panel.panel-default
-      .panel-heading
-        h4.panel-title
-          span.pull-right
-            | (
-            = brand.products.size
-            | )
-          a[class="brand__item #{params[:brand] == brand.slug ? "active" : nil}" id="#{brand.slug}_#{brand.id}"]
-            = brand.title
+.panel-group.brands_products#list_brands
+
+script#list_brands_template[type='text/template']
+  | <% _.each(options, function(option) { %>
+  |   <div class='panel panel-default'>
+  |     <div class='panel-heading brand-heading' brand_id='<%- option.id %>'>
+  |       <h4 class='panel-title'>
+  |         <span class='pull-right'><%- option.product_quantity %></span>
+  |         <a class='brand__item'><%- option.title %></a>
+  |       </h4>
+  |     </div>
+  |   </div>
+  | <% }) %>

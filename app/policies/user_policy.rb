@@ -58,4 +58,20 @@ class UserPolicy < BasePolicy
 	def get_product_cart?
 		authenticate_customer
 	end
+
+	def get_order?
+		authenticate_customer
+	end
+
+	def voucher?
+		authenticate_customer
+	end
+
+	def check_cart?
+		authenticate_customer
+	end
+
+	def address?
+		authenticate_customer
+	end
 end
