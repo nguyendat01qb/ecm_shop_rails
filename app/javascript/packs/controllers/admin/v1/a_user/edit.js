@@ -14,17 +14,17 @@ function AUserEdit() {
   // };
 
   module.handleImageInput = function () {
-    $("#user_avatar").on("change", () => {
-      const preview = $(".preview");
-      const file = $("#user_avatar")[0].files[0];
+    $('#user_avatar').on('change', () => {
+      const preview = $('.preview');
+      const file = $('#user_avatar')[0].files[0];
       const reader = new FileReader();
 
-      $(reader).on("load", ({ target }) => {
+      $(reader).on('load', ({ target }) => {
         preview.empty();
         preview.append(
-          $("<img/>", {
+          $('<img/>', {
             src: target.result,
-            class: "preview img-thumbnail",
+            class: 'preview img-thumbnail',
           })
         );
       });

@@ -1,4 +1,6 @@
 class V1::Customer::CheckoutsController < V1::BaseController
+  before_action :authenticate_user!
+
   def get_order
     return unless current_user
 

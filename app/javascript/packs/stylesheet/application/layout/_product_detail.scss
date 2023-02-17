@@ -555,3 +555,25 @@
     }
   }
 }
+
+.comment_body{
+  display: flex;
+  margin: auto;
+}
+
+.upload_file {
+  width: 70px;
+  height: 60px;
+  position: relative;
+  overflow: hidden;
+  margin-left: 20px;
+
+  label img {
+    width: 60px;
+    height: 60px;
+  }
+
+  input {
+    display: none;
+  }
+}

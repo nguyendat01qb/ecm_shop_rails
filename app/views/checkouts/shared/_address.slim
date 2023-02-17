@@ -23,9 +23,9 @@ script#addresses_template[type='text/template']
   | <%_.each(options, function(option) { %>
   |   <div class='item'>
   |     <% if(option.status == true) {%>
-  |       <input type='radio' name='address' value="<%- option.id %>" checked>
+  |       <input type='radio' name='address' value='<%- option.id %>' checked>
   |     <% } else { %>
-  |       <input type='radio' name='address' value="<%- option.id %>">
+  |       <input type='radio' name='address' value='<%- option.id %>'>
   |     <% } %>
   |     <div class='show-address'>
   |       <div class='address_content-name' style='display: block'>
@@ -37,7 +37,7 @@ script#addresses_template[type='text/template']
   |       </div>
   |     </div>
   |     <div class='edit-address'>
-  |       <a href="http://localhost:3000/user/addresses/<%- option.id %>/edit">
+  |       <a href='http://localhost:3000/user/addresses/<%- option.id %>/edit'>
   |         <i class='fa-regular fa-pen-to-square'></i>
   |       </a>
   |       <a class='destroy_address'><i class='fa-solid fa-trash'></i></a>

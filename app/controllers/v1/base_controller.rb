@@ -41,7 +41,7 @@ class V1::BaseController < ApplicationController
     if api_token?
       @current_user = current_user ? current_user : User.find_by(api_token_digest: session_api_token)
     else
-      nil
+      @current_user = nil
     end
   end
 

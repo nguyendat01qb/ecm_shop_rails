@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   root to: 'home#index'
-  resources :product_detail, only: [ :show ] do
-    get '/:slug', to: 'product_detail#show'
-  end
+  resources :products, only: [ :show ]
 
   resources :comments do
     post 'reply_comment', to: 'comments#reply_comment'

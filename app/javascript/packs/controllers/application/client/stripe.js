@@ -1,18 +1,18 @@
-import Turbolinks from "turbolinks";
-import "../../lib/jquery.cookie";
-import { Ajax, redirect } from "../../lib/application";
+import Turbolinks from 'turbolinks';
+import '../../lib/jquery.cookie';
+import { Ajax, redirect } from '../../lib/application';
 
 export default class StripeController {
   publicKey =
-    "pk_test_51MQQDqAfM8SM9VlxjUWgvgCSUpGM0IGWbzdDQcj3cPae4OdH2WyK8jG3OXAqRGBs6TYAynE44wE8RMeQvvnk09RW00eayTBSlh";
+    'pk_test_51MQQDqAfM8SM9VlxjUWgvgCSUpGM0IGWbzdDQcj3cPae4OdH2WyK8jG3OXAqRGBs6TYAynE44wE8RMeQvvnk09RW00eayTBSlh';
 
   stripe = Stripe(this.publicKey, {
-    apiVersion: "2022-08-01",
+    apiVersion: '2022-08-01',
   });
 
   api = {
-    paymentWithStripe: "/checkout/payment_with_stripe",
-    checkOrderStripe: "/checkout/check_order_stripe",
+    paymentWithStripe: '/checkout/payment_with_stripe',
+    checkOrderStripe: '/checkout/check_order_stripe',
   };
 
   setInterval = null;
@@ -22,53 +22,53 @@ export default class StripeController {
   }
 
   styleStripe = (shipping, voucher) => {
-    $("#btn_payment").prop("disabled", true);
+    $('#btn_payment').prop('disabled', true);
 
     const elements = this.stripe.elements();
 
     const style = {
       base: {
-        color: "#32325d",
-        fontFamily: "Arial, sans-serif",
-        fontSmoothing: "antialiased",
-        fontSize: "16px",
-        "::placeholder": {
-          color: "#888",
+        color: '#32325d',
+        fontFamily: 'Arial, sans-serif',
+        fontSmoothing: 'antialiased',
+        fontSize: '16px',
+        '::placeholder': {
+          color: '#888',
         },
       },
       invalid: {
-        fontFamily: "Arial, sans-serif",
-        color: "#fa755a",
-        iconColor: "#fa755a",
+        fontFamily: 'Arial, sans-serif',
+        color: '#fa755a',
+        iconColor: '#fa755a',
       },
     };
 
-    const cardNumber = elements.create("cardNumber", {
+    const cardNumber = elements.create('cardNumber', {
       style: style,
-      placeholder: "XXXX XXXX XXXX XXXX",
+      placeholder: 'XXXX XXXX XXXX XXXX',
     });
-    const cardExpiry = elements.create("cardExpiry", {
+    const cardExpiry = elements.create('cardExpiry', {
       style: style,
-      placeholder: "MM / YY",
+      placeholder: 'MM / YY',
     });
-    const cardCvc = elements.create("cardCvc", {
+    const cardCvc = elements.create('cardCvc', {
       style: style,
-      placeholder: "CVC",
+      placeholder: 'CVC',
     });
 
-    const card_number = document.getElementById("card_number");
-    const card_day = document.getElementById("card_number");
-    const card_cvc = document.getElementById("card_number");
+    const card_number = document.getElementById('card_number');
+    const card_day = document.getElementById('card_number');
+    const card_cvc = document.getElementById('card_number');
 
     if (card_number && card_day && card_cvc) {
-      cardNumber.mount("#card_number");
-      cardExpiry.mount("#card_day");
-      cardCvc.mount("#card_cvc");
+      cardNumber.mount('#card_number');
+      cardExpiry.mount('#card_day');
+      cardCvc.mount('#card_cvc');
 
       this.paymentWithStripe(cardNumber, shipping, voucher);
 
-      this.errorInput(cardNumber, "#card_number-error");
-      this.errorInput(cardExpiry, "#card_day-error");
+      this.errorInput(cardNumber, '#card_number-error');
+      this.errorInput(cardExpiry, '#card_day-error');
     }
   };
 
@@ -77,12 +77,12 @@ export default class StripeController {
       shipping: shipping,
       voucher: voucher,
     };
-    Ajax(this.api.paymentWithStripe, "POST", data)
+    Ajax(this.api.paymentWithStripe, 'POST', data)
       .done((res) => {
         if (res.status === 200) {
-          const form = document.getElementById("payment-form");
+          const form = document.getElementById('payment-form');
 
-          form.addEventListener("submit", (e) => {
+          form.addEventListener('submit', (e) => {
             e.preventDefault();
             this.payWithCard(this.stripe, cardNumber, res.data);
           });
@@ -119,27 +119,27 @@ export default class StripeController {
   };
 
   // refund = () => {
-  //   $("body").on("click", ".btn-refund", ({ target }) => {
-  //     const code = $(target).attr("id");
+  //   $('body').on('click', '.btn-refund', ({ target }) => {
+  //     const code = $(target).attr('id');
 
   //     Swal.fire({
-  //       title: "Are you sure you want to cancel your order?",
+  //       title: 'Are you sure you want to cancel your order?',
   //       showDenyButton: true,
-  //       confirmButtonText: "ok!",
+  //       confirmButtonText: 'ok!',
   //       denyButtonText: `No`,
   //     }).then((result) => {
   //       if (result.isConfirmed) {
-  //         Ajax(this.api.refundStripe, "POST", { code: code })
+  //         Ajax(this.api.refundStripe, 'POST', { code: code })
   //           .done((res) => {
   //             if (res.status == 200) {
-  //               Swal.fire("Refund successfully!", "", "success");
+  //               Swal.fire('Refund successfully!', '', 'success');
 
   //               redirect(`/user/order/detail/${code}`, 1000);
   //             }
   //           })
   //           .fail((res) => {});
 
-  //         Swal.fire("Changes are not saved", "", "info");
+  //         Swal.fire('Changes are not saved', '', 'info');
   //       }
   //     });
   //   });
@@ -147,20 +147,20 @@ export default class StripeController {
 
   // ---------------- UI Helper -------------------
   renderSuccess = (payment_intent_id) => {
-    Ajax(this.api.checkOrderStripe, "POST", {
+    Ajax(this.api.checkOrderStripe, 'POST', {
       payment_intent_id: payment_intent_id,
     })
       .done((res) => {
         if (res.status == 200) {
           clearInterval(this.setInterval);
-          $.removeCookie("add_to_cart", { path: "/" });
-          $(".count-product").get(0).innerText = "";
+          $.removeCookie('add_to_cart', { path: '/' });
+          $('.count-product').get(0).innerText = '';
 
-          $("#loader").css("display", "flex");
+          $('#loader').css('display', 'flex');
           setTimeout(() => {
-            $("#loader").css("display", "none");
+            $('#loader').css('display', 'none');
           }, 1000);
-          $(".home-page").replaceWith(res.html);
+          $('.home-page').replaceWith(res.html);
         }
       })
       .fail((res) => {});
@@ -172,34 +172,34 @@ export default class StripeController {
 
   showError = (errorMsgText) => {
     this.loading(false);
-    const errorMsg = document.querySelector("#card-error");
+    const errorMsg = document.querySelector('#card-error');
 
     errorMsg.textContent = errorMsgText;
     setTimeout(() => {
-      errorMsg.textContent = "";
+      errorMsg.textContent = '';
     }, 10000);
   };
 
   loading = (isLoading) => {
     if (isLoading) {
-      $("#btn_payment").prop("disabled", true);
-      document.querySelector("#spinner").classList.remove("hidden");
+      $('#btn_payment').prop('disabled', true);
+      document.querySelector('#spinner').classList.remove('hidden');
     } else {
-      $("#btn_payment").prop("disabled", false);
-      document.querySelector("#spinner").classList.add("hidden");
+      $('#btn_payment').prop('disabled', false);
+      document.querySelector('#spinner').classList.add('hidden');
     }
   };
 
   errorInput = (card, element) => {
-    const btn = $("#btn_payment");
-    card.on("change", (e) => {
+    const btn = $('#btn_payment');
+    card.on('change', (e) => {
       if (e.error) {
         document.querySelector(element).textContent = e.error.message;
-        btn.prop("disabled", true);
-        btn.removeClass("apply");
+        btn.prop('disabled', true);
+        btn.removeClass('apply');
       } else {
-        btn.prop("disabled", false);
-        btn.addClass("apply");
+        btn.prop('disabled', false);
+        btn.addClass('apply');
       }
     });
   };

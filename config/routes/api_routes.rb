@@ -15,12 +15,16 @@ Rails.application.routes.draw do
           post :load_more
           post :select_attribute
           post :add_to_cart
+          post :comments
         end
       end
       resources :home do
         collection do
+          get :categories
+          get :brands
           post :filter_products
           get :get_product_cart
+          get :load_default_products
         end
       end
       resources :carts do
@@ -36,6 +40,11 @@ Rails.application.routes.draw do
           post :check_cart
           post :voucher
           post :address
+        end
+      end
+      resources :comments do
+        collection do
+          post :create
         end
       end
     end

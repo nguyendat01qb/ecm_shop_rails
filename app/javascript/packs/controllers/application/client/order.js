@@ -1,21 +1,21 @@
-import { data } from "jquery";
-import Raicon from "raicon";
-import { Ajax, changeUrl, redirect } from "../../lib/application";
+import { data } from 'jquery';
+import Raicon from 'raicon';
+import { Ajax, changeUrl, redirect } from '../../lib/application';
 
 export default class OrderController {
   api = {
-    orderDetail: "/user/order/detail",
-    refundStripe: "/checkout/refund_stripe",
+    orderDetail: '/user/order/detail',
+    refundStripe: '/checkout/refund_stripe',
   };
 
   orderDetail = () => {
-    $("body").on("click", ".item_order-body", ({ target }) => {
-      const code = $(target).closest(".item_order-body").attr("id");
+    $('body').on('click', '.item_order-body', ({ target }) => {
+      const code = $(target).closest('.item_order-body').attr('id');
 
-      Ajax(this.api.orderDetail, "POST", { code: code })
+      Ajax(this.api.orderDetail, 'POST', { code: code })
         .done((res) => {
           if (res.status == 200) {
-            $(".user_col_right").replaceWith(res.html);
+            $('.user_col_right').replaceWith(res.html);
             changeUrl(`/user/order/detail/${code}`);
           }
         })
@@ -24,27 +24,27 @@ export default class OrderController {
   };
 
   refund = () => {
-    $("body").on("click", ".btn-refund", ({ target }) => {
-      const code = $(target).attr("id");
+    $('body').on('click', '.btn-refund', ({ target }) => {
+      const code = $(target).attr('id');
 
       Swal.fire({
-        title: "Are you sure you want to cancel your order?",
+        title: 'Are you sure you want to cancel your order?',
         showDenyButton: true,
-        confirmButtonText: "ok!",
-        denyButtonText: `No`,
+        confirmButtonText: 'ok!',
+        denyButtonText: 'No',
       }).then((result) => {
         if (result.isConfirmed) {
-          Ajax(this.api.refundStripe, "POST", { code: code })
+          Ajax(this.api.refundStripe, 'POST', { code: code })
             .done((res) => {
               if (res.status == 200) {
-                Swal.fire("Refund successfully!", "", "success");
+                Swal.fire('Refund successfully!', '', 'success');
 
                 redirect(`/user/order/detail/${code}`, 1000);
               }
             })
             .fail((res) => {});
         } else {
-          Swal.fire("Changes are not saved", "", "info");
+          Swal.fire('Changes are not saved', '', 'info');
         }
       });
     });
@@ -62,4 +62,4 @@ export default class OrderController {
   };
 }
 
-Raicon.register("orders", OrderController);
+Raicon.register('orders', OrderController);

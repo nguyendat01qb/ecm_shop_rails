@@ -9,7 +9,7 @@ class V1::Admin::BrandsController < V1::BaseAuthController
       I18n.t('messages.success.brand.list_brands'),
       brands: ActiveModelSerializers::SerializableResource.new(
         brands,
-        each_serializer: Brand::ListBrandSerializer
+        each_serializer: Brand::AdminBrandSerializer
       ),
       total_page: brands.total_pages,
       per_page: per_page,
