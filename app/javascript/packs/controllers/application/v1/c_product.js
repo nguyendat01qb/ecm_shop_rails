@@ -2,9 +2,12 @@ import '../../lib/notify';
 import '../../lib/slick';
 import '../../lib/jquery.cookie';
 import { popupFire } from '../../lib/application';
+import { flatten } from 'underscore';
 
 function CProduct(options) {
   var module = this;
+  var url = window.location.href.split('/');
+  var product_id = url[url.length - 1];
   var defaults = {
     page: 1,
     per_page: 6,
@@ -12,14 +15,68 @@ function CProduct(options) {
     api: {
       get_attributes: '/v1/customer/products/select_attribute',
       add_to_cart: '/v1/customer/products/add_to_cart',
+      images: `/v1/customer/products/${product_id}/images`,
+      detail: `/v1/customer/products/${product_id}`,
     },
+    templates: {
+      images: $('#product_images_template'),
+      detail: $('#product_detail_template')
+    },
+    elements: {
+      images: $('#product_images'),
+      detail: $('#product_detail')
+    }
   };
 
   module.settings = $.extend({}, defaults, options);
 
+  module.getImages = function () {
+    return $.ajax({
+      url: module.settings.api.images,
+      type: 'GET',
+      dataType: 'json',
+      success: function (res) {
+        module.renderImage(res.data.image_urls);
+      }
+    })
+  };
+
+  module.renderImage = function (image_urls) {
+    var template = _.template(module.settings.templates.images.html());
+    module.settings.elements.images.html(template({ image_urls: image_urls }));
+  };
+
+  module.getProductDetail = function () {
+    return $.ajax({
+      url: module.settings.api.detail,
+      type: 'GET',
+      dataType: 'json',
+      success: function (res) {
+        var data = res.data;
+        var results = []
+        _.each(data.attr_values, function (attr_value, key) {
+          var key = JSON.parse(key);
+          var obj = {};
+          obj.id = key[0];
+          obj.name = key[1];
+          obj.values = flatten(attr_value);
+          results.push(obj);
+        })
+        data.attr_values = results
+        module.renderProductDetail(data);
+      }
+    })
+  };
+
+  module.renderProductDetail = function (data) {
+    var template = _.template(module.settings.templates.detail.html());
+    module.settings.elements.detail.html(template({ option: data }));
+  };
+
   module.handleAttribute = function () {
     $(document).on('click', '.attribute_item', ({ target }) => {
       const attribute = $(target);
+      const product_id = attribute.attr('product_id');
       const attributeOld = $(target).closest('.select__items').find('.active');
       const attributeDanger = $('.attribute_error');
 
@@ -36,10 +93,10 @@ function CProduct(options) {
       if ($('.select__items').length == 2) {
         if ($('.select__items').find('.active').length == 2) {
           const data = {
-            id_attr1: $('.item1.active').data('attribute'),
-            value_attr1: $('.item1.active').html(),
-            id_attr2: $('.item2.active').data('attribute'),
-            value_attr2: $('.item2.active').html(),
+            id_attr1: $('.item_1.active').data('attribute'),
+            value_attr1: $('.item_1.active').html().trim(),
+            id_attr2: $('.item_2.active').data('attribute'),
+            value_attr2: $('.item_2.active').html().trim(),
           };
 
           $.ajax({
@@ -54,7 +111,7 @@ function CProduct(options) {
                 );
                 if (parseInt(res.data.attribute_value.quantity) > 0) {
                   $('.out-of-stock').replaceWith(`
-                    <a class='btn btn-fefault cart add-to-cart' name='add-to-cart-detail'>
+                    <a class='btn btn-fefault cart' id='add-to-cart' product_id=${product_id} name='add-to-cart-detail'>
                       <i class='fa fa-shopping-cart'></i>
                       Add to cart
                     </a>
@@ -91,44 +148,18 @@ function CProduct(options) {
             },
           });
         }
-      } else if ($('.select__items').length == 1) {
-        const data = {
-          id_attr1: $('.item1.active').data('attribute'),
-          value_attr1: $('.item1.active').html(),
-        };
-
-        $.ajax({
-          url: module.settings.api.get_attributes,
-          type: 'POST',
-          data: data,
-          dataType: 'json',
-          success: function (res) {
-            if (res.status == 200) {
-              $('.product__stock').replaceWith(`
-                <p class='product__stock'><b>Quantity in stock: </b>${res.value.stock}</p>
-              `);
-
-              $('.price_new').replaceWith(
-                `<span class='price_new'>${res.value.price_attribute_product}</span>`
-              );
-            }
-          },
-        });
       }
     });
   };
 
   module.handleAddCart = function () {
-    $(document).on('click', '.add-to-cart', ({ target }) => {
-      const product_id = $(target)
-        .closest('.add_product')
-        .attr('id')
-        .split(' ')[0];
+    $(document).on('click', '#add-to-cart', () => {
+      const p_id = $(this).data('product_id') || product_id;
       const quantity = parseInt($('#cart_quantity_input').val());
-      const id_attr1 = $('.item1.active').data('attribute');
-      const value_attr1 = $('.item1.active').html();
-      const id_attr2 = $('.item2.active').data('attribute');
-      const value_attr2 = $('.item2.active').html();
+      const id_attr1 = $('.item_1.active').data('attribute');
+      const value_attr1 = $('.item_1.active').html().trim();
+      const id_attr2 = $('.item_2.active').data('attribute');
+      const value_attr2 = $('.item_2.active').html().trim();
       var item_1_name = $('#item_1').children().attr('name');
       var item_2_name = $('#item_2').children().attr('name');
       if (!_.isEmpty(item_1_name) && _.isEmpty(value_attr1)) {
@@ -143,10 +174,11 @@ function CProduct(options) {
         id_attr2: id_attr2,
         value_attr2: value_attr2,
       };
-      module.getAttributes(data, product_id, quantity);
+      module.getAttributes(data, p_id, quantity);
       if (!_.isEmpty(module.settings.headers['Api-Token'])) {
-        data.product_id = product_id;
+        data.product_id = p_id;
         data.quantity = quantity;
+        debugger
         module.handleUpdateCart(data);
       }
     });
@@ -267,9 +299,12 @@ function CProduct(options) {
   };
 
   module.init = function () {
+    $.when(module.getImages()).done(function () {
+      module.handleSliderSlick();
+    })
+    module.getProductDetail();
     module.handleAttribute();
     module.handleAddCart();
-    module.handleSliderSlick();
 
     module.handleIncrement();
     module.handleDecrement();

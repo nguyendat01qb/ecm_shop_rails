@@ -128,3 +128,29 @@
 .-bottom-1\.5 {
   bottom: -0.375rem;
 }
+
+.dashboard {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.dashboard_title {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 10px;
+  padding: 20px;
+  position: relative;
+
+  .number {
+    position: absolute;
+    font-weight: 400;
+    font-size: 40px;
+    bottom: 20px;
+    right: 60px;
+  }
+}
+
+.linechart{
+  margin: 20px;
+}

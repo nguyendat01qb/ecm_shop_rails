@@ -73,6 +73,13 @@ class Admin::ProductsController < Admin::BaseController
     redirect_to admin_products_path
   end
 
+  def export_csv
+    csv = Admin::Products::ExportCsvService.new(Product.all, Product::CSV_ATTRIBUTES)
+    respond_to do |format|
+      format.csv { send_data csv.perform, filename: "products-#{Date.current}.csv"}
+    end
+  end
+
   private
 
   def set_product

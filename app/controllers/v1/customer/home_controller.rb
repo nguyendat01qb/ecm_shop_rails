@@ -24,40 +24,45 @@ class V1::Customer::HomeController < V1::BaseController
   end
 
   def load_default_products
-    products = Product.all.select(:id, :title, :price, :price_cents, :discount, :quantity).page(1).per(6)
+    per_page = request.params[:per_page] ? request.params[:per_page].to_i : 6
+    products = Product.all.select(:id, :title, :price, :price_cents, :discount, :quantity).page(1).per(per_page)
     images = products.each_with_object({}) do |product, result|
       result[product.id] = url_for(product.images.first)
     end
+    is_load_more = products.total_pages > 1
     render json: success_message(
       I18n.t('messages.success.product.list_products'),
       products: ActiveModelSerializers::SerializableResource.new(
         products,
         each_serializer: Product::FilterProductsSerializer
       ),
-      images: images
+      images: images,
+      is_load_more: is_load_more,
+      per_page: per_page
     )
   end
 
   def filter_products
     category_id = request.params[:category_id].to_i
     brand_id = request.params[:brand_id].to_i
-    if category_id.zero? && brand_id.zero?
-      return render json: error_message(I18n.t('messages.error.product.empty'))
-    end
+    per_page = request.params[:per_page] ? request.params[:per_page].to_i : 6
     products =
       if !brand_id.zero? && !category_id.zero?
         Kaminari.paginate_array(load_by_category(category_id).map do |product|
           product if product.brand_id == brand_id
-        end).page(1).per(6)
-      elsif brand_id.zero?
-        load_by_category(category_id)
-      elsif category_id.zero?
-        Product.where(brand_id: brand_id).select(:id, :title, :price, :price_cents, :discount, :quantity).page(1).per(6)
-      end.compact
+        end).page(1).per(per_page)
+      elsif !category_id.zero?
+        load_by_category(category_id, per_page)
+      elsif !brand_id.zero?
+        Product.where(brand_id: brand_id).select(:id, :title, :price, :price_cents, :discount, :quantity).page(1).per(per_page)
+      else
+        Product.all.select(:id, :title, :price, :price_cents, :discount, :quantity).page(1).per(per_page)
+      end
     if products.present?
       images = products.each_with_object({}) do |product, result|
         result[product.id] = url_for(product.images.first)
       end
+      is_load_more = products.total_pages > 1
 
       render json: success_message(
         I18n.t('messages.success.product.list_products'),
@@ -65,7 +70,9 @@ class V1::Customer::HomeController < V1::BaseController
           products,
           each_serializer: Product::FilterProductsSerializer
         ),
-        images: images
+        images: images,
+        is_load_more: is_load_more,
+        per_page: per_page
       )
     else
       render json: error_message(I18n.t('messages.error.product.empty'))
@@ -89,7 +96,7 @@ class V1::Customer::HomeController < V1::BaseController
 
   private
 
-  def load_by_category(category_id)
+  def load_by_category(category_id, per_page)
     category = Category.friendly.find_by(id: category_id)
     childs = category.childs
 
@@ -101,6 +108,6 @@ class V1::Customer::HomeController < V1::BaseController
     else
       products = category.products.select(:id, :title, :price, :price_cents, :discount, :quantity, :brand_id)
     end
-    products
+    Kaminari.paginate_array(products).page(1).per(per_page)
   end
 end

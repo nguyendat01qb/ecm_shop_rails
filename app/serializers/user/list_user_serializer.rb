@@ -1,5 +1,5 @@
 class User::ListUserSerializer < ActiveModel::Serializer
-  attributes :id, :avatar, :name, :phone, :email, :is_admin, :sign_in_count, :created_at
+  attributes :id, :name, :phone, :email, :is_admin, :sign_in_count, :created_at
 
   def is_admin
     object.has_role? :admin

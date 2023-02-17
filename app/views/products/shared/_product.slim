@@ -1,150 +1,111 @@
 .product-details
-  .col-sm-5
-    .view-product.pro-dec-big-img-slider
-      - @product.images.each do |img|
-        .item-img
-          = image_tag(img)
-          a href='' rel='prettyPhoto'
-            h3 ZOOM
-      - if @product_attributes.present?
-        - @product_attributes[0].images.each do |img|
-          .item-img
-            = image_tag(img)
-            a href='' rel='prettyPhoto'
-              h3 ZOOM
-
-    #similar-product
-      .product-dec-slider-small
-        - @product.images.each do |img|
-          .item.active
-            = image_tag(img)
-        - if @product_attributes.present?
-          - @product_attributes[0].images.each do |img|
-            .item.active
-              = image_tag(img)
-        a.left.item-control
-          i.fa.fa-angle-left
-        a.right.item-control
-          i.fa.fa-angle-right
-
-  .col-sm-7
-    .product-information.add_product id="#{@product.id} #{@product.slug}"
-      = image_tag('home/new.jpg', class: 'newarrival')
-      h2 = @product.title
-      .rate-star
-        i.fa.fa-star
-        i.fa.fa-star
-        i.fa.fa-star
-        i.fa.fa-star
-        i.fa.fa-star
-        | (5.0)
-      .select-other
-        span 50 Review
-        span 50 Favorite
-        span 50 Order
-      .price.display-flex
-        - if @product_attributes.present?
-          - value_min = @product_attributes[0].attribute_values.min_by(&:price_attribute_product)
-          span.price_new
-            sup $
-            = discount(value_min.price_attribute_product, @product.discount)
-          del.price_old
-            sup $
-            = value_min.price_attribute_product
-        - else
-          span.price_new
-            sup $
-            = discount(@product.price, @product.discount)
-          del.price_old
-            sup $
-            = @product.price
-      .quantity
-        label Quantity:
-        button#cart_quantity_down
-          i.fa-solid.fa-minus
-        input id='cart_quantity_input' aria-label='quantity' type='number' min='0' max="#{@product.quantity}" value="1" disabled='disabled'
-        button#cart_quantity_up
-          i.fa-solid.fa-plus
-        - if get_stock_product(@product).to_i == 0
-          a.btn.btn-danger.out-of-stock href='javascript:void(0)' Out of stock
-        - else
-          a.btn.btn-fefault.cart.add-to-cart name='add-to-cart-detail'
-            i.fa.fa-shopping-cart
-            | Add to cart
-      .attribute_product style="display:#{@product_attributes.present? ? 'block': 'none'}"
-        .item
-          - if @product_attributes[0].present?
-            .flex style='align-items: baseline;'
-              span.flex#item_1: b name="#{@product_attributes[0].name}"
-                = @product_attributes[0].name
-              .select__items
-                - @product_attributes[0].attribute_values.uniq{ |el| el[:attribute_1] }.each do |value|
-                  button.attribute_item.item1 data-attribute="#{@product_attributes[0].id}"
-                    = value.attribute_1
-
-          - if @product_attributes[1].present?
-            .flex style='align-items: baseline;'
-              span.flex#item_2: b name="#{@product_attributes[1].name}"
-                = @product_attributes[1].name
-              .select__items
-                - @product_attributes[1].attribute_values.uniq{ |el| el[:attribute_2] }.each do |value|
-                  button.attribute_item.item2 data-attribute="#{@product_attributes[1].id}"
-                    = value.attribute_2
-
-      .product__stock
-        b Quantity in stock:
-        span#stock value="#{@product.quantity}"
-          | &nbsp
-          = @product.quantity
-      p
-        b Viewes:&nbsp
-        | 40
-      p
-        b Brand:&nbsp
-        = @product.brand.title
-      p
-        b Categories:
-        ul
-          - @product.categories.each do |category|
-            li
-              = category.title
-      p
-        b Share:
-        a.share_shop
-          i.fa-brands.fa-facebook-f
+  .col-sm-5#product_images
+  .col-sm-7#product_detail
 
 script#product_images_template[type='text/template']
-  | <div class='col-sm-5'>
-  |   <div class='view-product pro-dec-big-img-slider'>
-  |     <%_.each(options, function(option) { %>
-  |       <div class='item-img'>
-  |         <img src='<%- option %>'>
+  | <div class='view-product pro-dec-big-img-slider'>
+  |   <% _.each(image_urls, function(image_url) { %>
+  |     <div class='item-img'>
+  |       <img src='<%- image_url %>' />
+  |       <a href='' rel='prettyPhoto'>
+  |         <h3>ZOOM</h3>
+  |       </a>
+  |     </div>
+  |   <% }) %>
+  | </div>
+  | <div id='similar-product'>
+  |   <div class='product-dec-slider-small'>
+  |     <% _.each(image_urls, function(image_url) { %>
+  |       <div class='item active'>
+  |         <img src='<%- image_url %>' />
   |       </div>
   |     <% }) %>
-  |   </div>
   | </div>
-  / | <%_.each(options, function(option) { %>
-  / |   <div class='item_order'>
-  / |     <div class='thumb_order'>
-  / |       <a href='/product_detail/<%- option.product.id %>.<%- option.product.slug %>'>
-  / |         <img src='<%- option.pro_images[0] %>'/>
-  / |       </a>
-  / |     </div>
-  / |     <div class='info_order'>
-  / |       <div class='title_product_order'>
-  / |         <div class='pull-left'>
-  / |           Amount:&nbsp&nbsp
-  / |           <strong><%- option.amount %></strong>
-  / |           <br/>
-  / |           Attribute:&nbsp&nbsp
-  / |           <strong><%- option.name[0] %> : <%- option.attribute_value[0] %></strong>
-  / |           <br/>
-  / |           <strong style='margin-left:67px'><%- option.name[1] %> : <%- option.attribute_value[1] %></strong>
-  / |         </div>
-  / |         <div class='pull-right'>
-  / |           <span><sup>$</sup><%- option.price %> x <%- option.quantity %> x <%- option.discount %>%</span>
-  / |         </div>
-  / |       </div>
-  / |     </div>
-  / |   </div>
-  / | <% }) %>
+
+script#product_detail_template[type='text/template']
+  | <div class='product-information add_product' product_id='<%- option.product.id %>'>
+  |   <img src='/assets/home/new.jpg' class='newarrival' />
+  |   <h2><%- option.product.title %></h2>
+  |   <div class='rate-star'>
+  |     <i class='fa fa-star'></i>
+  |     <i class='fa fa-star'></i>
+  |     <i class='fa fa-star'></i>
+  |     <i class='fa fa-star'></i>
+  |     <i class='fa fa-star'></i>
+  |     &nbsp (5.0)
+  |   </div>
+  |   <div class='select-other'>
+  |     <span>50 Review</span>
+  |     <span>50 Favorite</span>
+  |     <span>50 Order</span>
+  |   </div>
+  |   <div class='price display-flex'>
+  |     <span class='price_new'>
+  |       <sup>$</sup><%- option.product.discount %>
+  |     </span>
+  |     <del>
+  |       <sup>$</sup><%- option.product.price %>
+  |     </del>
+  |   </div>
+  |   <div class='quantity'>
+  |     <label>Quantity: </label>
+  |     <% if (option.product.quantity > 0) { %>
+  |       <button id='cart_quantity_down'>
+  |         <i class='fa-solid fa-minus'></i>
+  |       </button>
+  |       <input id='cart_quantity_input' aria-label='quantity' type='number' min='0' max='<%- option.product.quantity %>' value='1' disabled='disabled' />
+  |       <button id='cart_quantity_up'>
+  |         <i class='fa-solid fa-plus'></i>
+  |       </button>
+  |       <a class='btn btn-fefault cart' id='add-to-cart' name='add-to-cart-detail' data-product_id='<%- option.product.id %>'>
+  |         <i class='fa fa-shopping-cart'></i>
+  |         Add to cart
+  |       </a>
+  |     <% } else { %>
+  |       <button id='cart_quantity_down' disabled='disabled'>
+  |         <i class='fa-solid fa-minus'></i>
+  |       </button>
+  |       <input id='cart_quantity_input' aria-label='quantity' type='number' min='0' max='<%- option.product.quantity %>' value='0' disabled='disabled' />
+  |       <button id='cart_quantity_up' disabled='disabled'>
+  |         <i class='fa-solid fa-plus'></i>
+  |       </button>
+  |       <a class='btn btn-danger out-of-stock'>Out of stock</a>
+  |     <% } %>
+  |   </div>
+  |   <div class='attribute_product' style='display: block'>
+  |     <div class='item'>
+  |       <% var i = 1 %>
+  |       <% _.each(option.attr_values, function(av) { %>
+  |         <div class='flex' style='align-items: baseline'>
+  |           <span class='flex' id='item_<%- i %>'>
+  |             <b name='<%- av.name %>'><%- av.name %>:&nbsp&nbsp</b>
+  |           </span>
+  |           <div class='select__items'>
+  |             <% _.each(av.values, function(value) { %>
+  |               <button class='attribute_item item_<%- i %>' product_id='<%- option.product.id %>' data-attribute='<%- av.id %>'>
+  |                 <%- value %>
+  |               </button>
+  |             <% }) %>
+  |           </div>
+  |         </div>
+  |         <% i = i + 1 %>
+  |       <% }) %>
+  |     </div>
+  |   </div>
+  |   <div class='product__stock'>
+  |     <b>Quantity in stock: </b>
+  |     <span id='stock' value='<%- option.product.quantity %>'>
+  |       <%- option.product.quantity %>
+  |     </span>
+  |   </div>
+  |   <p><b>View: </b>40</p>
+  |   <p><b>Brand: </b><%- option.product.brand %></p>
+  |   <p><b>Categories: </b>
+  |     <ul>
+  |       <% _.each(option.product.categories, function(category) { %>
+  |         <li><%- category %></li>
+  |       <% }) %>
+  |     </ul>
+  |   </p>
+  |   <p><b>Share: </b><a class='chare_shop'><i class='fa-brands fa-facebook-f'></i></a></p>
+  | </div>

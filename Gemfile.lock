@@ -114,6 +114,7 @@ GEM
       ssrf_filter (~> 1.0)
     case_transform (0.2)
       activesupport
+    chartkick (5.0.1)
     ckeditor (5.1.1)
       orm_adapter (~> 0.5.0)
     climate_control (0.2.0)
@@ -502,6 +503,7 @@ DEPENDENCIES
   byebug
   capybara (>= 3.26)
   carrierwave
+  chartkick
   ckeditor
   cocoon
   config

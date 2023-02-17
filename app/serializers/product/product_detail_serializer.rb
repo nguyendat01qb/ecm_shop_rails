@@ -1,17 +1,23 @@
 class Product::ProductDetailSerializer < ActiveModel::Serializer
-  attributes :id, :price, :discount, :quantity
+  attributes :id, :title, :price, :discount, :quantity, :brand, :categories
 
   def price
-    return 0 unless object.price_attribute_product
-    object.price_attribute_product
+    return unless object.price
+    object.price.to_f.round(2)
   end
 
   def discount
-    return 0 unless object.discount_attribute_product
-    (object.price_attribute_product * (1 - object.discount_attribute_product)).round(2)
+    return unless object.discount
+    (object.price.to_f * object.discount).round(2)
   end
 
-  def quantity
-    object.stock? ? object.stock : 0
+  def brand
+    return unless object.brand
+    object.brand.title
+  end
+
+  def categories
+    return if object.categories.blank?
+    object.categories.map(&:title)
   end
 end

@@ -2,27 +2,27 @@
   = javascript_pack_tag 'controllers/admin/v1/a_user/users', 'data-turbolinks-track': 'reload'
 
 .page-header
-  h1 List of Users
+  h1 = t('.list')
 ol.breadcrumb
   li.dashboard
-    a.pjax href='#{admin_url}' Dashboard
-  li.active Users
+    a.pjax href='#{admin_url}' = t('.dashboard')
+  li.active = t('.users')
 
 = render 'admin/shared/flash_message_errors'
 
 ul.nav.nav-tabs.action_items
   li.active
-    a class='pjax' href='#{admin_users_url}'
+    a class='pjax' href="#{admin_users_url}"
       i.fa.fa-list
-      span List
+      span = t('.list')
   li
-    a.pjax href='#{new_admin_user_url}'
+    a.pjax href="#{new_admin_user_url}"
       i.fa.fa-plus
-      span New
+      span = t('.new')
   li
-    a.pjax
+    p.pjax
       i.fa.fa-share
-      span Export
+      = link_to t('.export'), export_csv_admin_users_path(format: :csv)
 
 .col-lg-12.grid-margin.stretch-card
   .card
@@ -31,16 +31,16 @@ ul.nav.nav-tabs.action_items
           table.table.table-striped
             thead
               tr
-                th STT
-                th ID
-                th Avatar
-                th Full Name
-                th Phone
-                th Email
-                th Role
-                th Sign In Count
-                th Created At
-                th Action
+                th = t('.stt')
+                th = t('.id')
+                th = t('.avatar')
+                th = t('.fullname')
+                th = t('.phone')
+                th = t('.email')
+                th = t('.role')
+                th = t('.sign_in_count')
+                th = t('.created_at')
+                th = t('.action')
             tbody#users_list
           #paginate.paginatestext-center
         = render 'admin/shared/paginate'
@@ -50,7 +50,7 @@ script#admin_user_template[type='text/template']
   |   <tr>
   |     <td><%- option.idx %></td>
   |     <td><%- option.user.id %></td>
-  |       <td><img src='<%- option.avatar_url %>'/></td>
+  |     <td><img src='<%- option.avatar_url %>'/></td>
   |     <td><%- option.user.name %></td>
   |     <td><%- option.user.phone %></td>
   |     <td><%- option.user.email %></td>
@@ -71,17 +71,17 @@ script#admin_user_template[type='text/template']
   |     <td style='width: 80px'>
   |       <ul class='others'>
   |         <li>
-  |           <a href='/admin/users/<%- option.id %>' title='view'>
+  |           <a href='/admin/users/<%- option.user.id %>' title='view'>
   |             <i class='fa fa-info-circle'></i>
   |           </a>
   |         </li>
   |         <li>
-  |           <a href='/admin/users/<%- option.id %>/edit' title='edit'>
+  |           <a href='/admin/users/<%- option.user.id %>/edit' title='edit'>
   |             <i class='fa fa-edit'></i>
   |           </a>
   |         </li>
   |         <li>
-  |           <a href='/admin/users/<%- option.id %>' data-confirm='Are you sure?' rel='nofollow' data-method='delete'>
+  |           <a href='/admin/users/<%- option.user.id %>' data-confirm='Are you sure?' rel='nofollow' data-method='delete'>
   |             <i class='fa-solid fa-trash'></i>
   |           </a>
   |         </li>

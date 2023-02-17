@@ -1,67 +1,70 @@
 .page-header
-  h1 Details for user
+  h1 = t('.title')
 ol.breadcrumb
   li.dashboard
-    a class="pjax" href="#{admin_url}" Dashboard
+    a.pjax href="#{admin_url}" = t('.dashboard')
   li.dashboard
-    a class="pjax" href="#{admin_users_url}" User
-  li.active Show
+    a.pjax href="#{admin_users_url}" = t('.user')
+  li.active = t('.show')
 ul.nav.nav-tabs.action_items
   li
-    a class="pjax" href="#{admin_users_url}"
+    a.pjax href="#{admin_users_url}"
       i.fa.fa-list
-      span List
+      span = t('.list')
   li.active
-    a class="pjax"
+    a.pjax
       i.fa.fa-info
-      span Show
+      span = t('.show')
   li
-    a class="pjax" href="#{new_admin_user_url}"
+    a.pjax href="#{new_admin_user_url}"
       i.fa.fa-plus
-      span New
+      span = t('.new')
   li
-    a class="pjax"
+    a.pjax
       i.fa.fa-share
-      span Export
+      span = t('.export')
 
 .col-lg-12.grid-margin.stretch-card.form-show
   .card
     .card-body
       .table-responsive
-        h4 Basic info
+        h4 = t('.basic_info')
         dl
-          dt: span.label.label-warning Id
+          dt: span.label.label-warning = t('.id')
           dd.well = @user.id
 
-          dt: span.label.label-warning Avatar
+          dt: span.label.label-warning = t('.avatar')
           dd.well
             - if @user.avatar.attached?
               a href="#{url_for(@user.avatar) }"
-                = image_tag(@user.avatar, class: "preview img-thumbnail")
+                = image_tag(@user.avatar, class: 'preview img-thumbnail')
             - else
-              = image_tag('/assets/admin/avatars/user', class: "preview img-thumbnail")
+              = image_tag('/assets/admin/avatars/user', class: 'preview img-thumbnail')
 
-          dt: span.label.label-warning Full Name
+          dt: span.label.label-warning = t('.fullname')
           dd.well = @user.name
 
-          dt: span.label.label-warning Phone
+          dt: span.label.label-warning = t('.phone')
           dd.well = @user.phone
 
-          dt: span.label.label-warning Email
+          dt: span.label.label-warning = t('.email')
           dd.well = @user.email
 
-          dt: span.label.label-warning Role
+          dt: span.label.label-warning = t('.gender')
+          dd.well = @user.gender
+
+          dt: span.label.label-warning = t('.role')
           dd.well
             - if @user.has_role? :admin
-              | Admin
+              = t('.admin')
             - else
-              | User
+              = t('.user')
 
-          dt: span.label.label-warning Sign In Count
+          dt: span.label.label-warning = t('.sign_in_count')
           dd.well = @user.sign_in_count
 
-          dt: span.label.label-warning Created At
-          dd.well = @user.created_at.strftime("%H:%M %d/%m/%Y")
+          dt: span.label.label-warning = t('.created_at')
+          dd.well = @user.created_at.strftime('%H:%M %d/%m/%Y')
 
-          dt: span.label.label-warning Updated At
-          dd.well = @user.updated_at.strftime("%H:%M %d/%m/%Y")
+          dt: span.label.label-warning = t('.updated_at')
+          dd.well = @user.updated_at.strftime('%H:%M %d/%m/%Y')

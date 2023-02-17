@@ -5,14 +5,6 @@
 section.home-page
   .container
     .row
-      .col-sm-3
-        .left-sidebar
-          = render "home/shared/category"
-          = render "home/shared/brands"
-          = render "home/shared/sales"
-          = render "home/shared/fanpage"
-      .col-sm-9.padding-right
-        .right-sidebar
-          = render 'products/shared/product'
-          = render 'products/shared/tab'
-          = render 'home/shared/recommended_items'
+      = render 'products/shared/product'
+      = render 'products/shared/tab'
+      = render 'home/shared/recommended_items'

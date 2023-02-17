@@ -1,0 +1,40 @@
+en:
+  user_header_csv:
+    name: Full Name
+    phone: Phone Number
+    gender: Gender
+    is_admin: Admin
+    email: Email Address
+    created_at: Created At
+    updated_at: Updated At
+    sign_in_count: Sign In Count
+  category_header_csv:
+    title: Title
+    meta_title: Meta Title
+    slug: Slug
+    content: Content
+    created_at: Created At
+    updated_at: Updated At
+    category_id: Category Id
+  brand_header_csv:
+    title: Title
+    slug: Slug
+    created_at: Created At
+    updated_at: Updated At
+  product_header_csv:
+    title: Title
+    meta_title: Meta Title
+    content: Content
+    slug: Slug
+    price: Price
+    discount: Discount
+    quantity: Quantity
+    product_type: Product Type
+    stock_keeping_unit: Stockkeeping Unit
+    created_at: Created At
+    updated_at: Updated At
+    brand_id: Brand Id
+    stripe_plan_name: Stripe Plan Name
+    paypal_plan_name: PayPal Plan Name
+    price_cents: Price Cents
+    price_currency: Price Currency

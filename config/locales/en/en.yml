@@ -204,6 +204,75 @@ en:
     orders:
     shared:
     users:
+      admin:
+        list: List of admins
+        dashboard: *dashboard
+        admins: Admins
+        list: *list
+        new: *new
+        export: *export
+        stt: STT
+        id: ID
+        avatar: Avatar
+        fullname: Full Name
+        phone: Phone
+        email: Email
+        role: Role
+        sign_in_count: Sign In Count
+        created_at: Created At
+        action: Action
+      edit:
+        title: 'Edit User: '
+        dashboard: *dashboard
+        user: User
+        edit: *edit
+        list: *list
+        new: *new
+        export: *export
+      index:
+        list: List of users
+        dashboard: *dashboard
+        users: Users
+        list: *list
+        new: *new
+        export: *export
+        stt: STT
+        id: ID
+        avatar: Avatar
+        fullname: Full Name
+        phone: Phone
+        email: Email
+        role: Role
+        sign_in_count: Sign In Count
+        created_at: Created At
+        action: Action
+      new:
+        title: New User
+        dashboard: *dashboard
+        user: User
+        list: *list
+        new: *new
+        export: *export
+      show:
+        title: Details for user
+        dashboard: *dashboard
+        admin: Admin
+        user: User
+        show: *show
+        list: *list
+        new: *new
+        export: *export
+        basic_info: Basic Information
+        id: ID
+        avatar: Avatar
+        fullname: Full Name
+        phone: Phone Number
+        email: Email
+        gender: Gender
+        role: Role
+        sign_in_count: Sign In Count
+        created_at: Created At
+        updated_at: Updated At
     vouchers:
   cart:
     shared:
@@ -217,3 +286,8 @@ en:
         quantity: Quantity
         total: Total amount
         action: Action
+  home:
+    shared:
+      products:
+        products: Products
+        load_more: Load More

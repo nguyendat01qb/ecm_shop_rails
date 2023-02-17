@@ -9,13 +9,16 @@ Rails.application.routes.draw do
     end
 
     namespace :customer do
-      resources :products do
+      resources :products, only: [ :show ] do
         collection do
           post :search
-          post :load_more
           post :select_attribute
           post :add_to_cart
           post :comments
+        end
+
+        member do
+          get :images
         end
       end
       resources :home do

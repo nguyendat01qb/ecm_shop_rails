@@ -25,8 +25,8 @@ ul.nav.nav-tabs.action_items
       i.fa.fa-edit
       span = t('.edit')
   li
-    a.pjax
+    p.pjax
       i.fa.fa-share
-      span = t('.export')
+      = link_to t('.export'), export_csv_admin_categories_path(format: :csv)
 
 = render 'admin/categories/form', url: admin_category_path

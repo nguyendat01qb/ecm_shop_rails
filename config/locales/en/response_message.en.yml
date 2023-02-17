@@ -5,8 +5,10 @@ en:
         list_categories: Get list categories successfully
       product:
         list_products: Get list products successfully
+        product_detail: Get product detail successfully
         attributes: Get attribute value successfully
         add_cart: Add to cart successfully
+        images: Get list images successfully
       user:
         list_admins: Get list admins successfully
         list_users: Get list users successfully

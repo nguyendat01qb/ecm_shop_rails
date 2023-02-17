@@ -74,4 +74,20 @@ class UserPolicy < BasePolicy
 	def address?
 		authenticate_customer
 	end
+
+	def success?
+		authenticate_admin
+	end
+
+	def submit?
+		authenticate_admin
+	end
+
+	def export_csv?
+		authenticate_admin
+	end
+
+	def export_admin_csv?
+		authenticate_admin
+	end
 end

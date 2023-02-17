@@ -216,7 +216,7 @@
             padding: 0 5px 0 5px;
           }
 
-          .add-to-cart {
+          #add-to-cart {
             background: #f5f5ed;
             border: 0;
             border-radius: 10px;
@@ -262,6 +262,7 @@
   }
 
   .load_more {
+    display: none;
     text-align: center;
     margin-bottom: 15px;
 

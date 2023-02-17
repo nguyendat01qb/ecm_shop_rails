@@ -20,9 +20,9 @@ ul.nav.nav-tabs.action_items
       i.fa.fa-plus
       span = t('.new')
   li
-    a.pjax
+    p.pjax
       i.fa.fa-share
-      span = t('.export')
+      = link_to t('.export'), export_csv_admin_products_path(format: :csv)
 
 .col-lg-12.grid-margin.stretch-card.form-show
   .card
