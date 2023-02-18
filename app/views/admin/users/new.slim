@@ -1,26 +1,26 @@
 .page-header
-  h1 New User
+  h1 = t('.title')
 ol.breadcrumb
   li.dashboard
-    a class="pjax" href="#{admin_url}" Dashboard
+    a.pjax href="#{admin_url}" = t('.dashboard')
   li.dashboard.active
-    a class="pjax" href="#{admin_users_url}" User
-  li.active New
+    a.pjax href="#{admin_users_url}" = t('.user')
+  li.active = t('.new')
 
-= render "admin/shared/flash_message_errors"
+= render 'admin/shared/flash_message_errors'
 
 ul.nav.nav-tabs.action_items
   li
-    a class="pjax" href="#{admin_users_url}"
+    a.pjax href="#{admin_users_url}"
       i.fa.fa-list
-      span List
+      span = t('.list')
   li.active
-    a class="pjax" href="#{new_admin_user_url}"
+    a.pjax href="#{new_admin_user_url}"
       i.fa.fa-plus
-      span New
+      span = t('.new')
   li
-    a class="pjax"
+    p.pjax
       i.fa.fa-share
-      span Export
+      = link_to t('.export'), export_csv_admin_users_path(format: :csv)
 
-= render "admin/users/form", url: admin_users_path
+= render 'admin/users/form', url: admin_users_path

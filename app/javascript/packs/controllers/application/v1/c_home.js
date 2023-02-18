@@ -118,34 +118,7 @@ function CHome(options) {
 
   module.loadMoreProducts = function () {
     $('.btn-load_more').on('click', function () {
-      const current_page = _.isEmpty(localStorage.getItem('current_page'))
-        ? 1
-        : localStorage.getItem('current_page');
-      var data = { page: current_page, per_page: module.settings.per_page };
-      $.ajax({
-        url: module.settings.api.load_more,
-        type: 'POST',
-        data: data,
-        dataType: 'json',
-        success: function (res) {
-          if (res.status == 200) {
-            if (res.page != 'error_page') {
-              $('.features_items').append(res.html);
-              const next_page = parseInt(current_page) + 1;
-              localStorage.setItem('current_page', next_page);
-
-              if (res.page == 'last_page') {
-                $('.load_more').hide();
-              } else {
-                $('.load_more').show();
-              }
-            } else if (res.page == 'error_page') {
-              $.notify('cc');
-            }
-            loadPage({ time: 200 });
-          }
-        },
-      });
+      module.filterProducts(parseInt(localStorage.getItem('home-per-page')) + 6);
     });
   };
 
@@ -156,17 +129,26 @@ function CHome(options) {
       dataType: 'json',
       success: function (res) {
         if (res.code == 200) {
+          localStorage.setItem('home-per-page', res.data.per_page)
+          localStorage.removeItem('home-category-id');
+          localStorage.removeItem('home-brand-id');
           module.renderProducts(res.data);
+          module.handleLoadMore(res.data.is_load_more);
         }
       },
     });
   }
 
-  module.filterProducts = function () {
+  module.filterProducts = function (per_page) {
+    var category_id = module.settings.data.category_id || localStorage.getItem('home-category-id');
+    var brand_id = module.settings.data.brand_id || localStorage.getItem('home-brand-id');
     const data = {
-      category_id: module.settings.data.category_id,
-      brand_id: module.settings.data.brand_id,
+      category_id: category_id,
+      brand_id: brand_id,
+      per_page: per_page
     };
+    localStorage.setItem('home-category-id', data.category_id);
+    localStorage.setItem('home-brand-id', data.brand_id);
     return $.ajax({
       url: module.settings.api.filter_products,
       type: 'POST',
@@ -174,9 +156,11 @@ function CHome(options) {
       dataType: 'json',
       success: function (res) {
         if (res.code == 200) {
+          localStorage.setItem('home-per-page', res.data.per_page)
           module.renderProducts(res.data);
+          module.handleLoadMore(res.data.is_load_more);
         } else {
-          module.settings.elements.product.replaceWith(`<h4 class='error_message'>${res.message}</h4>`);
+          module.settings.elements.product.html(`<h4 class='error_message'>${res.message}</h4>`);
         }
       },
     });
@@ -186,6 +170,14 @@ function CHome(options) {
     var template = _.template(module.settings.templates.list_products.html());
     module.settings.elements.product.html(template({ option: data }));
   };
+
+  module.handleLoadMore = function (is_load_more) {
+    if(is_load_more){
+      $('.load_more').show();
+    }else{
+      $('.load_more').hide();
+    }
+  }
 
   module.handleKeyPress = function () {
     $(window).on('load', function () {

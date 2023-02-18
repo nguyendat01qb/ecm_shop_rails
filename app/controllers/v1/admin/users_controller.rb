@@ -4,7 +4,7 @@ class V1::Admin::UsersController < V1::BaseAuthController
   def load_admins
     page = params[:page].to_i
     per_page = 10
-    admins = User.all.map { |user| user if user.current_admin }.compact
+    admins = User.has_role_admin
     admins = Kaminari.paginate_array(admins).page(page).per(per_page)
     render json: success_message(
       I18n.t('messages.success.user.list_admins'),

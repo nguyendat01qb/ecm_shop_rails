@@ -1,88 +1,45 @@
-.content.p-4.flex-1.flex.flex-col.justify-between.items-stretch class='lg:p-6 2xl:container 2xl:mx-auto'
-  .flex.flex-1.flex-col.justify-between.items-stretch.space-y-8
-    .data-panel-index
-      .flex-1.flex.flex-col.justify-between.mb-4 class='xl:flex-row'
-        .overflow-hidden.flex.flex-col
-          .text-2xl.tracking-normal.font-semibold.text-gray-800.truncate.items-center.flex.flex-1 data-target='title'
-            span Dashy
-  .relative.bg-white.rounded.shadow
-  .relative
-    .min-h-24
-      .grid.gap-4.grid-cols-1 class='sm:grid-cols-3'
-        .relative.bg-white.rounded.shadow-panel.space-y-2.h-36.overflow-hidden class='sm:col-span-1'
-          turbo-frame#dashy_bookings_count src='http:3000/admin' data-card-index='0'
-            .relative.flex-1.flex.flex-col.justify-between.h-full data-controller='dashboard-card' data-dashboard-card-target='card' data-refresh-every='' data-card-id='bookings_count' data-card-index='0'
-              .px-4.pt-4
-                .flex.justify-between.items-center.min-h-6
-                  .text-base.font-bold.text-gray-700.leading-none
-                    | Bookings count
-                  .select data-controller='select'
-              .flex-1.flex.px-4.pb-4
-                .flex.mt-4.items-end
-                  span.text-3xl
-                  span.text-5xl 0
-                  span.text-3xl
+span.dashboard Dashboard
 
-        .relative.bg-white.rounded.shadow-panel.space-y-2.h-36.overflow-hidden class='sm:col-span-1'
-          turbo-frame#dashy_locations_count src='http:3000/admin' data-card-index='2'
-            .relative.flex-1.flex.flex-col.justify-between.h-full data-controller='dashboard-card' data-dashboard-card-target='card' data-refresh-every='' data-card-id='locations_count' data-card-index='2'
-              .px-4.pt-4
-                .flex.justify-between.items-center.min-h-6
-                  .text-base.font-bold.text-gray-700.leading-none
-                    | Locations count
-                  .select data-controller='select'
-              .flex-1.flex.px-4.pb-4
-                .flex.mt-4.items-end
-                  .text-3xl
-                  .text-5xl 101
-                  .text-3xl
-        .relative.bg-white.rounded.shadow-panel.space-y-2.h-36.overflow-hidden class='sm:col-span-1'
-          turbo-frame#dashy_locations_count src='http:3000/admin' data-card-index='2'
-            .relative.flex-1.flex.flex-col.justify-between.h-full data-controller='dashboard-card' data-dashboard-card-target='card' data-refresh-every='' data-card-id='locations_count' data-card-index='2'
-              .px-4.pt-4
-                .flex.justify-between.items-center.min-h-6
-                  .text-base.font-bold.text-gray-700.leading-none
-                    | Rooms count
-                  .select data-controller='select'
-              .flex-1.flex.px-4.pb-4
-                .flex.mt-4.items-end
-                  .text-3xl
-                  .text-5xl 101
-                  .text-3xl
-        .relative.bg-white.rounded.shadow-panel.space-y-2.h-36.overflow-hidden class='sm:col-span-1'
-          turbo-frame#dashy_locations_count src='http:3000/admin' data-card-index='2'
-            .relative.flex-1.flex.flex-col.justify-between.h-full data-controller='dashboard-card' data-dashboard-card-target='card' data-refresh-every='' data-card-id='locations_count' data-card-index='2'
-              .px-4.pt-4
-                .flex.justify-between.items-center.min-h-6
-                  .text-base.font-bold.text-gray-700.leading-none
-                    | Users count
-                  .select data-controller='select'
-              .flex-1.flex.px-4.pb-4
-                .flex.mt-4.items-end
-                  .text-3xl
-                  .text-5xl 101
-                  .text-3xl
-        .relative.bg-white.rounded.shadow-panel.space-y-2.h-36.overflow-hidden class='sm:col-span-1'
-          turbo-frame#dashy_locations_count src='http:3000/admin' data-card-index='2'
-            .relative.flex-1.flex.flex-col.justify-between.h-full data-controller='dashboard-card' data-dashboard-card-target='card' data-refresh-every='' data-card-id='locations_count' data-card-index='2'
-              .px-4.pt-4
-                .flex.justify-between.items-center.min-h-6
-                  .text-base.font-bold.text-gray-700.leading-none
-                    | Bookings over time
-                  .select data-controller='select'
-              .flex-1.flex.px-4.pb-4
-                .flex.mt-4.items-end
-                  .text-3xl
-                  .text-5xl 101
-                  .text-3xl
-        .relative.bg-white.rounded.shadow-panel.space-y-2.h-36.overflow-hidden class='sm:col-span-3'
-          turbo-frame#dashy_bookings_over_time src='http:3000/admin' data-card-index='5'
-            .relative.flex-1.flex.flex-col.justify-between.h-full data-controller='dashboard-card' data-dashboard-card-target='card' data-refresh-every='' data-card-id='bookings_over_time' data-card-index='5'
-              .px-4.pt-4
-                .flex.justify-between.items-center.min-h-6
-                  .text-base.font-bold.text-gray-700.leading-none
-                    | Bookings over time
-                  .chart data-controller='select'
-              .relative.flex.flex-col.top-auto class='-mx-1.5 -bottom-1.5'
-                #dashy-52889 style="height: 104px; width: 100%; text-align: center; color: #999; line-height: 104px; font-size: 14px; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Arial, Helvetica, sans-serif;"
-                  canvas width='1500' height='104' style='display: block; box-sizing: border-box; height: 104px; width: 1500px;'
+.grid.gap-4.grid-cols-1 class='sm:grid-cols-3'
+  .relative.bg-white.shadow-panel.space-y-2.h-36.dashboard_title class='sm:col-span-1'
+    | Users
+    .number
+      = User.count
+  .relative.bg-white.shadow-panel.space-y-2.h-36.dashboard_title class='sm:col-span-1'
+    | Products
+    .number
+      = Product.count
+  .relative.bg-white.shadow-panel.space-y-2.h-36.dashboard_title class='sm:col-span-1'
+    | Categories
+    .number
+      = Category.count
+  .relative.bg-white.shadow-panel.space-y-2.h-36.dashboard_title class='sm:col-span-1'
+    | Carts
+    .number
+      = Cart.count
+  .relative.bg-white.shadow-panel.space-y-2.h-36.dashboard_title class='sm:col-span-1'
+    | Cart Item
+    .number
+      = CartItem.count
+  .relative.bg-white.shadow-panel.space-y-2.h-36.dashboard_title class='sm:col-span-1'
+    | Orders
+    .number
+      = Order.count
+  .relative.bg-white.shadow-panel.space-y-2.h-36.dashboard_title class='sm:col-span-1'
+    | Order Items
+    .number
+      = OrderItem.count
+.linechart
+  .dashboard_title
+    | Products of category
+  = column_chart @categories
+.linechart
+  .dashboard_title
+    | Products count
+  = column_chart @products
+.linechart
+  .dashboard_title
+    | Signin count
+  = column_chart @users
+.linechart
+  = column_chart @categories

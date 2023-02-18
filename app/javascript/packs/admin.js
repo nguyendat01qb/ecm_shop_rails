@@ -18,6 +18,8 @@ window._ = _;
 require('jquery');
 import 'bootstrap';
 require('@nathanvda/cocoon');
+require('chartkick');
+require('chart.js');
 import '@fortawesome/fontawesome-free/css/all';
 import '../packs/controllers/admin';
 import './stylesheet/admin/application.scss';

@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  CSV_ATTRIBUTES = %w[name phone gender is_admin email created_at updated_at sign_in_count].freeze
   extend FriendlyId
   friendly_id :name, use: :slugged
   rolify
@@ -24,6 +25,8 @@ class User < ApplicationRecord
   validates :phone, phone_number: true, presence: true, unless: -> { from_omniauth? }
   validates :name, presence: true, length: { minimum: 6, maximum: 30 }, unless: -> { from_omniauth? }
   validates :email, presence: true, uniqueness: true
+
+  scope :has_role_admin, -> { where(is_admin: true) }
 
   class << self
     def new_token
@@ -57,7 +60,7 @@ class User < ApplicationRecord
   end
 
   def current_admin
-    self.has_role? :admin
+    has_role? :admin
   end
 
   private

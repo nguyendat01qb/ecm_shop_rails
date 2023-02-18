@@ -3,56 +3,56 @@
     ul.nav.nav-tabs
       / add .active.in
       li.active
-        a data-toggle='tab' Products Other
+        a href='#productsother' data-toggle='tab' Products Other
       li
-        a data-toggle='tab' Description
+        a href='#description' data-toggle='tab' Description
       li
-        a data-toggle='tab' Reviews
+        a href='#reviews' data-toggle='tab' Reviews
   .tab-content
     .tab-pane.fade#productsother.active.in
-      / .col-sm-3.col-xs-6
-      /   .product-image-wrapper
-      /     .single-products
-      /       .productinfo
-      /         = image_tag('home/product1')
-      /         h2 $50
-      /         p Lorem ipsum dolor sit
-      /         a.btn.btn-default.add-to-cart
-      /           i.fa.fa-shopping-cart
-      /           |   Add to cart
-      / .col-sm-3.col-xs-6
-      /     .product-image-wrapper
-      /         .single-products
-      /             .productinfo
-      /                 = image_tag('home/product1')
-      /                 h2 $50
-      /                 p Lorem ipsum dolor sit
-      /                 a.btn.btn-default.add-to-cart
-      /                     i.fa.fa-shopping-cart
-      /                     |   Add to cart
-      / .col-sm-3.col-xs-6
-      /     .product-image-wrapper
-      /         .single-products
-      /             .productinfo
-      /                 = image_tag('home/product1')
-      /                 h2 $50
-      /                 p Lorem ipsum dolor sit
-      /                 a.btn.btn-default.add-to-cart
-      /                     i.fa.fa-shopping-cart
-      /                     |   Add to cart
-      / .col-sm-3.col-xs-6
-      /     .product-image-wrapper
-      /         .single-products
-      /             .productinfo
-      /                 = image_tag('home/product1')
-      /                 h2 $50
-      /                 p Lorem ipsum dolor sit
-      /                 a.btn.btn-default.add-to-cart
-      /                     i.fa.fa-shopping-cart
-      /                     |   Add to cart
+      .col-sm-3.col-xs-6
+        .product-image-wrapper
+          .single-products
+            .productinfo
+              = image_tag('home/product1')
+              h2 $50
+              p Lorem ipsum dolor sit
+              a.btn.btn-default.add-to-cart
+                i.fa.fa-shopping-cart
+                |   Add to cart
+      .col-sm-3.col-xs-6
+          .product-image-wrapper
+              .single-products
+                  .productinfo
+                      = image_tag('home/product1')
+                      h2 $50
+                      p Lorem ipsum dolor sit
+                      a.btn.btn-default.add-to-cart
+                          i.fa.fa-shopping-cart
+                          |   Add to cart
+      .col-sm-3.col-xs-6
+          .product-image-wrapper
+              .single-products
+                  .productinfo
+                      = image_tag('home/product1')
+                      h2 $50
+                      p Lorem ipsum dolor sit
+                      a.btn.btn-default.add-to-cart
+                          i.fa.fa-shopping-cart
+                          |   Add to cart
+      .col-sm-3.col-xs-6
+          .product-image-wrapper
+              .single-products
+                  .productinfo
+                      = image_tag('home/product1')
+                      h2 $50
+                      p Lorem ipsum dolor sit
+                      a.btn.btn-default.add-to-cart
+                          i.fa.fa-shopping-cart
+                          |   Add to cart
     .tab-pane.fade#description
       = raw @product.content
-    .tab-pane.fade#reviews p_id="#{@product.id}"
+    .tab-pane.fade#reviews p_id='#{@product.id}'
       .col-sm-12
         .rating
           h4.rating__title Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore recusandae blanditiis soluta nostrum non tempore vitae modi vel explicabo earum itaque ab maxime unde

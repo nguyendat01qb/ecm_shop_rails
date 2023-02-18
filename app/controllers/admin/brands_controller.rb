@@ -42,6 +42,13 @@ class Admin::BrandsController < Admin::BaseController
     redirect_to admin_brands_url
   end
 
+  def export_csv
+    csv = Admin::Brands::ExportCsvService.new(Brand.all, Brand::CSV_ATTRIBUTES)
+    respond_to do |format|
+      format.csv { send_data csv.perform, filename: "brands-#{Date.current}.csv"}
+    end
+  end
+
   private
 
   def set_brand

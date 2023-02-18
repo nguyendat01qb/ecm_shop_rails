@@ -3,34 +3,33 @@
 
 .page-header
   h1
-    | Edit User:
-    '
+    = t('.title')
     = @user.name
 
-= render "admin/shared/flash_message_errors"
+= render 'admin/shared/flash_message_errors'
 
 ol.breadcrumb
   li.dashboard
-    a class="pjax" href="#{admin_url}" Dashboard
+    a.pjax href="#{admin_url}" = t('.dashboard')
   li.dashboard.active
-    a class="pjax" href="#{admin_users_url}" User
-  li.active Edit
+    a.pjax href="#{admin_users_url}" = t('.user')
+  li.active = t('.edit')
 ul.nav.nav-tabs.action_items
   li
-    a class="pjax" href="#{admin_users_url}"
+    a.pjax href="#{admin_users_url}"
       i.fa.fa-list
-      span List
+      span = t('.list')
   li
-    a class="pjax" href="#{new_admin_user_url}"
+    a.pjax href="#{new_admin_user_url}"
       i.fa.fa-plus
-      span New
+      span = t('.new')
   li.active
-    a class="pjax"
+    a.pjax
       i.fa.fa-edit
-      span Edit
+      span = t('.edit')
   li
-    a class="pjax"
+    p.pjax
       i.fa.fa-share
-      span Export
+      = link_to t('.export'), export_csv_admin_users_path(format: :csv)
 
-= render "admin/users/form", url: admin_user_path
+= render 'admin/users/form', url: admin_user_path

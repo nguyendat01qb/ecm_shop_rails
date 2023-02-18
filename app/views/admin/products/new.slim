@@ -19,8 +19,8 @@ ul.nav.nav-tabs.action_items
         i.fa.fa-plus
         span = t('.new')
     li
-      a.pjax
+      p.pjax
         i.fa.fa-share
-        span = t('.export')
+        = link_to t('.export'), export_csv_admin_products_path(format: :csv)
 
 = render 'admin/products/form', url: admin_products_path

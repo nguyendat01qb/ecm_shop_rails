@@ -1,6 +1,9 @@
 .features_items
-  h2.title_feature_item Products
+  h2.title_feature_item = t('.products')
   #list_products
+
+  .load_more
+    button.btn.btn-load_more = t('.load_more')
 
 script#list_products_template[type='text/template']
   | <% _.each(option.products, function(product) { %>
