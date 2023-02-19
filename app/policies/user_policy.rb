@@ -90,4 +90,8 @@ class UserPolicy < BasePolicy
 	def export_admin_csv?
 		authenticate_admin
 	end
+
+	def numbers?
+		authenticate_admin
+	end
 end

@@ -1,6 +1,6 @@
 import '../../lib/notify';
 
-function AUser(options) {
+function AAdmin(options) {
   var module = this;
   var defaults = {
     pagination_template: $('#pagination-template'),
@@ -89,6 +89,6 @@ function AUser(options) {
 }
 
 $(document).ready(function () {
-  var user = new AUser();
-  user.init();
+  var admin = new AAdmin();
+  admin.init();
 });

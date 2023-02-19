@@ -18,9 +18,16 @@ module FashionStore
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
-    config.autoload_paths << config.root.join('lib')
-    config.autoload_paths << config.root.join('lib/concerns')
-    config.autoload_paths << config.root.join('app/serializers')
+    config.autoload_paths += %W[
+      #{config.root}/lib/concerns
+      #{config.root}/lib/error
+      #{config.root}/app/services
+      #{config.root}/app/interactors
+      #{config.root}/app/workers
+      #{config.root}/app/serializers
+      #{config.root}/app/mailers
+      #{config.root}/app/adapters
+    ]
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
     config.i18n.available_locales = %i[en vi]
     config.i18n.default_locale = :en
@@ -33,6 +40,8 @@ module FashionStore
       ENV[key.to_s] = value
     end unless config_file.nil?
 
+    # This tells Rails to serve error pages from the Rails app itself (i.e. the routes we just set up), rather than using static error pages
+    config.exceptions_app = self.routes
     # Rails.application.configure do
     #   config.hosts << 'b97a-222-253-42-176.ap.ngrok.io'
     # end
