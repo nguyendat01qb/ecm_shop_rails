@@ -113,16 +113,16 @@ nav.navbar.col-lg-12.col-12.p-0.fixed-top.d-flex
               i.fas.fa-chevron-right
       li.nav-item.dropdown.user-dropdown
         a.nav-link#UserDropdown[data-bs-toggle='dropdown' aria-expanded='false']
-          = image_tag('admin/avatars/1', class: 'img-sm rounded-circle')
+          = image_tag(@current_user.avatar, class: 'img-sm rounded-circle')
           .d-lg-inline-block
-            span.p-0.ms-3.fs-4.cursor-pointer Zane Le
+            span.p-0.ms-3.fs-4.cursor-pointer = @current_user.name
             i.fa-solid.fa-caret-down.ms-3
         .dropdown-menu.dropdown-list-user.dropdown-list
           .dropdown-header.d-flex
-            = image_tag('admin/avatars/1', class: 'img-sm rounded-circle')
+            = image_tag(@current_user.avatar, class: 'img-sm rounded-circle')
             .flex-grow-1.m-3.mb-0.mt-0
-              p.p-0.m-0.fs-3 Zane Le
-              small.m-0 Logged in 5 min ago
+              p.p-0.m-0.fs-3 = @current_user.name
+              small.m-0 = Time.at((current_user.total_online_time) * 60).utc.strftime("%H:%M:%S")
           .dropdown-divider
           a.dropdown-item.d-flex.align-items-center
             i.far.fa-user.me-2.fs-4

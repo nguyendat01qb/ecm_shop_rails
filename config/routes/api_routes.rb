@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
   namespace :v1, defaults: { format: :json } do
     namespace :admin do
+      resources :dashboards, only: [:show] do
+        collection do
+          get :numbers
+          get :linechart
+        end
+      end
       get 'load_admins', to: 'users#load_admins'
       get 'load_users', to: 'users#load_users'
       get 'load_categories', to: 'categories#load_categories'
@@ -9,7 +15,7 @@ Rails.application.routes.draw do
     end
 
     namespace :customer do
-      resources :products, only: [ :show ] do
+      resources :products, only: [:show] do
         collection do
           post :search
           post :select_attribute
@@ -51,5 +57,8 @@ Rails.application.routes.draw do
         end
       end
     end
+
+    resources :errors, only: :catch_404
+    match "*path", to: "errors#catch_404", via: :all
   end
 end

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root to: 'home#index'
-  resources :products, only: [ :show ]
+  resources :products, only: [:show]
 
   resources :comments do
     post 'reply_comment', to: 'comments#reply_comment'
@@ -23,8 +23,8 @@ Rails.application.routes.draw do
     post '/info_checkout', to: 'checkouts#info_checkout'
     post '/voucher', to: 'checkouts#voucher'
     post '/check_order_stripe', to: 'checkouts#check_order_stripe'
-    post '/check_cart', to:'checkouts#check_cart'
-    post '/refund_stripe', to:'orders#refund_stripe'
+    post '/check_cart', to: 'checkouts#check_cart'
+    post '/refund_stripe', to: 'orders#refund_stripe'
   end
 
   resource :webhook do
@@ -32,21 +32,21 @@ Rails.application.routes.draw do
     post '/momo', to: 'webhooks#momo'
   end
 
-  resource :user, only: [:edit, :update] do
-    get '/profile/edit', to:'users#edit'
-    patch '/profile/edit', to:'users#update'
-    post '/profile', to:'users#show_profile'
-    get '/password/change', to:'users#password'
-    post '/password', to:'users#show_password'
-    post 'addresses/change_address', to:'addresses#change_address'
-    post 'addresses/show', to:'addresses#show_address'
+  resource :user, only: %i[edit update] do
+    get '/profile/edit', to: 'users#edit'
+    patch '/profile/edit', to: 'users#update'
+    post '/profile', to: 'users#show_profile'
+    get '/password/change', to: 'users#password'
+    post '/password', to: 'users#show_password'
+    post 'addresses/change_address', to: 'addresses#change_address'
+    post 'addresses/show', to: 'addresses#show_address'
     resource :order, only: [:show] do
-      post '/show_order', to:'orders#show_order'
+      post '/show_order', to: 'orders#show_order'
     end
-    post 'order/detail', to:'orders#order_detail'
-    get 'order/detail/:code', to:'orders#show_order_detail'
+    post 'order/detail', to: 'orders#order_detail'
+    get 'order/detail/:code', to: 'orders#show_order_detail'
     resources :addresses do
-      post '/:slug', to:'addresses#edit'
+      post '/:slug', to: 'addresses#edit'
     end
   end
 end

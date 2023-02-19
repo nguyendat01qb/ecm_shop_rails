@@ -3,6 +3,7 @@ class V1::BaseController < ApplicationController
   include Pagy::Backend
   protect_from_forgery with: :null_session
   before_action :current
+  before_action :set_online_time, if: proc { user_signed_in? }
 
   attr_reader :current_user
 
@@ -31,6 +32,23 @@ class V1::BaseController < ApplicationController
     cookies_values = request.cookies.to_a.flatten
     index_of_token_key = cookies_values.find_index('api_token');
     request.headers['Api-Token'] || cookies[:api_token] || cookies_values[index_of_token_key.next]
+  end
+
+  def set_online_time
+    start_time = current_user.last_sign_in_at.to_time;
+    end_time = Time.now;
+
+    if(start_time && end_time)
+      minutes = time_diff(start_time, end_time)
+      if(current_user.total_online_time)
+        minutes = current_user.total_online_time + minutes
+      end
+      current_user.update_attribute(:total_online_time, minutes)
+    end
+  end
+
+  def time_diff(start_time, end_time)
+    (start_time -  end_time) / 60
   end
 
   def token_invalid_json
