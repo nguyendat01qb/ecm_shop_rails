@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   namespace :admin do
-    # root to: 'dashboards#index'
+    root to: 'dashboards#index'
     get '/', to: 'dashboards#index'
     resources :brands do
       collection do

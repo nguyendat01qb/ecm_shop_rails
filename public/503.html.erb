@@ -1,0 +1,31 @@
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>503 サービスを利用できません。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="。">
+    <link rel="canonical" href="">
+    <%= stylesheet_link_tag "reset" %>
+    <%= stylesheet_link_tag "layout" %>
+    <%= stylesheet_link_tag "common" %>
+    <%= stylesheet_link_tag "base" %>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="page-container">
+        <div class="page-content page-content--error">
+          <div class="error-area">
+            <div class="error-area__content">
+              <%= image_tag "error-img_503.png", class: "error-area__img--error503", width: "100%",
+                alt: "サービスを利用できません。" %>
+              <%= link_to page_top(@screen_admin) do %>
+                <button class="button button--light-blue button--fillet button--error-returntop font-bold">TOP</button>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

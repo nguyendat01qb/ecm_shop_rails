@@ -1,4 +1,6 @@
 class Admin::DashboardsController < Admin::BaseController
+  before_action :authorize_admin!
+
   def index
     @categories = Category.all.each_with_object({}) do |category, result|
       result[category.title] = category.products.count

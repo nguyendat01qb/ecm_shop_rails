@@ -1,6 +1,8 @@
 en:
   messages:
     success:
+      dashboard:
+        list_numbers: Get list numbers successfully
       category:
         list_categories: Get list categories successfully
       product:

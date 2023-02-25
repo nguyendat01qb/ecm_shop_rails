@@ -1,34 +1,10 @@
+= content_for :js_pages
+  = javascript_pack_tag 'controllers/admin/v1/a_dashboard', 'data-turbolinks-track': 'reload'
+
 span.dashboard Dashboard
 
-.grid.gap-4.grid-cols-1 class='sm:grid-cols-3'
-  .relative.bg-white.shadow-panel.space-y-2.h-36.dashboard_title class='sm:col-span-1'
-    | Users
-    .number
-      = User.count
-  .relative.bg-white.shadow-panel.space-y-2.h-36.dashboard_title class='sm:col-span-1'
-    | Products
-    .number
-      = Product.count
-  .relative.bg-white.shadow-panel.space-y-2.h-36.dashboard_title class='sm:col-span-1'
-    | Categories
-    .number
-      = Category.count
-  .relative.bg-white.shadow-panel.space-y-2.h-36.dashboard_title class='sm:col-span-1'
-    | Carts
-    .number
-      = Cart.count
-  .relative.bg-white.shadow-panel.space-y-2.h-36.dashboard_title class='sm:col-span-1'
-    | Cart Item
-    .number
-      = CartItem.count
-  .relative.bg-white.shadow-panel.space-y-2.h-36.dashboard_title class='sm:col-span-1'
-    | Orders
-    .number
-      = Order.count
-  .relative.bg-white.shadow-panel.space-y-2.h-36.dashboard_title class='sm:col-span-1'
-    | Order Items
-    .number
-      = OrderItem.count
+#list_numbers
+
 .linechart
   .dashboard_title
     | Products of category
@@ -43,3 +19,14 @@ span.dashboard Dashboard
   = column_chart @users
 .linechart
   = column_chart @categories
+
+
+script#list_numbers_template[type='text/template']
+  | <div class='grid gap-4 grid-cols-1 sm:grid-cols-3'>
+  |   <%_.each(options, function(option) { %>
+  |     <div class='relative bg-white shadow-panel space-y-2 h-36 dashboard_title sm:col-span-1'>
+  |       <%- option.name %>
+  |         <div class='number'><%- option.quantity %></div>
+  |     </div>
+  |   <% }) %>
+  | </div>
