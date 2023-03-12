@@ -11,7 +11,7 @@ class Client::Checkout::Voucher < ApplicationService
 
     return [false, 'Voucher expired'] if voucher.end_time < DateTime.now
     return [false, 'Discounted items are sold out'] if voucher.discount_mount <= voucher.apply_amount
-    if user.user_vouchers.nil? && user.user_vouchers.find_by(id: voucher.id).checked == true
+    if user.user_vouchers.present? && user.user_vouchers.find_by(id: voucher.id)&.checked == true
       return [false, 'You have used this voucher']
     end
 

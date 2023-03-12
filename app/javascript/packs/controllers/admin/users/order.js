@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 export default class Order {
   constructor() {
     this.submitOrder();
