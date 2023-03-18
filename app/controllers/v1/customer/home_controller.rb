@@ -1,6 +1,4 @@
 class V1::Customer::HomeController < V1::BaseController
-  before_action :authenticate_user!, only: :get_product_cart
-
   def categories
     categories = Category.is_parent.select(:id, :title)
     childs = Category.is_child.select(:id, :title, :category_id).group_by(&:category_id)

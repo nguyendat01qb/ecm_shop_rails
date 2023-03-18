@@ -2,13 +2,13 @@
   h1 = t('.title_header')
 ol.breadcrumb
   li.dashboard
-    a.pjax href="#{admin_url}" = t('.dashboard')
+    a.pjax href='#{admin_url}' = t('.dashboard')
   li.dashboard
-    a.pjax href="#{admin_products_url}" = t('.products')
+    a.pjax href='#{admin_products_url}' = t('.products')
   li.active = t('.show')
 ul.nav.nav-tabs.action_items
   li
-    a.pjax href="#{admin_products_url}"
+    a.pjax href='#{admin_products_url}'
       i.fa.fa-list
       span = t('.list')
   li.active
@@ -16,7 +16,7 @@ ul.nav.nav-tabs.action_items
       i.fa.fa-info
       span = t('.show')
   li
-    a.pjax href="#{new_admin_product_url}"
+    a.pjax href='#{new_admin_product_url}'
       i.fa.fa-plus
       span = t('.new')
   li
@@ -38,8 +38,8 @@ ul.nav.nav-tabs.action_items
             dt: span.label.label-warning = t('.images')
             dd.well
               - @product.images.each do |image|
-                a href="#{url_for(image)}"
-                  img.preview.img-thumbnail src="#{url_for(image)}" height='250px' width='250px'
+                a href='#{url_for(image)}'
+                  img.preview.img-thumbnail src='#{url_for(image)}' height='250px' width='250px'
 
             dt: span.label.label-warning = t('.title')
             dd.well = @product.title
@@ -53,7 +53,7 @@ ul.nav.nav-tabs.action_items
             dt: span.label.label-warning = t('.categories')
             dd.well
               - @product.categories.each do |category|
-                a href="/admin/categories/#{category.id}"
+                a href='/admin/categories/#{category.id}'
                   = category.title
                 br
 
@@ -73,7 +73,7 @@ ul.nav.nav-tabs.action_items
             dd.well = raw @product.content
 
             dt: span.label.label-warning = t('.created_at')
-            dd.well = @product.created_at.strftime("%H:%M %d/%m/%Y")
+            dd.well = @product.created_at.strftime('%H:%M %d/%m/%Y')
 
             dt: span.label.label-warning = t('.updated_at')
-            dd.well = @product.updated_at.strftime("%H:%M %d/%m/%Y")
+            dd.well = @product.updated_at.strftime('%H:%M %d/%m/%Y')

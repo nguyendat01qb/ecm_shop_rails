@@ -1,10 +1,8 @@
 class Admin::OrdersController < Admin::BaseAdminController
   before_action :set_order, only: %i[show edit update destroy]
-  before_action :set_status, only: %i[submit cancel success]
+  # before_action :set_status, only: %i[submit cancel success]
 
-  def index
-    @pagy, @orders = pagy(Order.all.order(created_at: :desc), items: 10)
-  end
+  def index; end
 
   def edit; end
 
@@ -39,13 +37,5 @@ class Admin::OrdersController < Admin::BaseAdminController
 
   def set_order
     @order = Order.find(params[:id])
-  end
-
-  def set_status
-    @order = Order.find_by(token: params[:id])
-  end
-
-  def authorize_admin!
-    authorize current_user
   end
 end

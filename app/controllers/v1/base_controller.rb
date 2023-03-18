@@ -1,6 +1,5 @@
 class V1::BaseController < ApplicationController
-  include Pundit::Authorization
-  include Pagy::Backend
+  include Authority
   include PrivacyPolicy
   protect_from_forgery with: :null_session
   before_action :current
@@ -55,9 +54,9 @@ class V1::BaseController < ApplicationController
     start_time = current_user.last_sign_in_at.to_time
     end_time = Time.now
 
-    if(start_time && end_time)
+    if start_time && end_time
       minutes = time_diff(start_time, end_time)
-      if(current_user.total_online_time)
+      if current_user.total_online_time
         minutes = current_user.total_online_time + minutes
       end
       current_user.update_attribute(:total_online_time, minutes)
@@ -65,7 +64,7 @@ class V1::BaseController < ApplicationController
   end
 
   def time_diff(start_time, end_time)
-    (start_time -  end_time) / 60
+    (start_time - end_time) / 60
   end
 
   def token_invalid_json
@@ -82,11 +81,6 @@ class V1::BaseController < ApplicationController
 
   def api_token?
     request.headers['Api-Token'].present? || cookies[:api_token].present? || !request.cookies.to_a.flatten.find_index('api_token').nil?
-  end
-
-  def authorize_admin!
-    token_invalid_json && return unless api_token?
-    authorize current_user
   end
 
   def authenticate_user!

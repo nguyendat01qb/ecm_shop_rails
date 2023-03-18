@@ -274,6 +274,63 @@ en:
         created_at: Created At
         updated_at: Updated At
     vouchers:
+      index:
+        title_header: List of Vouchers
+        dashboard: *dashboard
+        vouchers: Vouchers
+        list: *list
+        new: *new
+        export: *export
+        stt: STT
+        code: Code
+        name: Name
+        cost: Cost
+        max_user: Max User
+        discount_amount: Discount amount
+        apply_amount: Apply amount
+        type: Type
+        status: Status
+        start_date: Start date
+        end_date: End date
+        actions: Actions
+      edit:
+        title_header: 'Edit Voucher: '
+        dashboard: *dashboard
+        voucher: Voucher
+        list: *list
+        new: *new
+        edit: *edit
+        export: *export
+      new:
+        title_header: New Voucher
+        dashboard: *dashboard
+        voucher: Voucher
+        list: *list
+        new: *new
+        export: *export
+      show:
+        title_header: Details for Voucher
+        dashboard: *dashboard
+        voucher: Voucher
+        show: *show
+        list: *list
+        new: *new
+        export: *export
+        basic_info: Basic info
+        id: Id
+        code: Code
+        name: Name
+        description: Description
+        max_user: Max user
+        type_voucher: Type voucher
+        discount_mount: Discount mount
+        status: Status
+        start_time: Start time
+        end_time: End time
+        cost: Cost
+        apply_amount: Apply amount
+        created_at: Created At
+        updated_at: Updated At
   cart:
     shared:
       list_product_cart:

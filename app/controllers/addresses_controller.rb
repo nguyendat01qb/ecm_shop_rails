@@ -1,16 +1,16 @@
 class AddressesController < ApplicationController
-  before_action :authenticate_user
+  # before_action :authenticate_user
   before_action :set_address, only: %i[update edit destroy]
-  rescue_from Pundit::NotAuthorizedError, with: :address_not_authorized
+  # rescue_from Pundit::NotAuthorizedError, with: :address_not_authorized
 
   def index
     @addresses = current_user.addresses
-    authorize @addresses
+    # authorize @addresses
   end
 
   def show_address
     @addresses = current_user.addresses
-    authorize @addresses
+    # authorize @addresses
 
     html = render_to_string partial: 'addresses/shared/address'
     render json: { status: 200, message: 'successfully', html: html }
@@ -35,7 +35,7 @@ class AddressesController < ApplicationController
   def edit; end
 
   def update
-    authorize @address
+    # authorize @address
     update, message = Client::Address::UpdateService.call(@address, address_params)
 
     if update
@@ -58,7 +58,7 @@ class AddressesController < ApplicationController
 
   def change_address
     change = Client::Address::ChangeService.call(change_address_params, current_user)
-    authorize current_user.addresses
+    # authorize current_user.addresses
 
     if change
       render json: { status: 200, message: 'Successfully' }

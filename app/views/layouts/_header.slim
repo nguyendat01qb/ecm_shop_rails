@@ -92,7 +92,7 @@ header#header
                       i.fa.fa-angle-down
                       ul.sub-menu role='menu'
                         - if user_signed_in?
-                          li: a
+                          li: a href="#{show_cart_cart_path}"
                             = t('.cart')
                           li: a href="#{user_order_url}"
                             = t('.my_orders')

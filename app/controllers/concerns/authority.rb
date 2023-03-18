@@ -3,6 +3,7 @@ module Authority
     valid = check_permissions
     render_permission_error unless valid
   rescue NameError, NoMethodError => e
+    Slack::PushErrorService.new({ error: e, detail: e.backtrace[0..5].join('\n') }, 'Error authority').push
     true
   rescue StandardError => e
     Slack::PushErrorService.new({ error: e, detail: e.backtrace[0..5].join('\n') }, 'Error authority').push

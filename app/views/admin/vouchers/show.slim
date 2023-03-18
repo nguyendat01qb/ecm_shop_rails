@@ -1,0 +1,73 @@
+.page-header
+  h1 = t('.title')
+ol.breadcrumb
+  li.dashboard
+    a.pjax href='#{admin_url}' = t('.dashboard')
+  li.dashboard
+    a.pjax href='#{admin_vouchers_url}' = t('.voucher')
+  li.active = t('.show')
+ul.nav.nav-tabs.action_items
+  li
+    a.pjax href='#{admin_vouchers_url}'
+      i.fa.fa-list
+      span = t('.list')
+  li.active
+    a.pjax
+      i.fa.fa-info
+      span = t('.show')
+  li
+    a.pjax href='#{new_admin_voucher_url}'
+      i.fa.fa-plus
+      span = t('.new')
+  li
+    a.pjax
+      i.fa.fa-share
+      span = t('.export')
+
+.col-lg-12.grid-margin.stretch-card.form-show
+  .card
+    .card-body
+      .table-responsive
+        h4 = t('.basic_info')
+        dl
+          dt: span.label.label-warning = t('.id')
+          dd.well = @voucher.id
+
+          dt: span.label.label-warning = t('.code')
+          dd.well = @voucher.code
+
+          dt: span.label.label-warning = t('.name')
+          dd.well = @voucher.name
+
+          dt: span.label.label-warning = t('.description')
+          dd.well = @voucher.description
+
+          dt: span.label.label-warning = t('.max_user')
+          dd.well = @voucher.max_user
+
+          dt: span.label.label-warning = t('.type_voucher')
+          dd.well = @voucher.type_voucher
+
+          dt: span.label.label-warning = t('.discount_mount')
+          dd.well = @voucher.discount_mount
+
+          dt: span.label.label-warning = t('.status')
+          dd.well = @voucher.status
+
+          dt: span.label.label-warning = t('.start_time')
+          dd.well = @voucher.start_time
+
+          dt: span.label.label-warning = t('.end_time')
+          dd.well = @voucher.end_time
+
+          dt: span.label.label-warning = t('.cost')
+          dd.well = @voucher.cost
+
+          dt: span.label.label-warning = t('.apply_amount')
+          dd.well = @voucher.apply_amount
+
+          dt: span.label.label-warning = t('.created_at')
+          dd.well = @voucher.created_at.strftime('%H:%M %d/%m/%Y')
+
+          dt: span.label.label-warning = t('.updated_at')
+          dd.well = @voucher.updated_at.strftime('%H:%M %d/%m/%Y')

@@ -2,16 +2,16 @@
   h1 = t('.title_header')
 ol.breadcrumb
   li.dashboard
-    a.pjax href="#{admin_url}" = t('.dashboard')
+    a.pjax href='#{admin_url}' = t('.dashboard')
   li.dashboard.active
-    a.pjax href="#{admin_brand_url}" = t('.brand')
+    a.pjax href='#{admin_brand_url}' = t('.brand')
   li.active = t('.show')
 
 = render 'admin/shared/flash_message_errors'
 
 ul.nav.nav-tabs.action_items
   li
-    a.pjax href="#{admin_brands_url}"
+    a.pjax href='#{admin_brands_url}'
       i.fa.fa-list
       span = t('.list')
   li.active
@@ -19,7 +19,7 @@ ul.nav.nav-tabs.action_items
       i.fa.fa-info
       span = t('.show')
   li
-    a.pjax href="#{new_admin_brand_url}"
+    a.pjax href='#{new_admin_brand_url}'
       i.fa.fa-plus
       span = t('.new')
   li
@@ -43,7 +43,7 @@ ul.nav.nav-tabs.action_items
           dd.well = @brand.slug
 
           dt: span.label.label-warning = t('.created_at')
-          dd.well = @brand.created_at.strftime("%H:%M %d/%m/%Y")
+          dd.well = @brand.created_at.strftime('%H:%M %d/%m/%Y')
 
           dt: span.label.label-warning = t('.updated_at')
-          dd.well = @brand.updated_at.strftime("%H:%M %d/%m/%Y")
+          dd.well = @brand.updated_at.strftime('%H:%M %d/%m/%Y')

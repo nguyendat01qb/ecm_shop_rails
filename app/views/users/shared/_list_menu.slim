@@ -5,7 +5,7 @@
     .name_profile
       strong
         | Chào
-        = @current_user.name
+        = current_user.name
       br
       a[href="#{profile_edit_user_url}"] Edit account
   ul.menu_profile

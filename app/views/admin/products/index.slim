@@ -5,7 +5,7 @@
     h1 = t('.list_products')
 ol.breadcrumb
   li.dashboard
-    a.pjax href="#{admin_url}" = t('.dashboard')
+    a.pjax href='#{admin_url}' = t('.dashboard')
   li.active = t('.products')
 
 = render 'admin/shared/flash_message_errors'
@@ -16,7 +16,7 @@ ul.nav.nav-tabs.action_items
       i.fa.fa-list
       span = t('.list')
   li
-    a.pjax href="#{new_admin_product_url}"
+    a.pjax href='#{new_admin_product_url}'
       i.fa.fa-plus
       span = t('.new')
   li

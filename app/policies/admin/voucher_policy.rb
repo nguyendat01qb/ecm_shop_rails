@@ -27,6 +27,10 @@ class Admin::VoucherPolicy < BasePolicy
     can_manager?
   end
 
+  def export_csv?
+    can_manager?
+  end
+
   private
 
   def can_manager?

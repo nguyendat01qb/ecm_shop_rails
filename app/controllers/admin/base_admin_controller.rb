@@ -1,6 +1,4 @@
 class Admin::BaseAdminController < BaseAuthController
-  include Pundit::Authorization
-  include Pagy::Backend
   layout 'admin'
   include Authority
 
@@ -8,8 +6,6 @@ class Admin::BaseAdminController < BaseAuthController
 
   protect_from_forgery with: :exception
   before_action :authenticate_admin!
-
-  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   private
 
@@ -24,13 +20,10 @@ class Admin::BaseAdminController < BaseAuthController
 
   def authenticate_admin!
     return redirect_to root_path unless current_user
+
     cookies[:api_token] = current_user.api_token_digest
     return if admin?
 
     redirect_to root_path
-  end
-
-  def authorize_admin!
-    authorize current_user
   end
 end

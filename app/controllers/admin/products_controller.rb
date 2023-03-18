@@ -1,23 +1,23 @@
 class Admin::ProductsController < Admin::BaseAdminController
-  before_action :set_product, only: %i[ show edit update destroy edit_product]
+  before_action :set_product, only: %i[show edit update destroy edit_product]
 
   def index; end
 
   def show; end
 
   def show_attribute
-    html = render_to_string partial: "admin/products/shared/add_attribute", :layout => false
-    render json: { status: 200, message:"successfully", html: html }
+    html = render_to_string partial: 'admin/products/shared/add_attribute', layout: false
+    render json: { status: 200, message: 'successfully', html: html }
   end
 
   def show_no_attribute
-    html = render_to_string partial: "admin/products/shared/attribute_form", :layout => false
-    render json: { status: 200, message:"successfully", html: html }
+    html = render_to_string partial: 'admin/products/shared/attribute_form', layout: false
+    render json: { status: 200, message: 'successfully', html: html }
   end
 
   def show_attribute2
-    html = render_to_string partial: "admin/products/shared/attribute2", :layout => false
-    render json: { status: 200, message:"successfully", html: html }
+    html = render_to_string partial: 'admin/products/shared/attribute2', layout: false
+    render json: { status: 200, message: 'successfully', html: html }
   end
 
   def new
@@ -39,26 +39,25 @@ class Admin::ProductsController < Admin::BaseAdminController
   def edit; end
 
   def edit_product
-    attr1 = render_to_string partial: "admin/products/shared/add_attribute", :layout => false
-    attr2 = render_to_string partial: "admin/products/shared/attribute2", :layout => false
+    attr1 = render_to_string partial: 'admin/products/shared/add_attribute', layout: false
+    attr2 = render_to_string partial: 'admin/products/shared/attribute2', layout: false
 
     data = {
       attributes: @product.product_attributes,
       value: @product.product_attributes[0].attribute_values,
-      images: @product.product_attributes[0].images.map{ |image| url_for(image) },
+      images: @product.product_attributes[0].images.map { |image| url_for(image) }
     }
 
-    render json: { status: 200, message: "successfully", data: data, html: { attr1: attr1, attr2: attr2 }}
+    render json: { status: 200, message: 'successfully', data: data, html: { attr1: attr1, attr2: attr2 } }
   end
-
 
   def update
     update = Admin::Products::UpdateService.call(@product, product_params)
 
     if update
-      flash[:success] = "Product was successfully updated."
+      flash[:success] = 'Product was successfully updated.'
     else
-      flash[:danger] = "Product was failure updated."
+      flash[:danger] = 'Product was failure updated.'
     end
 
     redirect_to admin_products_path
@@ -75,7 +74,7 @@ class Admin::ProductsController < Admin::BaseAdminController
   def export_csv
     csv = Admin::Products::ExportCsvService.new(Product.all, Product::CSV_ATTRIBUTES)
     respond_to do |format|
-      format.csv { send_data csv.perform, filename: "products-#{Date.current}.csv"}
+      format.csv { send_data csv.perform, filename: "products-#{Date.current}.csv" }
     end
   end
 
@@ -99,25 +98,25 @@ class Admin::ProductsController < Admin::BaseAdminController
       category_ids: [],
       product_attribute_1: [
         :name,
-        attribute_value: [
-          attribute: [],
-          price_attribute_product: [],
-          discount_attribute_product: [],
-          stock: [],
-        ],
-        images: []
+        { attribute_value: [
+            attribute: [],
+            price_attribute_product: [],
+            discount_attribute_product: [],
+            stock: []
+          ],
+          images: [] }
       ],
       product_attribute_2: [
         :name,
-        attribute_value: [
-          attribute: [],
-        ]
+        { attribute_value: [
+          attribute: []
+        ] }
       ],
       update: [
-        :insert ,
-        destroy: [
+        :insert,
+        { destroy: [
           attribute_value: []
-        ]
+        ] }
       ]
     )
   end

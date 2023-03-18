@@ -12,7 +12,11 @@ Rails.application.routes.draw do
         get :export_csv
       end
     end
-    resources :vouchers
+    resources :vouchers do
+      collection do
+        get :export_csv
+      end
+    end
     delete 'users/:id/delete', to: 'users#destroy'
     resources :products do
       post 'edit_product', to: 'products#edit_product'

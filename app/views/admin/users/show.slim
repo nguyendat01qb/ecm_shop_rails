@@ -2,13 +2,13 @@
   h1 = t('.title')
 ol.breadcrumb
   li.dashboard
-    a.pjax href="#{admin_url}" = t('.dashboard')
+    a.pjax href='#{admin_url}' = t('.dashboard')
   li.dashboard
-    a.pjax href="#{admin_users_url}" = t('.user')
+    a.pjax href='#{admin_users_url}' = t('.user')
   li.active = t('.show')
 ul.nav.nav-tabs.action_items
   li
-    a.pjax href="#{admin_users_url}"
+    a.pjax href='#{admin_users_url}'
       i.fa.fa-list
       span = t('.list')
   li.active
@@ -16,13 +16,13 @@ ul.nav.nav-tabs.action_items
       i.fa.fa-info
       span = t('.show')
   li
-    a.pjax href="#{new_admin_user_url}"
+    a.pjax href='#{new_admin_user_url}'
       i.fa.fa-plus
       span = t('.new')
   li
-    a.pjax
+    p.pjax
       i.fa.fa-share
-      span = t('.export')
+      = link_to t('.export'), export_csv_admin_users_path(format: :csv)
 
 .col-lg-12.grid-margin.stretch-card.form-show
   .card
@@ -36,7 +36,7 @@ ul.nav.nav-tabs.action_items
           dt: span.label.label-warning = t('.avatar')
           dd.well
             - if @user.avatar.attached?
-              a href="#{url_for(@user.avatar) }"
+              a href='#{url_for(@user.avatar) }'
                 = image_tag(@user.avatar, class: 'preview img-thumbnail')
             - else
               = image_tag('/assets/admin/avatars/user', class: 'preview img-thumbnail')

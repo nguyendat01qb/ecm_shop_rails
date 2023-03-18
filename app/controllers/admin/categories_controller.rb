@@ -46,7 +46,7 @@ class Admin::CategoriesController < Admin::BaseAdminController
   def export_csv
     csv = Admin::Categories::ExportCsvService.new(Category.all, Category::CSV_ATTRIBUTES)
     respond_to do |format|
-      format.csv { send_data csv.perform, filename: "categories-#{Date.current}.csv"}
+      format.csv { send_data csv.perform, filename: "categories-#{Date.current}.csv" }
     end
   end
 

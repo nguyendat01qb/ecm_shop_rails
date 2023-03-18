@@ -44,14 +44,14 @@ class Admin::UsersController < Admin::BaseAdminController
   def export_csv
     csv = Admin::Users::ExportCsvService.new(User.all, User::CSV_ATTRIBUTES)
     respond_to do |format|
-      format.csv { send_data csv.perform, filename: "users-#{Date.current}.csv"}
+      format.csv { send_data csv.perform, filename: "users-#{Date.current}.csv" }
     end
   end
 
   def export_admin_csv
     csv = Admin::Users::ExportCsvService.new(User.has_role_admin, User::CSV_ATTRIBUTES)
     respond_to do |format|
-      format.csv { send_data csv.perform, filename: "admins-#{Date.current}.csv"}
+      format.csv { send_data csv.perform, filename: "admins-#{Date.current}.csv" }
     end
   end
 

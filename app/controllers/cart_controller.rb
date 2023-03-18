@@ -1,7 +1,4 @@
 class CartController < ApplicationController
-  # before_action :authenticate_user!
-  # before_action :authenticate_user
-
   def show
     if params[:carts].nil? && cookies[:add_to_cart].nil?
       render :show
