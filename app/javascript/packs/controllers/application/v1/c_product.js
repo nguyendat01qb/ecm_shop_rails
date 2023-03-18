@@ -157,15 +157,18 @@ function CProduct(options) {
       const p_id = $(this).data('product_id') || product_id;
       const quantity = parseInt($('#cart_quantity_input').val());
       const id_attr1 = $('.item_1.active').data('attribute');
-      const value_attr1 = $('.item_1.active').html().trim();
+      const value_attr1 = $('.item_1.active').html() ? $('.item_1.active').html().trim() : '';
       const id_attr2 = $('.item_2.active').data('attribute');
-      const value_attr2 = $('.item_2.active').html().trim();
+      const value_attr2 = $('.item_2.active').html() ? $('.item_2.active').html().trim() : '';
       var item_1_name = $('#item_1').children().attr('name');
       var item_2_name = $('#item_2').children().attr('name');
-      if (!_.isEmpty(item_1_name) && _.isEmpty(value_attr1)) {
+      if (!_.isEmpty(item_1_name) && _.isEmpty(value_attr1) && !_.isEmpty(item_2_name) && _.isEmpty(value_attr2)) {
+        $.notify(item_1_name + ' is empty');
+        $.notify(item_2_name + ' is empty');
+        return
+      } else if (!_.isEmpty(item_1_name) && _.isEmpty(value_attr1)) {
         return $.notify(item_1_name + ' is empty');
-      }
-      if (!_.isEmpty(item_2_name) && _.isEmpty(value_attr2)) {
+      } else if (!_.isEmpty(item_2_name) && _.isEmpty(value_attr2)) {
         return $.notify(item_2_name + ' is empty');
       }
       const data = {

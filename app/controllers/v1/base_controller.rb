@@ -1,6 +1,7 @@
 class V1::BaseController < ApplicationController
   include Pundit::Authorization
   include Pagy::Backend
+  include PrivacyPolicy
   protect_from_forgery with: :null_session
   before_action :current
   before_action :set_online_time, if: proc { user_signed_in? }
@@ -21,6 +22,14 @@ class V1::BaseController < ApplicationController
     ResponseTemplate.unauthorized(message, content, code)
   end
 
+  def error_permission(message, content = {}, code = 500)
+    ResponseTemplate.error(message, content, code)
+  end
+
+  def token_invalid_message(message, content = {}, code = 404)
+    ResponseTemplate.error(message, content, code)
+  end
+
   def serializers(data, serializer, scope: nil)
     ActiveModelSerializers::SerializableResource.new(data,
                                                      each_serializer: serializer, scope: scope)
@@ -30,13 +39,21 @@ class V1::BaseController < ApplicationController
 
   def session_api_token
     cookies_values = request.cookies.to_a.flatten
-    index_of_token_key = cookies_values.find_index('api_token');
+    index_of_token_key = cookies_values.find_index('api_token')
     request.headers['Api-Token'] || cookies[:api_token] || cookies_values[index_of_token_key.next]
   end
 
+  def permission_error_message
+    error_permission(I18n.t('messages.errors.permission_errors'))
+  end
+
+  def valid_token?
+    current_user.api_token_digest == session_api_token
+  end
+
   def set_online_time
-    start_time = current_user.last_sign_in_at.to_time;
-    end_time = Time.now;
+    start_time = current_user.last_sign_in_at.to_time
+    end_time = Time.now
 
     if(start_time && end_time)
       minutes = time_diff(start_time, end_time)

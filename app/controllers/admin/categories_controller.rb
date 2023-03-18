@@ -1,6 +1,5 @@
-class Admin::CategoriesController < Admin::BaseController
+class Admin::CategoriesController < Admin::BaseAdminController
   before_action :set_category, only: %i[show edit update destroy]
-  before_action :authorize_admin!
 
   def index; end
 
@@ -27,9 +26,13 @@ class Admin::CategoriesController < Admin::BaseController
   def update
     update, message = Admin::Categories::UpdateService.call(@category, category_params)
 
-    status = update ? :success : :danger
-    flash[status] = message
-    render :edit
+    if update
+      flash[:success] = message
+      redirect_to admin_categories_path
+    else
+      flash[:danger] = message
+      render :edit
+    end
   end
 
   def destroy

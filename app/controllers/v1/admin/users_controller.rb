@@ -1,6 +1,4 @@
-class V1::Admin::UsersController < V1::BaseAuthController
-  before_action :authorize_admin!
-
+class V1::Admin::UsersController < V1::Admin::BaseAuthController
   def load_admins
     page = params[:page].to_i
     per_page = 10

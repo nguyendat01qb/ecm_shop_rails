@@ -6,6 +6,7 @@ class Admin::Users::CreateService < ApplicationService
 
   def call
     @user = User.new(user_params.except(:roles))
+    @user.skip_confirmation!
     create = @user.save
     message = create ? 'User was successfully created.' : 'User was failure created.'
 

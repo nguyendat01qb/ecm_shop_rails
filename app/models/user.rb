@@ -63,6 +63,10 @@ class User < ApplicationRecord
     has_role? :admin
   end
 
+  def is_admin?
+    user_role.admin?
+  end
+
   private
 
   def set_default_role
@@ -71,5 +75,9 @@ class User < ApplicationRecord
 
   def from_omniauth?
     provider && uid
+  end
+
+  def user_role
+    @user_role ||= UserRole.new(self)
   end
 end

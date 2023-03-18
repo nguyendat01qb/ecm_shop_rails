@@ -49,3 +49,6 @@ en:
         content_to_short: Your comment is too short (minimum is 6 characters)
       product:
         empty: There are no products in this category or brand
+
+    errors:
+      permission_errors: Permission errors

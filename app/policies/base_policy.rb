@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 class BasePolicy
-  attr_reader :user, :record
-
-  def initialize(user, record)
+  def initialize(user, params, processing_shop_id)
     @user = user
-    @record = record
+    @params = params
+    @shop_id_param = processing_shop_id
   end
 
   def index?
@@ -52,6 +51,8 @@ class BasePolicy
   end
 
   private
+
+  attr_reader :user, :params, :shop_id_param
 
   def authenticate_admin
 		self.record.has_role?(:admin)

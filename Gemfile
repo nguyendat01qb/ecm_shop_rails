@@ -52,7 +52,7 @@ group :development, :test do
 
   gem 'database_cleaner'
 
-  gem 'capybara', '>= 3.26'
+  # gem 'capybara', '>= 3.26'
 
   gem 'rails-controller-testing'
 
@@ -83,7 +83,7 @@ group :test do
 end
 
 group :production do
-  gem 'pg'
+  # gem 'pg'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

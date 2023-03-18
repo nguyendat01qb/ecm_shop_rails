@@ -1,14 +1,13 @@
-class Admin::ProductsController < Admin::BaseController
+class Admin::ProductsController < Admin::BaseAdminController
   before_action :set_product, only: %i[ show edit update destroy edit_product]
-  before_action :authorize_admin!, only: [:index, :show, :edit, :update, :show, :destory]
 
   def index; end
 
-  def show;end
+  def show; end
 
   def show_attribute
     html = render_to_string partial: "admin/products/shared/add_attribute", :layout => false
-    render json: {status: 200, message:"successfully", html: html}
+    render json: { status: 200, message:"successfully", html: html }
   end
 
   def show_no_attribute
@@ -18,7 +17,7 @@ class Admin::ProductsController < Admin::BaseController
 
   def show_attribute2
     html = render_to_string partial: "admin/products/shared/attribute2", :layout => false
-    render json: {status: 200, message:"successfully", html: html}
+    render json: { status: 200, message:"successfully", html: html }
   end
 
   def new
@@ -37,7 +36,7 @@ class Admin::ProductsController < Admin::BaseController
     end
   end
 
-  def edit;end
+  def edit; end
 
   def edit_product
     attr1 = render_to_string partial: "admin/products/shared/add_attribute", :layout => false
