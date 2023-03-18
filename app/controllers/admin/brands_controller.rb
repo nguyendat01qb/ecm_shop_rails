@@ -1,6 +1,5 @@
-class Admin::BrandsController < Admin::BaseController
+class Admin::BrandsController < Admin::BaseAdminController
   before_action :set_brand, only: %i[show edit update destroy]
-  before_action :authorize_admin!
 
   def index
     @pagy, @brands = pagy(Brand.all, items: 10)
@@ -28,10 +27,13 @@ class Admin::BrandsController < Admin::BaseController
 
   def update
     update, message = Admin::Brands::UpdateService.call(@brand, brand_params)
-
-    status = update ? :success : :danger
-    flash[status] = message
-    render :edit
+    if update
+      flash[:success] = message
+      redirect_to admin_brands_url
+    else
+      flash[:danger] = message
+      render :edit
+    end
   end
 
   def destroy

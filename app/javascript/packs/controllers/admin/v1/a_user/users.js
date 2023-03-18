@@ -42,6 +42,9 @@ function AUser(options) {
           if (callback) {
             callback();
           }
+        } else {
+          $('.card-body').hide();
+          $.notify(res.message);
         }
       },
     });

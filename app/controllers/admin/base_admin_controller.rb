@@ -1,7 +1,10 @@
-class Admin::BaseController < ActionController::Base
+class Admin::BaseAdminController < BaseAuthController
   include Pundit::Authorization
   include Pagy::Backend
   layout 'admin'
+  include Authority
+
+  before_action :verify_authority
 
   protect_from_forgery with: :exception
   before_action :authenticate_admin!
@@ -21,6 +24,7 @@ class Admin::BaseController < ActionController::Base
 
   def authenticate_admin!
     return redirect_to root_path unless current_user
+    cookies[:api_token] = current_user.api_token_digest
     return if admin?
 
     redirect_to root_path

@@ -1,6 +1,4 @@
-class V1::Admin::BrandsController < V1::BaseAuthController
-  before_action :authorize_admin!
-
+class V1::Admin::BrandsController < V1::Admin::BaseAuthController
   def load_brands
     page = params[:page].to_i
     per_page = 10

@@ -1,6 +1,5 @@
-class Admin::VouchersController < Admin::BaseController
+class Admin::VouchersController < Admin::BaseAdminController
   before_action :set_voucher, only: %i[show edit update destroy]
-  before_action :authorize_admin!
 
   def index
     @pagy, @vouchers = pagy(Voucher.all, items: 10)
@@ -35,7 +34,7 @@ class Admin::VouchersController < Admin::BaseController
   end
 
   def destroy
-    destroy, message = Admin::Vouchers::DestroyService.call(@brand)
+    destroy, message = Admin::Vouchers::DestroyService.call(@voucher)
 
     status = destroy ? :success : :danger
     flash[status] = message

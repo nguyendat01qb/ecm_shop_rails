@@ -11,11 +11,12 @@ html
     / <script src='https://www.paypal.com/sdk/js?client-id=test&currency=USD'></script>
   body *raicon_data_attributes
     = render 'layouts/header'
-    - if flash
-      - flash.each do |message_type, message|
-        .alert.alert-dismissible class="alert-#{message_type}" style='font-size: 15px; align-items: center;text-align: center;'
-          button.close data-dismiss='alert' type='button' ×
-          = message
+    #flash
+      - if flash
+        - flash.each do |message_type, message|
+          .alert.alert-dismissible class="alert-#{message_type}" style='font-size: 15px; align-items: center;text-align: center;'
+            button.close data-dismiss='alert' type='button' ×
+            = message
     / ==== loader ====
     #loader.display-flex
       .position-center-center
@@ -25,3 +26,10 @@ html
     = render 'layouts/footer'
   = content_for :js_pages
   = content_for :css_pages
+
+script type="text/javascript"
+  | $(document).ready(function(){
+  |   setTimeout(function(){
+  |     $('#flash').remove();
+  |   }, 5000);
+  | })

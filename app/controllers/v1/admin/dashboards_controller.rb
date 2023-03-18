@@ -1,6 +1,4 @@
-class V1::Admin::DashboardsController < V1::BaseController
-  before_action :authorize_admin!
-
+class V1::Admin::DashboardsController < V1::Admin::BaseAuthController
   def numbers
     number_of_users = { name: 'Users', quantity: User.count }
     number_of_categories = { name: 'Categories', quantity: Category.count }
