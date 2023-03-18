@@ -10,17 +10,17 @@
 
 ol.breadcrumb
   li.dashboard
-    a.pjax href="#{admin_url}" = t('.dashboard')
+    a.pjax href='#{admin_url}' = t('.dashboard')
   li.dashboard.active
-    a.pjax href="#{admin_users_url}" = t('.user')
+    a.pjax href='#{admin_users_url}' = t('.user')
   li.active = t('.edit')
 ul.nav.nav-tabs.action_items
   li
-    a.pjax href="#{admin_users_url}"
+    a.pjax href='#{admin_users_url}'
       i.fa.fa-list
       span = t('.list')
   li
-    a.pjax href="#{new_admin_user_url}"
+    a.pjax href='#{new_admin_user_url}'
       i.fa.fa-plus
       span = t('.new')
   li.active

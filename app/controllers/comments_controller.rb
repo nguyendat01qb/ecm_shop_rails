@@ -1,7 +1,4 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!, only: %i[new create reply_comment]
-  before_action :authenticate_user
-
   def index; end
 
   def new

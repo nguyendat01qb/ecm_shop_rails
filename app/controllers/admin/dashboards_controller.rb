@@ -2,7 +2,7 @@ class Admin::DashboardsController < Admin::BaseAdminController
   def index
     @categories = Category.all.each_with_object({}) do |category, result|
       result[category.title] = category.products.count
-    end.sort_by { |category| category[1] }.reverse().first(10)
+    end.sort_by { |category| category[1] }.reverse.first(10)
     @products = Product.all.each_with_object({}) do |product, result|
       result[product.title] = product.quantity
     end

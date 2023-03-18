@@ -1,7 +1,5 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  include Pundit::Authorization
-  include Pagy::Backend
 
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :switch_locale
@@ -42,7 +40,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def after_sign_out_path_for(resource)
+  def after_sign_out_path_for(_resource)
     cookies.delete(:api_token)
     root_path
   end
@@ -50,9 +48,9 @@ class ApplicationController < ActionController::Base
   private
 
   def set_api_token(current_user)
-    if user_signed_in?
-      payload = current_user.generate_token
-      cookies.permanent[:api_token] = payload
-    end
+    return unless user_signed_in?
+
+    payload = current_user.generate_token
+    cookies.permanent[:api_token] = payload
   end
 end

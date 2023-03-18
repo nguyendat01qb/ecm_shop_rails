@@ -1,10 +1,10 @@
 require 'csv'
 
-class Admin::Brands::ExportCsvService < ApplicationService
+class Admin::Vouchers::ExportCsvService < ApplicationService
   def initialize(objects, attributes)
     @attributes = attributes
     @objects = objects
-    @header = attributes.map { |attr| I18n.t("brand_header_csv.#{attr}") }
+    @header = attributes.map { |attr| I18n.t("voucher_header_csv.#{attr}") }
   end
 
   def perform

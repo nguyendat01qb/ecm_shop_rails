@@ -1,4 +1,5 @@
 class Voucher < ApplicationRecord
+  CSV_ATTRIBUTES = %w[id name cost max_user discount_mount apply_amount type_voucher status start_time end_time].freeze
   enum status: { expired: false, applying: true }
   enum type_voucher: { normal: 0, special: 1 }
 

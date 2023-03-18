@@ -1,6 +1,4 @@
 class V1::Admin::BaseAuthController < V1::BaseController
-  include Authority
-
   before_action :auth_user
   before_action :verify_authority
 

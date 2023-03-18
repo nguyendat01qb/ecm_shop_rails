@@ -23,6 +23,8 @@ en:
         changed: Your address changed successfully
       comment:
         created: Your comment was created successfully
+      voucher:
+        list_vouchers: Get list vouchers successfully
     warning:
       cart:
         empty_cart: Shopping cart is empty

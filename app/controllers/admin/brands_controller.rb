@@ -1,9 +1,7 @@
 class Admin::BrandsController < Admin::BaseAdminController
   before_action :set_brand, only: %i[show edit update destroy]
 
-  def index
-    @pagy, @brands = pagy(Brand.all, items: 10)
-  end
+  def index; end
 
   def show; end
 
@@ -47,7 +45,7 @@ class Admin::BrandsController < Admin::BaseAdminController
   def export_csv
     csv = Admin::Brands::ExportCsvService.new(Brand.all, Brand::CSV_ATTRIBUTES)
     respond_to do |format|
-      format.csv { send_data csv.perform, filename: "brands-#{Date.current}.csv"}
+      format.csv { send_data csv.perform, filename: "brands-#{Date.current}.csv" }
     end
   end
 

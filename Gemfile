@@ -58,7 +58,7 @@ group :development, :test do
 
   gem 'webdrivers'
 
-  gem 'pundit-matchers'
+  # gem 'pundit-matchers'
 
   gem 'mysql2', '~> 0.5'
 end
@@ -92,7 +92,7 @@ gem 'slim-rails'
 gem 'stimulus-rails'
 
 gem 'devise'
-gem 'pundit'
+# gem 'pundit'
 gem 'rolify'
 gem 'friendly_id'
 
@@ -110,7 +110,7 @@ gem 'active_model_serializers'
 gem 'carrierwave'
 gem 'ckeditor'
 
-gem 'pagy'
+# gem 'pagy'
 gem 'kaminari'
 
 gem 'stripe-rails'

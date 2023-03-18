@@ -1,25 +1,28 @@
+= content_for :js_pages
+  = javascript_pack_tag 'controllers/admin/v1/a_voucher', 'data-turbolinks-track': 'reload'
+
 .page-header
-  h1 List of Vouchers
+  h1 = t('.title_header')
 ol.breadcrumb
   li.dashboard
-    a.pjax href="#{admin_url}" Dashboard
-  li.active Vouchers
+    a.pjax href='#{admin_url}' = t('.dashboard')
+  li.active = t('.vouchers')
 
-= render "admin/shared/flash_message_errors"
+= render 'admin/shared/flash_message_errors'
 
 ul.nav.nav-tabs.action_items
   li.active
-    a class="pjax" href="#{admin_vouchers_url}"
+    a.pjax href='#{admin_vouchers_url}'
       i.fa.fa-list
-      span List
+      span = t('.list')
   li
-    a.pjax href="#{new_admin_voucher_url}"
+    a.pjax href='#{new_admin_voucher_url}'
       i.fa.fa-plus
-      span New
+      span = t('.new')
   li
-    a.pjax
+    p.pjax
       i.fa.fa-share
-      span Export
+      = link_to t('.export'), export_csv_admin_vouchers_path(format: :csv)
 
 .col-lg-12.grid-margin.stretch-card
   .card
@@ -28,49 +31,76 @@ ul.nav.nav-tabs.action_items
           table.table.table-striped
             thead
               tr
-                th STT
-                th Code
-                th Name
-                th Cost
-                th Max User
-                th Discount amount
-                th apply amount
-                th Type
-                th Status
-                th Start
-                th End
-                th Action
-            tbody
-              - i = 0
-              - @vouchers.each do |voucher|
-                - i += 1
-                tr
-                  td = i
-                  td = voucher.code
-                  td = voucher.name
-                  td = voucher.cost
-                  td = voucher.max_user
-                  td = voucher.discount_mount
-                  td = voucher.apply_amount
-                  td
-                    label.badge[class="badge-#{voucher.type_voucher == 'normal' ? 'success' : 'info'}"]
-                      = voucher.type_voucher
-                  td
-                    label.badge[class="badge-#{voucher.status == 'expired' ? 'danger' : 'success'}"]
-                      = voucher.status
-                  td = voucher.start_time
-                  td = voucher.end_time
-                  td style="width: 80px"
-                    ul.others
-                      li
-                        a href="#{admin_voucher_url(voucher.id)}" title="view"
-                          i.fa.fa-info-circle
-                      li
-                        a href="#{edit_admin_voucher_path(voucher.id)}" title="edit"
-                          i.fa.fa-edit
-                      li
-                        a[data-confirm="Are you sure?" rel="nofollow" 
-                          data-method="delete" href="#{admin_voucher_url(voucher.id)}"]
-                          i.fa-solid.fa-trash
-          == pagy_bootstrap_nav(@pagy)
-                          
+                th = t('.stt')
+                th = t('.code')
+                th = t('.name')
+                th = t('.cost')
+                th = t('.max_user')
+                th = t('.discount_amount')
+                th = t('.apply_amount')
+                th = t('.type')
+                th = t('.status')
+                th = t('.start_date')
+                th = t('.end_date')
+                th = t('.actions')
+            tbody#vouchers_list
+          #paginate.paginatestext-center
+        = render 'admin/shared/paginate'
+
+script#admin_voucher_template[type='text/template']
+  | <%_.each(options, function(option) { %>
+  |   <tr>
+  |     <td><%- option.idx %></td>
+  |     <td><%- option.id %></td>
+  |     <td><%- option.name %></td>
+  |     <td><%- option.cost %></td>
+  |     <td><%- option.max_user %></td>
+  |     <td><%- option.discount_mount %></td>
+  |     <td><%- option.apply_amount %></td>
+  |     <td>
+  |       <% type_voucher = option.type_voucher %>
+  |         <% if (type_voucher == 'normal') { %>
+  |           <label class='badge-success'>
+  |             Normal
+  |           </label>
+  |         <% } else { %>
+  |           <label class='badge-info'>
+  |             Special
+  |           </label>
+  |         <% } %>
+  |     </td>
+  |     <td>
+  |       <% status = option.status %>
+  |         <% if (status == 'expired') { %>
+  |           <label class='badge-danger'>
+  |             Expired
+  |           </label>
+  |         <% } else { %>
+  |           <label class='badge-success'>
+  |             Applying
+  |           </label>
+  |         <% } %>
+  |     </td>
+  |     <td><%- option.start_time %></td>
+  |     <td><%- option.end_time %></td>
+  |     <td style='width: 80px'>
+  |       <ul class='others'>
+  |         <li>
+  |           <a href='/admin/vouchers/<%- option.id %>' title='view'>
+  |             <i class='fa fa-info-circle'></i>
+  |           </a>
+  |         </li>
+  |         <li>
+  |           <a href='/admin/vouchers/<%- option.id %>/edit' title='edit'>
+  |             <i class='fa fa-edit'></i>
+  |           </a>
+  |         </li>
+  |         <li>
+  |           <a href='/admin/vouchers/<%- option.id %>' data-confirm='Are you sure you want to delete voucher: <%- option.name %>?' rel='nofollow' data-method='delete'>
+  |             <i class='fa-solid fa-trash'></i>
+  |           </a>
+  |         </li>
+  |       </ul>
+  |     </td>
+  |  </tr>
+  | <% }) %>

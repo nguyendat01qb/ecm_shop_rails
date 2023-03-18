@@ -38,3 +38,16 @@ en:
     paypal_plan_name: PayPal Plan Name
     price_cents: Price Cents
     price_currency: Price Currency
+  voucher_header_csv:
+    id: ID
+    name: Name
+    cost: Cost
+    max_user: Max user
+    discount_mount: Discount mount
+    apply_amount: Apply amount
+    type_voucher: Type voucher
+    status: Status
+    start_time: Start time
+    end_time: End time
+    created_at: Created At
+    updated_at: Updated At

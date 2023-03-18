@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       get 'load_categories', to: 'categories#load_categories'
       get 'load_brands', to: 'brands#load_brands'
       get 'load_products', to: 'products#load_products'
+      get 'load_vouchers', to: 'vouchers#load_vouchers'
     end
 
     namespace :customer do

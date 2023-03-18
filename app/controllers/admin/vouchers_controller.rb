@@ -1,9 +1,7 @@
 class Admin::VouchersController < Admin::BaseAdminController
   before_action :set_voucher, only: %i[show edit update destroy]
 
-  def index
-    @pagy, @vouchers = pagy(Voucher.all, items: 10)
-  end
+  def index; end
 
   def show; end
 
@@ -39,6 +37,13 @@ class Admin::VouchersController < Admin::BaseAdminController
     status = destroy ? :success : :danger
     flash[status] = message
     redirect_to admin_vouchers_url
+  end
+
+  def export_csv
+    csv = Admin::Vouchers::ExportCsvService.new(Voucher.all, Voucher::CSV_ATTRIBUTES)
+    respond_to do |format|
+      format.csv { send_data csv.perform, filename: "vouchers-#{Date.current}.csv" }
+    end
   end
 
   private
