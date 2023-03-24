@@ -161,6 +161,7 @@ function CHome(options) {
           module.handleLoadMore(res.data.is_load_more);
         } else {
           module.settings.elements.product.html(`<h4 class='error_message'>${res.message}</h4>`);
+          $('.load_more').hide();
         }
       },
     });

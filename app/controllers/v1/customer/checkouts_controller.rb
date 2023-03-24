@@ -3,8 +3,8 @@ class V1::Customer::CheckoutsController < V1::BaseController
     return unless current_user
 
     cart = current_user&.carts&.is_pending&.first
-    voucher = current_user.user_vouchers.applying.voucher
-    product_values(cart, voucher)
+    # voucher = current_user.user_vouchers.applying.voucher
+    product_values(cart, nil)
   end
 
   def voucher
@@ -66,7 +66,7 @@ class V1::Customer::CheckoutsController < V1::BaseController
       quantity = cart_item.quantity
       price = attr_value.price_attribute_product
       discount = attr_value.discount_attribute_product * 100
-      amount = ((price * quantity * discount).to_f / 100.to_f).round(2)
+      amount = ((price * quantity * discount) / 100).to_f.round(2)
       total_amount += amount
       {
         product: product,

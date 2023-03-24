@@ -100,13 +100,11 @@ function CCart(options) {
           }
           localStorage.setItem('carts', JSON.stringify(carts));
         }
-        var totalAmount = parseFloat((price * discount * quantity) / 100);
+        var totalAmount = parseFloat((price * discount * quantity) / 100).toFixed(2);
         $('.cart_total_price_' + attr_id).replaceWith(
-          `<p class='cart_total_price cart_total_price_${attr_id}'><sup>$</sup>${totalAmount}</p>`
+          `<p class='cart_total_price cart_total_price_${attr_id}' id='${totalAmount}'><sup>$</sup>${totalAmount}</p>`
         );
-        $('#total_amount').replaceWith(
-          `<div id='total_amount'><sup>$</sup>${totalAmount}</div>`
-        );
+        return module.updateTotalAmount();
       } else {
         $.notify('Out of stock quantity');
       }
@@ -159,18 +157,27 @@ function CCart(options) {
           }
           localStorage.setItem('carts', JSON.stringify(carts));
         }
-        var totalAmount = parseFloat((price * discount * quantity) / 100);
+        var totalAmount = parseFloat((price * discount * quantity) / 100).toFixed(2);
         $('.cart_total_price_' + attr_id).replaceWith(
-          `<p class='cart_total_price cart_total_price_${attr_id}><sup>$</sup>${totalAmount}</p>`
+          `<p class='cart_total_price cart_total_price_${attr_id}' id='${totalAmount}'><sup>$</sup>${totalAmount}</p>`
         );
-        $('#total_amount').replaceWith(
-          `<div id='total_amount'><sup>$</sup>${totalAmount}</div>`
-        );
+        return module.updateTotalAmount();
       } else {
         $.notify('Quantity cannot be continue down');
       }
     });
   };
+
+  module.updateTotalAmount = function () {
+    if ($('.cart_total_price').length === 0) return;
+    var totalAmount = 0;
+    _.each($('.cart_total_price'), function (e) {
+      totalAmount = totalAmount + parseFloat(e.id);
+    });
+    $('#total_amount').replaceWith(
+      `<div id='total_amount'><sup>$</sup>${totalAmount.toFixed(2)}</div>`
+    );
+  }
 
   module.handleUpdate = function (cart_item_id, quantity) {
     var data = { cart_item_id: cart_item_id, quantity: quantity };
@@ -179,7 +186,7 @@ function CCart(options) {
       type: 'PUT',
       data: data,
       dataType: 'json',
-      success: function (res) {},
+      success: function (res) { },
     });
   };
 
@@ -231,6 +238,7 @@ function CCart(options) {
     module.handleIncrement();
     module.handleDecrement();
     module.handleDelete();
+    module.updateTotalAmount();
   };
 }
 

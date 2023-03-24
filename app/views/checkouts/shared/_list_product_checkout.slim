@@ -61,13 +61,20 @@ script#list_order_checkout_template[type='text/template']
   |     <div class='pull-left'>Transport fee:</div>
   |     <div class='pull-right' id='charge_fee'><sup>$</sup><%- option.transport_fee  %></div>
   |   </div>
-  |   <div class='item_fee' id='voucher_code'>
-  |     <span>Applied voucher code: <b><%- option.voucher_code %></b></span>
-  |   </div>
-  |   <div class='item_fee' id='discount_price'>
-  |     <div class='pull-left'>Discount:</div>
-  |     <div class='pull-right' id='sale_price'>- <sup>$</sup><%- option.voucher_cost %></div>
-  |   </div>
+  |   <% if (!_.isEmpty(option.voucher_code)) { %>
+  |     <div class='item_fee' id='voucher_code'>
+  |       <span>Applied voucher code: <b><%- option.voucher_code %></b></span>
+  |     </div>
+  |     <div class='item_fee' id='discount_price'>
+  |       <div class='pull-left'>Discount:</div>
+  |       <div class='pull-right' id='sale_price'>- <sup>$</sup><%- option.voucher_cost %></div>
+  |     </div>
+  |   <% } else { %>
+  |     <div class='item_fee' id='discount_price'>
+  |       <div class='pull-left'>Discount:</div>
+  |       <div class='pull-right' id='sale_price'>- <sup>$</sup>0</div>
+  |     </div>
+  |   <% } %>
   | </div>
   | <div class='into_money'>
   |   <div class='into_money-title'>

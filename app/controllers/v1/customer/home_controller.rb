@@ -46,13 +46,14 @@ class V1::Customer::HomeController < V1::BaseController
     per_page = request.params[:per_page] ? request.params[:per_page].to_i : 6
     products =
       if !brand_id.zero? && !category_id.zero?
-        Kaminari.paginate_array(load_by_category(category_id).map do |product|
+        Kaminari.paginate_array(load_by_category(category_id, per_page).map do |product|
           product if product.brand_id == brand_id
         end).page(1).per(per_page)
       elsif !category_id.zero?
         load_by_category(category_id, per_page)
       elsif !brand_id.zero?
-        Product.where(brand_id: brand_id).select(:id, :title, :price, :price_cents, :discount, :quantity).page(1).per(per_page)
+        Product.where(brand_id: brand_id).select(:id, :title, :price, :price_cents, :discount,
+                                                 :quantity).page(1).per(per_page)
       else
         Product.all.select(:id, :title, :price, :price_cents, :discount, :quantity).page(1).per(per_page)
       end
