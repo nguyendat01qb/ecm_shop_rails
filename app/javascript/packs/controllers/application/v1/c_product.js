@@ -181,7 +181,6 @@ function CProduct(options) {
       if (!_.isEmpty(module.settings.headers['Api-Token'])) {
         data.product_id = p_id;
         data.quantity = quantity;
-        debugger
         module.handleUpdateCart(data);
       }
     });

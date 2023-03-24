@@ -16,7 +16,7 @@ class BaseAuthController < ApplicationController
   private
 
   def available_admin?
-    user_role && current_user.admin?
+    user_role && current_user.is_admin?
   end
 
   def user_role

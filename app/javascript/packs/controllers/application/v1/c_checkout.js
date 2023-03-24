@@ -32,10 +32,11 @@ function CCheckout(options) {
       success: function (res) {
         if (res.code === 200) {
           var data = res.data;
-          data.voucher_id = res.data.voucher.id;
-          data.voucher_cost = res.data.voucher.cost;
-          data.voucher_code = res.data.voucher.code;
-          delete data.voucher;
+          if (!_.isEmpty(data.voucher)) {
+            data.voucher_cost = res.data.voucher.cost;
+            data.voucher_code = res.data.voucher.code;
+            delete data.voucher;
+          }
           var addressDefault = data.address_default;
           var addresses = data.addresses;
           var orderItems = data.order_item;
@@ -83,8 +84,7 @@ function CCheckout(options) {
     );
     data.total = (
       data.total_amount +
-      data.transport_fee -
-      data.voucher_cost
+      data.transport_fee
     ).toFixed(2);
     $(module.settings.elements.list_order_checkout).html(
       template({ option: data })
@@ -132,10 +132,11 @@ function CCheckout(options) {
         $('input[name=apply_voucher]').val('');
         if (res.code === 200) {
           var data = res.data;
-          data.voucher_id = res.data.voucher.id;
-          data.voucher_cost = res.data.voucher.cost;
-          data.voucher_code = res.data.voucher.code;
-          delete data.voucher;
+          if (!_.isEmpty(data.voucher)) {
+            data.voucher_cost = res.data.voucher.cost;
+            data.voucher_code = res.data.voucher.code;
+            delete data.voucher;
+          }
           module.renderOrderCheckout(data);
         } else {
           $.notify(res.message);
