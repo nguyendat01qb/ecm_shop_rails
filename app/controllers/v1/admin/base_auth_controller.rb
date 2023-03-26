@@ -1,5 +1,5 @@
 class V1::Admin::BaseAuthController < V1::BaseController
-  before_action :auth_user
+  before_action :auth_admin
   before_action :verify_authority
 
   # rescue_from CanCan::AccessDenied do |_exception|
@@ -8,7 +8,7 @@ class V1::Admin::BaseAuthController < V1::BaseController
 
   protected
 
-  def auth_user
+  def auth_admin
     render json: token_invalid_message(I18n.t('messages.errors.please_sign_in')) && return if current_user.blank?
     render json: error_message(I18n.t('messages.errors.missing_api_token')) && return unless api_token?
     render json: token_invalid_message && return unless valid_token?

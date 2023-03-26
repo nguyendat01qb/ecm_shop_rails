@@ -1,4 +1,6 @@
 class V1::Customer::ProductsController < V1::BaseController
+  before_action :verify_authority, only: [:add_to_cart]
+
   def images
     product_id = request.params[:id]
     image_urls = Product.find_by(id: product_id).images.map do |image|
@@ -16,9 +18,9 @@ class V1::Customer::ProductsController < V1::BaseController
     product_attributes = product.product_attributes.select(:id, :name)
     index = 0
     attr_values = product_attributes.each_with_object({}) do |pa, result|
-      if index === 0
+      if index.zero?
         (result[[pa.id, pa.name]] ||= []).push(pa.attribute_values.pluck(:attribute_1).uniq)
-      elsif index === 1
+      elsif index == 1
         (result[[pa.id, pa.name]] ||= []).push(pa.attribute_values.pluck(:attribute_2).uniq)
       end
       index += 1
@@ -80,5 +82,57 @@ class V1::Customer::ProductsController < V1::BaseController
       I18n.t('messages.success.product.add_cart'),
       cart_item: cart_item
     )
+  end
+
+  def comments
+    product = Product.find(params[:id])
+    comments = product.comments.group_by(&:comment_id)
+    pr_comments = comments[nil].index_by(&:id)
+    pr_comment_keys = pr_comments.keys
+    user_ids = comments.values.flatten.pluck(:user_id).uniq
+    users =  User.where(id: user_ids).select(:id, :name).index_by(&:id)
+    cmt_keys = comments.keys.compact
+    comments = pr_comment_keys.each_with_object([]) do |p_id, result|
+      pr_cmt = pr_comments[p_id]
+      if cmt_keys.include?(p_id)
+        childs = comments[p_id]
+        childs = childs.each_with_object([]) do |child, child_result|
+          user = users[child.user_id]
+          child_result << {
+            id: child.id,
+            user: {
+              name: user.name,
+              avatar: url_for(user.avatar)
+            },
+            content: child.content,
+            created_at: child.created_at.strftime('%H:%M %d/%m/%Y')
+          }
+        end
+        user = users[pr_cmt.user_id]
+        result << {
+          id: pr_cmt.id,
+          user: {
+            name: user.name,
+            avatar: url_for(user.avatar)
+          },
+          content: pr_cmt.content,
+          created_at: pr_cmt.created_at.strftime('%H:%M %d/%m/%Y'),
+          childs: childs
+        }
+      else
+        user = users[pr_cmt.user_id]
+        result << {
+          id: pr_cmt.id,
+          user: {
+            name: user.name,
+            avatar: url_for(user.avatar)
+          },
+          content: pr_cmt.content,
+          created_at: pr_cmt.created_at.strftime('%H:%M %d/%m/%Y'),
+          childs: []
+        }
+      end
+    end
+    render json: success_message('OK', comments: comments)
   end
 end

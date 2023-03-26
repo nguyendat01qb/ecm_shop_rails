@@ -13,7 +13,7 @@ function CCart(options) {
     },
     elements: {
       cart: $('#a_list_cart_items'),
-    },
+    }
   };
 
   module.settings = $.extend({}, defaults, options);
@@ -104,7 +104,7 @@ function CCart(options) {
         $('.cart_total_price_' + attr_id).replaceWith(
           `<p class='cart_total_price cart_total_price_${attr_id}' id='${totalAmount}'><sup>$</sup>${totalAmount}</p>`
         );
-        return module.updateTotalAmount();
+        module.updateTotalAmount();
       } else {
         $.notify('Out of stock quantity');
       }

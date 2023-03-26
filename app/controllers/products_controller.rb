@@ -2,8 +2,6 @@ class ProductsController < ApplicationController
   def show
     @categories = Category.is_parent.include_categories
     @brands = Brand.all.include_products
-    @product = Product.with_attached_images.friendly.find(params[:id])
-    @product_attributes = @product.product_attributes.includes(:attribute_values)
-    @comments = @product.comments.where(comment_id: nil)
+    @product_id = params[:id]
   end
 end

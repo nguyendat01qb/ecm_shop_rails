@@ -3,6 +3,9 @@ validation:
   number_phone: !ruby/regexp /\A[0-9+()●-]+\z/
 hmac_secret: 'ecommerce-secret'
 slack:
-  error_500: https://hooks.slack.com/services/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
+  error_500: https://hooks.slack.com/services/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
 sendgrid:
   api_key: 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
+stripe:
+  secret_key: sk_test_51MQQDqAfM8SM9VlxUp1gbrcZ2zkXucX2fNHgEUhsTqm1pjZuxGFPkcWpIo71gPWOE9WOAMAsdC799bHY3L1y2B1c00Zk5Y3EuF
+  publisable_key: pk_test_51MQQDqAfM8SM9VlxjUWgvgCSUpGM0IGWbzdDQcj3cPae4OdH2WyK8jG3OXAqRGBs6TYAynE44wE8RMeQvvnk09RW00eayTBSlh

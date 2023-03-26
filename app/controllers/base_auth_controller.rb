@@ -1,4 +1,6 @@
 class BaseAuthController < ApplicationController
+  include Authority
+
   before_action :auth_user
 
   def auth_user

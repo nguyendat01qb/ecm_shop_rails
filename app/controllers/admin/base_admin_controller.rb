@@ -1,9 +1,7 @@
 class Admin::BaseAdminController < BaseAuthController
   layout 'admin'
-  include Authority
 
   before_action :verify_authority
-
   protect_from_forgery with: :exception
   before_action :authenticate_admin!
 
