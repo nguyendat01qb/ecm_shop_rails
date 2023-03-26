@@ -7,7 +7,7 @@
       li
         a href='#description' data-toggle='tab' Description
       li
-        a href='#reviews' data-toggle='tab' Reviews
+        a.reviews href='#reviews' data-toggle='tab' Reviews
   .tab-content
     .tab-pane.fade#productsother.active.in
       .col-sm-3.col-xs-6
@@ -51,9 +51,9 @@
                           i.fa.fa-shopping-cart
                           |   Add to cart
     .tab-pane.fade#description
-      = raw @product.content
-    .tab-pane.fade#reviews p_id='#{@product.id}'
-      .col-sm-12
+      / = raw @product.content
+    .tab-pane.fade#reviews p_id='1'
+      .col-sm-12#comment_group
         .rating
           h4.rating__title Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore recusandae blanditiis soluta nostrum non tempore vitae modi vel explicabo earum itaque ab maxime unde
           .rating-star.left
@@ -106,6 +106,56 @@
 
         = render 'products/shared/form'
         .response-area
-          ul.list_comment
-            - @comments.each do |comment|
-              = render 'products/shared/list_comment', comment: comment
+          ul#list_comment
+
+script#list_comments_template[type='text/template']
+  | <% _.each(options, function(option) { %>
+  |   <li class='item_comment'>
+  |     <a class='pull-left'>
+  |       <img src='<%- option.user.avatar %>' class='media-object' />
+  |     </a>
+  |     <div class='item_comment-user'>
+  |       <p class='item_comment-name'><%- option.user.name %></p>
+  / |       <div class='rate-star'>
+  / |         <i class='fa fa-star'>
+  / |         <i class='fa fa-star'>
+  / |         <i class='fa fa-star'>
+  / |         <i class='fa fa-star'>
+  / |         <i class='fa fa-star'>
+  / |       </div>
+  |       <p class='item_comment-time'><%- option.created_at %></p>
+  |       <ul>
+  |         <li><i class='fa-solid fa-thumbs-up'></i></li>
+  |         <li class='reply-comment'><i class='fa-regular fa-comment'></i></li>
+  |         <li><i class='fa fa-edit'></i></li>
+  |         <li id='delete_comment' data-comment-id='<%- option.id %>'><i class='fa-solid fa-trash'></i></li>
+  |       </ul>
+  |       <div class='content_comment'><%- option.content %></div>
+  |       <% if(option.childs.length > 0)  { %>
+  |         <div class='list_comment_chidren'>
+  |           <% _.each(option.childs, function(child) { %>
+  |             <div class='item_comment_chidren'>
+  |               <img src='<%- option.user.avatar %>' />
+  |               <div class='item_comment_chidren-content'>
+  |                 <p><%- child.user.name %></p>
+  |                 <p><%- child.created_at %></p>
+  |                 <p class='list-edit-comment-children'><%- child.content %></p>
+  |                 <ul>
+  |                   <li><i class='fa-solid fa-thumbs-up'></i></li>
+  |                   <li><i class='fa fa-edit'></i></li>
+  |                   <li id='delete_comment' data-comment-id='<%- child.id %>'><i class='fa-solid fa-trash'></i></li>
+  |                 </ul>
+  |               </div>
+  |             </div>
+  |           <% }) %>
+  |         </div>
+  |       <% } %>
+  |       <div class='form-reply'>
+  |         <form id='form_comment'>
+  |           <textarea class='in-reply-comment' id='reply_comment' data-comment-id='<%- option.id %>' placeholder='Write a comment...'></textarea>
+  |           <input id='btn_reply_comment' type='button' value='Submit'>
+  |         </form>
+  |       </div>
+  |     </div>
+  |   </li>
+  | <% }) %>

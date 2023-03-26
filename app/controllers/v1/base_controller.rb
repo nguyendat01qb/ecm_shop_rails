@@ -4,6 +4,7 @@ class V1::BaseController < ApplicationController
   protect_from_forgery with: :null_session
   before_action :current
   before_action :set_online_time, if: proc { user_signed_in? }
+  # ./bin/webpack-dev-server
 
   attr_reader :current_user
 

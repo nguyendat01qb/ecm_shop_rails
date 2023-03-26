@@ -25,6 +25,9 @@ function CProduct(options) {
     elements: {
       images: $('#product_images'),
       detail: $('#product_detail')
+    },
+    data: {
+      starClicked: false
     }
   };
 
@@ -202,7 +205,7 @@ function CProduct(options) {
             attr_val_id: attr_val_id,
           };
           if (_.isEmpty(module.settings.headers['Api-Token'])) {
-            const cart_present = false;
+            let cart_present = false;
             if (_.isEmpty(carts)) {
               carts = [cart_params];
             } else {
@@ -221,14 +224,13 @@ function CProduct(options) {
               }
             }
             localStorage.setItem('carts', JSON.stringify(carts));
+            popupFire(
+              'top-right',
+              'success',
+              'The product has been added successfully',
+              2000
+            );
           }
-
-          popupFire(
-            'top-right',
-            'success',
-            'The product has been added successfully',
-            2000
-          );
         }
       },
     });
@@ -241,8 +243,26 @@ function CProduct(options) {
       data: data,
       dataType: 'json',
       success: function (res) {
-        $('#cart_quantity_input').attr('value', res.data.cart_item.quantity);
+        if (res.code === 200) {
+          $('#cart_quantity_input').attr('value', res.data.cart_item.quantity);
+          popupFire(
+            'top-right',
+            'success',
+            res.message,
+            2000
+          );
+        } else if (res.code === 500) {
+          popupFire(
+            'top-right',
+            'error',
+            res.message,
+            2000
+          );
+        }
       },
+      error: function (e) {
+        $.notify(e.message);
+      }
     });
   };
 
@@ -300,6 +320,72 @@ function CProduct(options) {
     });
   };
 
+  module.handleStar = function () {
+    $('.star').on('click', function () {
+      $(this).children('.selected').addClass('is-animated');
+      $(this).children('.selected').addClass('pulse');
+      var target = this;
+      setTimeout(function() {
+        $(target).children('.selected').removeClass('is-animated');
+        $(target).children('.selected').removeClass('pulse');
+      }, 1000);
+      module.settings.data.starClicked = true;
+    });
+
+    $('.half').on('click', function () {
+      debugger
+      if (module.settings.data.starClicked) {
+        module.setHalfStarState(this);
+      }
+      $(this).closest('#rating').find('.js-score').text($(this).data('value'));
+      $(this).closest('#rating').data('vote', $(this).data('value'));
+      module.calculateAverage();
+      console.log(parseInt($(this).data('value')));
+    })
+
+    $('.full').on('click', function() {
+      debugger
+      if (module.settings.data.starClicked) {
+        module.setFullStarState(this);
+      }
+      $(this).closest('#rating').find('.js-score').text($(this).data('value'));
+      $(this).find('js-average').text(parseInt($(this).data('value')));
+      $(this).closest('#rating').data('vote', $(this).data('value'));
+      module.calculateAverage();
+      console.log(parseInt($(this).data('value')));
+    })
+  }
+
+  module.updateStarState = function (target) {
+    $(target).parent().prevAll().addClass('animate');
+    $(target).parent().prevAll().children().addClass('star-colour');
+
+    $(target).parent().nextAll().removeClass('animate');
+    $(target).parent().nextAll().children().removeClass('star-colour');
+  }
+
+  module.setHalfStarState = function (target) {
+    $(target).addClass('star-colour');
+    $(target).siblings('.full').removeClass('star-colour');
+    module.updateStarState(target)
+  }
+
+  module.setFullStarState = function (target) {
+    $(target).addClass('star-colour');
+    $(target).parent().addClass('animate');
+    debugger
+    $(target).siblings('.half').addClass('star-colour');
+    module.updateStarState(target)
+  }
+
+  module.calculateAverage = function () {
+    var average = 0
+    $('#rating').each(function() {
+      average += $(this).data('vote')
+    })
+    $('.js-average').text((average/ $('#rating').length).toFixed(1))
+  }
+
   module.init = function () {
     $.when(module.getImages()).done(function () {
       module.handleSliderSlick();
@@ -310,6 +396,7 @@ function CProduct(options) {
 
     module.handleIncrement();
     module.handleDecrement();
+    module.handleStar();
   };
 }
 

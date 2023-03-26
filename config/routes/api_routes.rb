@@ -21,10 +21,10 @@ Rails.application.routes.draw do
           post :search
           post :select_attribute
           post :add_to_cart
-          post :comments
         end
 
         member do
+          get :comments
           get :images
         end
       end

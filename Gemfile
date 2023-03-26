@@ -24,43 +24,35 @@ gem 'jbuilder', '~> 2.7'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
-gem 'simple_form'
 gem 'cocoon'
+gem 'simple_form'
 
 gem 'config'
 
-gem 'slack-notifier'
-gem 'jwt'
 gem 'chartkick'
+gem 'jwt'
+gem 'slack-notifier'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'pry-rails'
   gem 'dotenv-rails', groups: [:development, :test]
+  gem 'pry-rails'
 
-  gem 'rspec-rails', '~> 6.0.0'
-  gem 'rspec-mocks', '~> 3.12'
   gem 'rspec-expectations', '~> 3.12'
+  gem 'rspec-mocks', '~> 3.12'
+  gem 'rspec-rails', '~> 6.0.0'
 
   gem 'factory_bot_rails'
 
   gem 'shoulda-matchers'
 
   gem 'database_cleaner'
-
-  # gem 'capybara', '>= 3.26'
-
-  gem 'rails-controller-testing'
-
-  gem 'webdrivers'
-
-  # gem 'pundit-matchers'
-
   gem 'mysql2', '~> 0.5'
+  gem 'rails-controller-testing'
+  gem 'webdrivers'
 end
 
 group :development do
@@ -69,10 +61,10 @@ group :development do
   # Display performance information such as SQL time and flame graphs for each request in your browser.
   # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
   # gem 'rack-mini-profiler', '~> 2.0'
+  gem 'letter_opener'
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  gem 'letter_opener'
 end
 
 group :test do
@@ -87,34 +79,32 @@ group :production do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'slim-rails'
 gem 'stimulus-rails'
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'devise'
-# gem 'pundit'
-gem 'rolify'
 gem 'friendly_id'
+gem 'rolify'
 
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
 
-gem 'paperclip'
 gem 'image_processing'
+gem 'paperclip'
 
-gem 'active_storage_validations'
 gem 'active_model_serializers'
+gem 'active_storage_validations'
 
 gem 'carrierwave'
 gem 'ckeditor'
 
-# gem 'pagy'
 gem 'kaminari'
 
-gem 'stripe-rails'
 gem 'money-rails'
+gem 'stripe-rails'
 
 gem 'i18n-js', '>= 3.0.0.rc11'
 

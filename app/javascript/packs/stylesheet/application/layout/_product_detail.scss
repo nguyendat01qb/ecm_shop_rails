@@ -407,7 +407,7 @@
       padding: 8px;
     }
 
-    #btn_send_comment {
+    #btn_send_comment, #btn_reply_comment {
       color: white;
       background: #fe980f;
       border-radius: 10px;
@@ -420,7 +420,7 @@
       margin-top: 20px;
     }
 
-    .list_comment {
+    #list_comment {
       background: #ffffff;
       border: none;
       list-style: none;
@@ -432,7 +432,6 @@
         width: 100%;
         border: 1px solid #f7f7f0;
         padding: 18px 18px 18px 0;
-        margin-bottom: 27px;
 
         a {
           @media #{$xs-portrait-layout} {
@@ -556,24 +555,64 @@
   }
 }
 
-.comment_body{
-  display: flex;
-  margin: auto;
-}
-
 .upload_file {
   width: 70px;
   height: 60px;
   position: relative;
   overflow: hidden;
-  margin-left: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   label img {
-    width: 60px;
-    height: 60px;
+    width: 30px;
+    height: 28px;
   }
 
   input {
     display: none;
   }
+}
+
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
+}
+
+#rating .stars {
+  margin-right: 15px;
+}
+
+#rating .stars .star {
+  float: left;
+  padding: 5px 2px;
+  cursor: pointer;
+}
+
+#rating .stars .star:before {
+  font-family: 'FontAwesome';
+  content: '\f005';
+  color: #d0e8f0;
+  font-size: 3em;
+}
+
+#rating .stars .star:hover:before,
+#rating .stars .star.to_rate:before,
+#rating .stars .star.rated:before {
+  color: #80c1d5;
+}
+
+#rating .stars .star.no_to_rate:before {
+  color: #d0e8f0;
+}
+
+.form_group {
+  display: flex;
+}
+
+.media-object {
+  width: 48px;
 }
