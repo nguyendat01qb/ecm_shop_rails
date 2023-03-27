@@ -1,14 +1,14 @@
 section#form
-  .container
+  .container#forgot_password
     .row
       .login-form
         h2 Forgot your password ?
         = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
-          = render "devise/shared/error_messages", resource: resource
+          = render 'devise/shared/error_messages', resource: resource
 
           = f.label :email
           br
-          = f.email_field :email, autofocus: true, autocomplete: "email",  placeholder: "Enter Your Email"
-          button[type="submit" class="btn btn-default"] Send me reset password instructions
-        
-        = render "devise/shared/links"
+          = f.email_field :email, autofocus: true, autocomplete: 'email',  placeholder: 'Enter Your Email'
+          button[type='submit' class='btn btn-default'] Send me reset password instructions
+
+        = render 'devise/shared/links'

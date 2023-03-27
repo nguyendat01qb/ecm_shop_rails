@@ -61,14 +61,19 @@ function CComment(options) {
 
   module.handleReplyComment = function () {
     $(document).on('click', '.reply-comment', function () {
-      $(document).find('.form-reply').hide();
-      $(this).closest('.item_comment-user').find('.form-reply').toggle();
+      var formReply = $(document).find('.form-reply');
+      var itemCommentUser = $(this).closest('.item_comment-user');
+      formReply.hide();
+      formReply.removeClass('active');
+      itemCommentUser.find('#reply_comment').addClass('active');
+      itemCommentUser.find('.form-reply').toggle();
     });
 
     $(document).on('click', '#btn_reply_comment', function () {
       var data = new FormData();
-      var comment = $('#reply_comment').val();
-      var comment_id = $('#reply_comment').data('comment-id')
+      var replyComment = $('#reply_comment.active');
+      var comment = replyComment.val();
+      var comment_id = replyComment.data('comment-id');
       data.append('comment', comment);
       data.append('product_id', module.settings.data.product_id);
       data.append('comment_id', comment_id);

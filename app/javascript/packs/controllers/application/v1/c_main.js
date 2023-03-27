@@ -56,6 +56,9 @@ function CMain(options) {
   module.init = function () {
     module.loadProductCart();
     module.beforeCheckout();
+    setTimeout(function(){
+      $('#flash').remove();
+    }, 5000);
   };
 }
 

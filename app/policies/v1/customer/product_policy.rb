@@ -6,6 +6,8 @@ class V1::Customer::ProductPolicy < BasePolicy
   private
 
   def can_customer?
+    return false unless user
+
     (user.has_role? :admin) || (user.has_role? :customer)
   end
 end
