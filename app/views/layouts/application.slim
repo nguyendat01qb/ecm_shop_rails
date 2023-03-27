@@ -26,10 +26,3 @@ html
     = render 'layouts/footer'
   = content_for :js_pages
   = content_for :css_pages
-
-script type="text/javascript"
-  | $(document).ready(function(){
-  |   setTimeout(function(){
-  |     $('#flash').remove();
-  |   }, 5000);
-  | })

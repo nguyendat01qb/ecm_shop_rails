@@ -31,9 +31,9 @@ class V1::Customer::CommentsController < V1::BaseController
   def destroy
     comment_id = params[:id]
     comment = Comment.find_by(id: comment_id)
-    if comment.present? && comment.child_comments
-      comment.child_comments.delete_all
-    end
+    return render json: error_message('You can not delete this comment') if comment.user_id != current_user.id
+
+    comment.child_comments.delete_all if comment.present? && comment.child_comments
     comment.delete
     render json: success_message('OK')
   end

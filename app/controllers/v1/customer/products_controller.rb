@@ -86,7 +86,9 @@ class V1::Customer::ProductsController < V1::BaseController
 
   def comments
     product = Product.find(params[:id])
-    comments = product.comments.group_by(&:comment_id)
+    comments = product.comments.reverse.group_by(&:comment_id)
+    return render json: success_message('OK', comments: []) if comments.blank?
+
     pr_comments = comments[nil].index_by(&:id)
     pr_comment_keys = pr_comments.keys
     user_ids = comments.values.flatten.pluck(:user_id).uniq
@@ -105,6 +107,7 @@ class V1::Customer::ProductsController < V1::BaseController
               avatar: url_for(user.avatar)
             },
             content: child.content,
+            is_author: current_user.id == user.id,
             created_at: child.created_at.strftime('%H:%M %d/%m/%Y')
           }
         end
@@ -116,6 +119,7 @@ class V1::Customer::ProductsController < V1::BaseController
             avatar: url_for(user.avatar)
           },
           content: pr_cmt.content,
+          is_author: current_user.id == user.id,
           created_at: pr_cmt.created_at.strftime('%H:%M %d/%m/%Y'),
           childs: childs
         }
@@ -128,6 +132,7 @@ class V1::Customer::ProductsController < V1::BaseController
             avatar: url_for(user.avatar)
           },
           content: pr_cmt.content,
+          is_author: current_user.id == user.id,
           created_at: pr_cmt.created_at.strftime('%H:%M %d/%m/%Y'),
           childs: []
         }
