@@ -107,7 +107,7 @@ class V1::Customer::ProductsController < V1::BaseController
               avatar: url_for(user.avatar)
             },
             content: child.content,
-            is_author: current_user.id == user.id,
+            is_author: current_user&.id == user.id,
             created_at: child.created_at.strftime('%H:%M %d/%m/%Y')
           }
         end
@@ -119,7 +119,7 @@ class V1::Customer::ProductsController < V1::BaseController
             avatar: url_for(user.avatar)
           },
           content: pr_cmt.content,
-          is_author: current_user.id == user.id,
+          is_author: current_user&.id == user.id,
           created_at: pr_cmt.created_at.strftime('%H:%M %d/%m/%Y'),
           childs: childs
         }
@@ -132,7 +132,7 @@ class V1::Customer::ProductsController < V1::BaseController
             avatar: url_for(user.avatar)
           },
           content: pr_cmt.content,
-          is_author: current_user.id == user.id,
+          is_author: current_user&.id == user.id,
           created_at: pr_cmt.created_at.strftime('%H:%M %d/%m/%Y'),
           childs: []
         }

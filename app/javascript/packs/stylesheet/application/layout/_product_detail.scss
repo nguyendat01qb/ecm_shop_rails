@@ -387,7 +387,7 @@
     textarea,
     #reply_comment {
       border: none;
-      margin-bottom: 25px;
+      margin: 25px 0;
       outline: none;
       padding-left: 10px;
       resize: none;
@@ -615,4 +615,8 @@
 
 .media-object {
   width: 48px;
+}
+
+#comment_group {
+  margin-top: 20px;
 }
