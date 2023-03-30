@@ -23,6 +23,7 @@ en:
         changed: Your address changed successfully
       comment:
         created: Your comment was created successfully
+        deleted: Your comment was deleted successfully
       voucher:
         list_vouchers: Get list vouchers successfully
     warning:
@@ -49,6 +50,7 @@ en:
       comment:
         create: Can't comment on this product
         content_to_short: Your comment is too short (minimum is 6 characters)
+        delete: You can not delete this comment
       product:
         empty: There are no products in this category or brand
 

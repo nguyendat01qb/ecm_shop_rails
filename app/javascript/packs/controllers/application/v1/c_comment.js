@@ -36,8 +36,14 @@ function CComment(options) {
 
   module.handleComment = function () {
     $('#btn_send_comment').on('click', function() {
-      var data = new FormData();
       var comment = $('#comment').val();
+      if (_.isEmpty(comment.trim())) {
+        return $.notify('Your comment invalid');
+      }
+      if (comment.length < 6) {
+        return $.notify('Your comment is too short (minimum is 6 characters)');
+      }
+      var data = new FormData();
       data.append('comment', comment);
       data.append('product_id', module.settings.data.product_id);
       // var files = $('#rv_image').get(0).files
@@ -70,10 +76,16 @@ function CComment(options) {
     });
 
     $(document).on('click', '#btn_reply_comment', function () {
-      var data = new FormData();
       var replyComment = $('#reply_comment.active');
       var comment = replyComment.val();
       var comment_id = replyComment.data('comment-id');
+      if (_.isEmpty(comment.trim())) {
+        return $.notify('Your comment invalid');
+      }
+      if (comment.length < 6) {
+        return $.notify('Your comment is too short (minimum is 6 characters)');
+      }
+      var data = new FormData();
       data.append('comment', comment);
       data.append('product_id', module.settings.data.product_id);
       data.append('comment_id', comment_id);
@@ -92,6 +104,7 @@ function CComment(options) {
       success: function (res) {
         if (res.code === 200) {
           module.loadComments(module.renderComments);
+          $.notify(res.message, 'success');
         } else {
           $.notify(res.message);
         }
@@ -110,6 +123,7 @@ function CComment(options) {
         success: function (res) {
           if (res.code === 200) {
             module.loadComments(module.renderComments);
+            $.notify(res.message, 'success');
           } else {
             $.notify(res.message);
           }
