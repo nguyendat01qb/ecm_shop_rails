@@ -13,6 +13,15 @@ Rails.application.routes.draw do
       get 'load_brands', to: 'brands#load_brands'
       get 'load_products', to: 'products#load_products'
       get 'load_vouchers', to: 'vouchers#load_vouchers'
+      get 'load_orders', to: 'orders#load_orders'
+
+      resources :orders do
+        collection do
+          post :submit
+          post :cancel
+          post :approve
+        end
+      end
     end
 
     namespace :customer do

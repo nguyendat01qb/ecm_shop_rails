@@ -1,10 +1,29 @@
 class V1::Customer::CheckoutsController < V1::BaseController
+  before_action :verify_authority
+
+  def create
+    cart = current_user.carts.is_pending.first
+    return render json: error_message(I18n.t('messages.error.cart.blank')) if cart.blank?
+
+    success, message, order = Client::Order::OrderService.new(current_user, cart, params).execute!
+    if success
+      render json: success_message(message, order)
+    else
+      render json: error_message(message)
+    end
+  end
+
   def get_order
     return unless current_user
 
     cart = current_user&.carts&.is_pending&.first
-    # voucher = current_user.user_vouchers.applying.voucher
-    product_values(cart, nil)
+    voucher_applying = current_user.user_vouchers.applying.first
+    voucher = voucher_applying.present? ? voucher_applying.voucher : nil
+    if cart
+      product_values(cart, voucher)
+    else
+      return render json: error_message('Not ok')
+    end
   end
 
   def voucher
@@ -92,7 +111,12 @@ class V1::Customer::CheckoutsController < V1::BaseController
       transport_fee: rand(1.0..1.5).round(2),
       is_current: true
     }
-    data['voucher'] = voucher if voucher
+    if voucher
+      data[:voucher] = {}
+      data[:voucher][:id] = voucher.id
+      data[:voucher][:cost] = voucher.cost
+      data[:voucher][:code] = voucher.code
+    end
     render json: success_message(I18n.t('messages.success.cart.list_carts'), data)
   end
 end

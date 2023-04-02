@@ -5,10 +5,11 @@ html
     meta name='viewport' content='width=device-width,initial-scale=1'
     = csrf_meta_tags
     = csp_meta_tag
-    / = stripe_javascript_tag
+    = stripe_javascript_tag
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', :defer => 'defer'
     = javascript_pack_tag 'controllers/application/v1/c_main', 'data-turbolinks-track': 'reload'
-    / = stylesheet_pack_tag 'https://www.paypal.com/sdk/js?client-id=test&currency=USD'
+    = stripe_javascript_tag 'https://www.paypal.com/sdk/js?client-id=AUUZrXvk97YhZ6jmUpKC5YZh4VFUFDTFj4hGPjJj_apZ7je_VICbnviS7HqywgH2t21LvzdqdpY-mQFX'
+    = stylesheet_pack_tag 'https://www.paypal.com/sdk/js?client-id=test&currency=USD'
   body *raicon_data_attributes
     = render 'layouts/header'
     #flash

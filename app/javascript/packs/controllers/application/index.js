@@ -4,8 +4,8 @@ import '../lib/select2.min';
 
 import './client/user';
 import './client/address';
-import './client/checkout';
-import './client/order';
+// import './client/checkout';
+// import './client/order';
 
 import MainController from './home/main';
 

@@ -26,6 +26,10 @@ en:
         deleted: Your comment was deleted successfully
       voucher:
         list_vouchers: Get list vouchers successfully
+      order:
+        list_orders: Get list orders successfully
+        update: Order updated successfully
+        created: Your order created successfully
     warning:
       cart:
         empty_cart: Shopping cart is empty
@@ -53,6 +57,10 @@ en:
         delete: You can not delete this comment
       product:
         empty: There are no products in this category or brand
+      cart:
+        blank: Your cart is empty
+      order:
+        update: Order update failed
 
     errors:
       permission_errors: Permission errors

@@ -7,6 +7,7 @@ function CCheckout(options) {
       getOrder: '/v1/customer/checkouts/get_order',
       voucher: '/v1/customer/checkouts/voucher',
       address: '/v1/customer/checkouts/address',
+      checkout: 'v1/customer/checkouts'
     },
     templates: {
       address_default: $('#address_default_template'),
@@ -20,6 +21,9 @@ function CCheckout(options) {
       list_order: $('.list_order'),
       list_order_checkout: $('.list_order_checkout'),
     },
+    data: {
+      public_key: 'pk_test_51MQQDqAfM8SM9VlxjUWgvgCSUpGM0IGWbzdDQcj3cPae4OdH2WyK8jG3OXAqRGBs6TYAynE44wE8RMeQvvnk09RW00eayTBSlh'
+    }
   };
 
   module.settings = $.extend({}, defaults, options);
@@ -32,11 +36,6 @@ function CCheckout(options) {
       success: function (res) {
         if (res.code === 200) {
           var data = res.data;
-          if (!_.isEmpty(data.voucher)) {
-            data.voucher_cost = res.data.voucher.cost;
-            data.voucher_code = res.data.voucher.code;
-            delete data.voucher;
-          }
           var addressDefault = data.address_default;
           var addresses = data.addresses;
           var orderItems = data.order_item;
@@ -132,11 +131,6 @@ function CCheckout(options) {
         $('input[name=apply_voucher]').val('');
         if (res.code === 200) {
           var data = res.data;
-          if (!_.isEmpty(data.voucher)) {
-            data.voucher_cost = res.data.voucher.cost;
-            data.voucher_code = res.data.voucher.code;
-            delete data.voucher;
-          }
           module.renderOrderCheckout(data);
         } else {
           $.notify(res.message);
@@ -185,6 +179,74 @@ function CCheckout(options) {
     });
   };
 
+  module.handlePaymentMethod = function () {
+    $('input[type=radio][name="payment-selection"]').on('change', function () {
+      var newActiveTabID = $('input[name="payment-selection"]:checked').val();
+      $('.paymentSelectionTab').removeClass('active');
+      $('#tab-' + newActiveTabID).addClass('active');
+    })
+  }
+
+  module.setupStripe = function () {
+    //Initialize stripe with publishable key
+    module.settings.data.stripe = Stripe(module.settings.data.public_key);
+
+    //Create Stripe credit card elements.
+    var elements = module.settings.data.stripe.elements();
+    module.settings.data.card = elements.create('card');
+
+    // Mount Stripe card element in the #card-element div.
+    module.settings.data.card.mount('#card-element');
+  }
+
+  module.handleSubmit = function () {
+    $(document).on('click', '.into_money-btn', () => {
+      module.settings.data.paymentGateway = $('input[name="payment-selection"]:checked').val();
+      switch (module.settings.data.paymentGateway) {
+        case 'stripe':
+          module.settings.data.stripe.createToken(module.settings.data.card).then(function(res) {
+            if (res.error) {
+              // Inform that there was an error.
+              var errorElement = document.getElementById('card-errors');
+              errorElement.textContent = res.error.message;
+              return
+            } else {
+              // Submits the order
+              module.settings.data.orderToken = res.token.id
+              module.handleStripeCheckout();
+            }
+          });
+          break;
+        default:
+          break;
+      }
+    })
+  }
+
+  module.handleStripeCheckout = function () {
+    var data = {
+      payment_gateway: module.settings.data.paymentGateway,
+      token: module.settings.data.orderToken,
+      total_amount: $('#total_amount').data('total-amount'),
+      transport_fee: $('#transport_fee').data('fee'),
+      voucher_id: $('#voucher_code').data('voucher-id'),
+      total_bill: $('#total_bill').data('total-bill')
+    }
+    return $.ajax({
+      url: module.settings.api.checkout,
+      type: 'POST',
+      data: data,
+      dataType: 'json',
+      success: function (res) {
+        if (res.code == 200) {
+
+        } else {
+          $.notify(res.message);
+        }
+      },
+    });
+  }
+
   module.init = function () {
     module.getOrder();
     module.checkVoucherCode();
@@ -192,6 +254,10 @@ function CCheckout(options) {
     module.handleApplyVoucher();
     module.changeAddress();
     module.handleInputAddress();
+    module.handlePaymentMethod();
+    module.setupStripe();
+    module.handleSubmit();
+    // module.setupPaypal();
   };
 }
 
