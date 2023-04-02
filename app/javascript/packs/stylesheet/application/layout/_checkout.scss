@@ -417,3 +417,17 @@
 #paypal-button-container {
   margin-top: 20px;
 }
+
+#card-element {
+  width:500px;
+}
+.paymentSelectionTab {
+  display: none;
+}
+.paymentSelectionTab.active {
+  display: block !important;
+}
+
+#card-errors {
+  color: #ee4d2d;
+}

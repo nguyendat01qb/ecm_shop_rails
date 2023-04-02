@@ -3,10 +3,6 @@ class V1::Admin::VoucherPolicy < BasePolicy
     can_manager?
   end
 
-  def load_admins?
-    can_manager?
-  end
-
   private
 
   def can_manager?

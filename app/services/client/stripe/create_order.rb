@@ -11,7 +11,7 @@ class Client::Stripe::CreateOrder < ApplicationService
     total, products, address = Client::Stripe::GetInfoOrder.call(user)
     cart = user.cart.cart_items
 
-    create, order = Client::Order::CreateService.call(
+    create, order = Client::Order::CreateService.execute!(
       user,
       Order.statuses[:paying_excute],
       Order.payment_gateways[:stripe],

@@ -6,28 +6,28 @@ class Client::Checkout::MomoService < ApplicationService
 
   def call
     endpoint = env_momo[:MOMO_END_POINT]
-    partnerCode = env_momo[:MOMO_PARTNER_CODE]
-    accessKey = env_momo[:MOMO_ACCESS_KEY]
-    secretKey = env_momo[:MOMO_SECRET_KEY]
-    orderInfo = 'pay with MoMo'
-    redirectUrl = 'http://localhost:3000/'
-    ipnUrl = 'https://4b4e-42-116-183-132.ap.ngrok.io/webhook/momo'
+    partner_code = env_momo[:MOMO_PARTNER_CODE]
+    access_key = env_momo[:MOMO_ACCESS_KEY]
+    secret_key = env_momo[:MOMO_SECRET_KEY]
+    order_info = 'pay with MoMo'
+    redirect_url = 'http://localhost:3000/'
+    ipn_url = 'https://4b4e-42-116-183-132.ap.ngrok.io/webhook/momo'
     amount = (order.total * 23_000).to_i.to_s
-    orderId = order.token
-    requestId = SecureRandom.uuid
-    requestType = 'payWithMethod'
-    extraData = ''
+    order_id = order.token
+    request_id = SecureRandom.uuid
+    request_type = 'payWithMethod'
+    extra_data = ''
 
-    rawSignature =  'accessKey=' + accessKey + '&amount=' + amount + '&extraData=' + extraData + '&ipnUrl=' + ipnUrl +
-                    '&orderId=' + orderId + '&orderInfo=' + orderInfo + '&partnerCode=' + partnerCode +
-                    '&redirectUrl=' + redirectUrl + '&requestId=' + requestId + '&requestType=' + requestType
+    raw_signature = "accessKey=#{access_key}&amount=#{amount}&extraData=#{extra_data}&ipnUrl=#{ipn_url}" +
+                    "&orderId=#{order_id}&orderInfo=#{order_info}&partnerCode=#{partner_code}" +
+                    "&redirectUrl=#{redirect_url}&requestId=#{request_id}&requestType=#{request_type}"
 
-    signature = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), secretKey, rawSignature)
+    signature = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), secret_key, raw_signature)
 
-    jsonRequestToMomo = {
-      partnerCode: partnerCode, partnerName: 'Test', storeId: 'MomoTestStore', requestId: requestId,
-      amount: amount, orderId: orderId, orderInfo: orderInfo, redirectUrl: redirectUrl,
-      ipnUrl: ipnUrl, lang: 'vi', extraData: extraData, requestType: requestType, signature: signature
+    json_request_to_momo = {
+      partnerCode: partner_code, partnerName: 'Test', storeId: 'MomoTestStore', requestId: request_id,
+      amount: amount, orderId: order_id, orderInfo: order_info, redirectUrl: redirect_url,
+      ipnUrl: ipn_url, lang: 'vi', extraData: extra_data, requestType: request_type, signature: signature
     }
 
     uri = URI.parse(endpoint)
@@ -37,7 +37,7 @@ class Client::Checkout::MomoService < ApplicationService
 
     request = Net::HTTP::Post.new(uri.path)
     request.add_field('Content-Type', 'application/json')
-    request.body = jsonRequestToMomo.to_json
+    request.body = json_request_to_momo.to_json
 
     response = http.request(request)
     result = JSON.parse(response.body)

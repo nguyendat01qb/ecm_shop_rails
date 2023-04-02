@@ -87,28 +87,29 @@ export default class CheckoutController {
   // };
 
   methodPayment = () => {
-    $('body').on('click', '.into_money-btn', ({ target }) => {
-      const carts = $.cookie('add_to_cart');
+    $(document).on('click', '.into_money-btn', ({ target }) => {
+      // const carts = $.cookie('add_to_cart');
       const paymentGateway = $('input[name=payment_gateway]')
         .filter(':checked')
         .val();
 
-      if (carts == [] || carts == undefined) {
-        popupFire('center', 'success', 'Cart empty!', 1000);
-        redirect('/', 1000);
-        return;
-      }
+      // if (carts == [] || carts == undefined) {
+      //   popupFire('center', 'success', 'Cart empty!', 1000);
+      //   redirect('/', 1000);
+      //   return;
+      // }
 
       if (paymentGateway == undefined) {
         popupFire('center', 'error', 'Please enter Payment Method !', 1500);
         return;
+      } else if (paymentGateway == 'STRIPE') {
+        window.location.href = '/checkout/stripe'
       }
 
       const data = {
-        cart: carts,
         payment_gateway: paymentGateway,
-        shipping: this.shipping,
-        voucher: this.voucher.code,
+        shipping: $('#transport_fee').data('fee'),
+        voucher: $('#voucher_code').data('voucher-id'),
       };
 
       Ajax(this.api.payment, 'POST', data)
@@ -117,8 +118,8 @@ export default class CheckoutController {
             if (res.data.method == 'STRIPE') {
               $('.home-page').replaceWith(res.data.html);
               const stripe = new StripeController(
-                this.shipping,
-                this.voucher.code
+                $('#transport_fee').data('fee'),
+                $('#voucher_code').data('voucher-id')
               );
             }
 
@@ -237,7 +238,7 @@ export default class CheckoutController {
     document.addEventListener('raicon:after:checkouts#show', () => {
       // this.applyVoucher();
       // this.checkInputVoucher();
-      this.methodPayment();
+      // this.methodPayment();
       // this.shippingCharge();
       // this.handleInputAddress();
       // this.handleChange();

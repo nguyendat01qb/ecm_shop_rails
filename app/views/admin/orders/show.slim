@@ -1,22 +1,22 @@
 .page-header
-  h1 Details for user 
+  h1 Details for user
 ol.breadcrumb
   li.dashboard
-    a class="pjax" href="#{admin_url}" Dashboard
+    a.pjax href="#{admin_url}" Dashboard
   li.dashboard
-    a class="pjax" href="#{admin_users_url}" Order
+    a.pjax href="#{admin_users_url}" Order
   li.active Show
 ul.nav.nav-tabs.action_items
   li
-    a class="pjax" href="#{admin_orders_url}"
+    a.pjax href="#{admin_orders_url}"
       i.fa.fa-list
       span List
   li.active
-    a class="pjax"
+    a.pjax
       i.fa.fa-info
       span Show
   li
-    a class="pjax"
+    a.pjax
       i.fa.fa-share
       span Export
 
@@ -30,7 +30,7 @@ ul.nav.nav-tabs.action_items
           dd.well = @order.token
 
           dt: span.label.label-warning Status
-          dd.well 
+          dd.well
             - if @order.status == 'pending'
               label.badge.badge-warning = @order.status
             - elsif @order.status == 'paid'
@@ -43,7 +43,7 @@ ul.nav.nav-tabs.action_items
 
           dt: span.label.label-warning Created At
           dd.well = @order.created_at.strftime("%H:%M %d/%m/%Y")
-          
+
           dt: span.label.label-warning Updated At
           dd.well = @order.updated_at.strftime("%H:%M %d/%m/%Y")
         h4 User Info
@@ -52,14 +52,14 @@ ul.nav.nav-tabs.action_items
           dt: span.label.label-warning Full name
           dd.well = user.fullname
 
-          dt: span.label.label-warning Phone 
+          dt: span.label.label-warning Phone
           dd.well = user.phone_number
 
-          dt: span.label.label-warning Email 
+          dt: span.label.label-warning Email
           dd.well = @order.user.email
 
           dt: span.label.label-warning Address
-          dd.well 
+          dd.well
             = "#{user.addressDetail}, #{user.ward}, #{user.district}, #{user.province}"
 
 .col-lg-9.grid-margin.stretch-card.form-show[style="display: block"]
@@ -68,19 +68,19 @@ ul.nav.nav-tabs.action_items
       table.table.table-striped
         thead
           tr
-            th[scope="col"] Product Name
-            th[scope="col"] Image
-            th[scope="col"] Atrribute
-            th[scope="col"] Quantity
-            th[scope="col"] Price
+            th[scope='col'] Product Name
+            th[scope='col'] Image
+            th[scope='col'] Atrribute
+            th[scope='col'] Quantity
+            th[scope='col'] Price
         tbody
           - order_items = @order.order_items
           - order_items.each do |item|
             - product = item.product
             tr
               td = product.title
-              td  
-                = image_tag(product.display_image, class: "img-product")
-              td Size: S, Color: red 
+              td
+                = image_tag(product.images.first, class: 'img-product')
+              td Size: S, Color: red
               td = item.quantity
               td = product.price

@@ -1,3 +1,6 @@
+= content_for :js_pages
+  = javascript_pack_tag 'controllers/admin/v1/a_order', 'data-turbolinks-track': 'reload'
+
 .page-header
   h1 List of Orders
 ol.breadcrumb
@@ -34,49 +37,98 @@ ul.nav.nav-tabs.action_items
                 th Created At
                 th Action
                 th Success
-            tbody
-              - i = 0
-              - @orders.each do |order|
-                - i += 1
-                tr[id="#{order.token}"]
-                  td = i
-                  td = order.id
-                  td
-                    - if order.status == 'pending'
-                      label.badge.badge-warning = order.status
-                    - elsif order.status == 'paid'
-                      label.badge.badge-success = order.status
-                    - elsif order.status == 'success'
-                      label.badge.badge-success = order.status
-                    - elsif order.status == 'delivering'
-                      label.badge.badge-info = order.status
-                    - else
-                      label.badge.badge-danger = order.status
-                  td
-                    - if order.payment_gateway == 'cod'
-                      label.badge.badge-success = order.payment_gateway
-                    - elsif order.payment_gateway == 'momo'
-                      label.badge.badge-momo = order.payment_gateway
-                    - elsif order.payment_gateway == 'paypal'
-                      label.badge.badge-info = order.payment_gateway
-                    - else
-                      label.badge.badge-info = order.payment_gateway
-                  td = order.total
-                  td 
-                    button.btn.btn-info.submitOrder[style="color: #fff"] Submit
-                  td
-                    button.btn.btn-danger.cancelOrder Canceled
-                  td = order.created_at.strftime("%H:%M %d/%m/%Y")
-                  td style="width: 80px"
-                    ul.others
-                      li
-                        a href="#{admin_order_url(order.id)}" title="view"
-                          i.fa.fa-info-circle
-                      li
-                        a[data-confirm="Are you sure?" rel="nofollow" 
-                          data-method="delete" href="#{admin_order_url(order.id)}"]
-                          i.fa-solid.fa-trash
-                  td 
-                    button.btn.btn-success.orderSuccess Success
-          == pagy_bootstrap_nav(@pagy)
-                          
+            tbody#orders_list
+          #paginate.paginatestext-center
+        = render 'admin/shared/paginate'
+
+script#admin_order_template[type='text/template']
+  | <%_.each(options, function(option) { %>
+  |   <tr>
+  |     <td><%- option.idx %></td>
+  |     <td><%- option.id %></td>
+  |     <td>
+  |       <% status = option.status %>
+  |       <% if (status == 'pending') { %>
+  |         <label class='badge badge-warning'>
+  |           <%- status %>
+  |         </label>
+  |       <% } else if (status == 'paid') { %>
+  |         <label class='badge badge-success'>
+  |           <%- status %>
+  |         </label>
+  |       <% } else if (status == 'success') { %>
+  |         <label class='badge badge-success'>
+  |           <%- status %>
+  |         </label>
+  |       <% } else if (status == 'delivering') { %>
+  |         <label class='badge badge-info'>
+  |           <%- status %>
+  |         </label>
+  |       <% } else { %>
+  |         <label class='badge badge-danger'>
+  |           <%- status %>
+  |         </label>
+  |       <% } %>
+  |     </td>
+  |     <td>
+  |       <% payment_gateway = option.payment_gateway %>
+  |       <% if (payment_gateway == 'cod') { %>
+  |         <label class='badge badge-warning'>
+  |           <%- payment_gateway %>
+  |         </label>
+  |       <% } else if (payment_gateway == 'momo') { %>
+  |         <label class='badge badge-momo'>
+  |           <%- payment_gateway %>
+  |         </label>
+  |       <% } else if (payment_gateway == 'paypal') { %>
+  |         <label class='badge badge-info'>
+  |           <%- payment_gateway %>
+  |         </label>
+  |       <% } else { %>
+  |         <label class='badge badge-info'>
+  |           <%- payment_gateway %>
+  |         </label>
+  |       <% } %>
+  |     </td>
+  |     <td><%- option.total %></td>
+  |     <% if (status == 'PENDING' || status == 'SHIPPING' || status == 'APPROVED') { %>
+  |       <td>
+  |         <button class='btn btn-info' id='submitOrder' data-order-id='<%- option.id %>' style='color: #fff'>Submit</button>
+  |       </td>
+  |       <td>
+  |         <button class='btn btn-danger' id='cancelOrder' data-order-id='<%- option.id %>'>Cancel</button>
+  |       </td>
+  |     <% } else { %>
+  |       <td>
+  |         <button class='btn btn-info' id='submitOrder' style='color: #fff; background-color: #ccc; border: #ccc;' disabled>Submit</button>
+  |       </td>
+  |       <td>
+  |         <button class='btn btn-danger' id='cancelOrder' style='color: #fff; background-color: #ccc; border: #ccc;' disabled>Cancel</button>
+  |       </td>
+  |     <% } %>
+  |     <td><%- option.created_at %></td>
+  |     <td style='width: 80px'>
+  |       <ul class='others'>
+  |         <li>
+  |           <a href='/admin/orders/<%- option.id %>' title='view'>
+  |             <i class='fa fa-info-circle'></i>
+  |           </a>
+  |         </li>
+  |         <li>
+  |           <a href='/admin/orders/<%- option.id %>' data-confirm='Are you sure you want to delete order: <%- option.name %>?' rel='nofollow' data-method='delete'>
+  |             <i class='fa-solid fa-trash'></i>
+  |           </a>
+  |         </li>
+  |       </ul>
+  |     </td>
+  |     <% if (status == 'DELIVERING') { %>
+  |       <td>
+  |         <button class='btn btn-success' id='orderSuccess' data-order-id='<%- option.id %>'>Success</button>
+  |       </td>
+  |     <% } else { %>
+  |       <td>
+  |         <button class='btn btn-success' id='orderSuccess' style='color: #fff; background-color: #ccc; border: #ccc;' disabled>Success</button>
+  |       </td>
+  |     <% } %>
+  |  </tr>
+  | <% }) %>

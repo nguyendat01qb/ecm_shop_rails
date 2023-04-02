@@ -24,7 +24,7 @@ class CheckoutsController < ApplicationController
       html = render_to_string partial: 'checkouts/shared/stripe', layout: false
       data = { method: 'STRIPE', html: html }
     when 'MOMO'
-      create, order = Client::Order::CreateService.call(
+      create, order = Client::Order::CreateService.execute!(
         current_user,
         Order.statuses[:paying_excute],
         Order.payment_gateways[:momo],
@@ -43,7 +43,7 @@ class CheckoutsController < ApplicationController
         essage = 'Invalid when payment'
       end
     when 'COD'
-      create, @order = Client::Order::CreateService.call(
+      create, @order = Client::Order::CreateService.execute!(
         current_user,
         Order.statuses[:pending],
         Order.payment_gateways[:cod],

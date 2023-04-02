@@ -1,31 +1,39 @@
 
 
 .payment_methods
-  .title_order 
-    .pull-left 
+  .title_order
+    .pull-left
       strong Payment methods
   .content_order
-    
+
     .list_order_online
+      / .item
+      /   input[type='radio' name='payment_gateway' value='COD']
+      /   / = radio_button_tag 'payment-selection', 'stripe', true"
+      /   = image_tag('payment/cod')
+      /   label Cash On Delivery (COD)
+      / br
       .item
-        input[type="radio" name="payment_gateway" value="COD"]
-        = image_tag('payment/cod')
-        label Cash On Delivery (COD)
-      br
-      .item
-        input[type="radio" name="payment_gateway" value="STRIPE"]
+        / input[type='radio' name='payment_gateway' value='STRIPE']
+        = radio_button_tag 'payment-selection', 'stripe', true
         = image_tag('payment/stripe')
         label Pay online with stripe
       br
+      #tab-stripe.paymentSelectionTab.active
+        #card-element abc
+        #card-errors role='alert'
+      br
       .item
-        input[type="radio" name="payment_gateway" value="PAYPAL"]
+        / input[type='radio' name='payment_gateway' value='PAYPAL']
+        = radio_button_tag 'payment-selection', 'paypal'
         = image_tag('payment/paypal')
         label Pay online with paypal
-        <div id="paypal-button-container"></div>
+        #paypal-button-container
+      / br
+      / .item
+      /   input[type='radio' name='payment_gateway' value='MOMO']
+      /   = image_tag('payment/momo')
+      /   label Pay online with momo
       br
-      .item
-        input[type="radio" name="payment_gateway" value="MOMO"]
-        = image_tag('payment/momo')
-        label Pay online with momo
-      br
+      #tab-paypal.paymentSelectionTab def
 

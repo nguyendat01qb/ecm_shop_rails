@@ -8,7 +8,7 @@ class Client::Order::CreateService < ApplicationService
     @token = token
   end
 
-  def call
+  def execute!
     total, products, address = Client::Stripe::GetInfoOrder.call(user)
     return [false] if address.nil?
 
@@ -51,7 +51,7 @@ class Client::Order::CreateService < ApplicationService
           attribute_value = attribute_values.find_by(id: cart_item.attribute_value_id)
           if attribute_value.stock < cart_item.quantity
             raise ActiveRecord::Rollback
-            return [false, order]
+            [false, order]
           else
             order_item.attribute_value_id = cart_item.attribute_value_id
           end
@@ -60,7 +60,7 @@ class Client::Order::CreateService < ApplicationService
 
           if product.quantity < cart_item.quantity
             raise ActiveRecord::Rollback
-            return [false, order]
+            [false, order]
           end
         end
         order_item.save
