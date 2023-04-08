@@ -42,7 +42,7 @@ Rails.application.routes.draw do
       post '/show_order', to: 'orders#show_order'
     end
     post 'order/detail', to: 'orders#order_detail'
-    get 'order/detail/:code', to: 'orders#show_order_detail'
+    get 'order/:id', to: 'orders#show_order_detail'
     resources :addresses do
       post '/:slug', to: 'addresses#edit'
     end
