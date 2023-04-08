@@ -1,19 +1,6 @@
-class CartController < ApplicationController
+class CartsController < ApplicationController
   def show
-    if params[:carts].nil? && cookies[:add_to_cart].nil?
-      render :show
-    elsif params[:carts]
-      @cart = exists_product?(params[:carts].values)
-
-      html = render_to_string partial: 'cart/shared/list_product_cart', layout: false
-      render json: { status: 200, html: html, carts: params[:carts].values }
-    else
-      @cart = exists_product?(JSON.parse(cookies[:add_to_cart]))
-
-      cart = JSON.parse(cookies[:add_to_cart])
-      ids = cart.map { |el| el['id'] }
-      @products = Product.where(id: ids)
-    end
+    @signed_in = cookies[:api_token].present?
   end
 
   def check_amount

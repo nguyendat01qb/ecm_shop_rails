@@ -52,11 +52,11 @@ script#product_detail_template[type='text/template']
   |   <div class='quantity'>
   |     <label>Quantity: </label>
   |     <% if (option.product.quantity > 0) { %>
-  |       <button id='cart_quantity_down'>
+  |       <button id='pd_quantity_down'>
   |         <i class='fa-solid fa-minus'></i>
   |       </button>
-  |       <input id='cart_quantity_input' aria-label='quantity' type='number' min='0' max='<%- option.product.quantity %>' value='1' disabled='disabled' />
-  |       <button id='cart_quantity_up'>
+  |       <input id='pd_quantity_input' aria-label='quantity' type='number' min='0' max='<%- option.product.quantity %>' value='1' disabled='disabled' />
+  |       <button id='pd_quantity_up'>
   |         <i class='fa-solid fa-plus'></i>
   |       </button>
   |       <a class='btn btn-fefault cart' id='add-to-cart' name='add-to-cart-detail' data-product_id='<%- option.product.id %>'>
@@ -64,11 +64,11 @@ script#product_detail_template[type='text/template']
   |         Add to cart
   |       </a>
   |     <% } else { %>
-  |       <button id='cart_quantity_down' disabled='disabled'>
+  |       <button id='pd_quantity_down' disabled='disabled'>
   |         <i class='fa-solid fa-minus'></i>
   |       </button>
-  |       <input id='cart_quantity_input' aria-label='quantity' type='number' min='0' max='<%- option.product.quantity %>' value='0' disabled='disabled' />
-  |       <button id='cart_quantity_up' disabled='disabled'>
+  |       <input id='pd_quantity_input' aria-label='quantity' type='number' min='0' max='<%- option.product.quantity %>' value='0' disabled='disabled' />
+  |       <button id='pd_quantity_up' disabled='disabled'>
   |         <i class='fa-solid fa-plus'></i>
   |       </button>
   |       <a class='btn btn-danger out-of-stock'>Out of stock</a>

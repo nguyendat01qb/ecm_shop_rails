@@ -1,3 +1,8 @@
+= content_for :js_pages
+  = javascript_pack_tag 'controllers/application/v1/c_cart', 'data-turbolinks-track': 'reload'
+
+= hidden_field_tag 'signed_in', @signed_in
+
 #cart_items.home-page
   .container
     .breadcrumbs

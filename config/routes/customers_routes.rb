@@ -6,9 +6,7 @@ Rails.application.routes.draw do
     post 'reply_comment', to: 'comments#reply_comment'
   end
 
-  resource :cart, only: [:show] do
-    get 'show_cart', to: 'cart#show'
-    # get 'select_attribute', to: 'cart#select_attribute'
+  resource :carts, only: [:show] do
     get 'check_amount', to: 'cart#check_amount'
   end
 
