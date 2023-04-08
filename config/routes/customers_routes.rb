@@ -2,13 +2,7 @@ Rails.application.routes.draw do
   root to: 'home#index'
   resources :products, only: [:show]
 
-  resources :comments do
-    post 'reply_comment', to: 'comments#reply_comment'
-  end
-
-  resource :carts, only: [:show] do
-    get 'check_amount', to: 'cart#check_amount'
-  end
+  resource :carts, only: [:show]
 
   resource :checkout do
     post '/payment', to: 'checkouts#payment'
@@ -18,7 +12,6 @@ Rails.application.routes.draw do
     post '/payment_with_momo', to: 'checkouts#payment_with_momo'
     get '/success', to: 'checkouts#success'
     get '/error', to: 'checkouts#error'
-    post '/info_checkout', to: 'checkouts#info_checkout'
     post '/voucher', to: 'checkouts#voucher'
     post '/check_order_stripe', to: 'checkouts#check_order_stripe'
     post '/check_cart', to: 'checkouts#check_cart'
