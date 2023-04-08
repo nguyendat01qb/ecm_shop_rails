@@ -67,9 +67,9 @@ class V1::Customer::CartsController < V1::BaseController
     cart_item_ids = cart.cart_items.pluck(:id)
     params = request.params
     if cart_item_ids.include?(params[:cart_item_id].to_i)
-      CartItem.find_by(params[:cart_item_id]).update(quantity: params[:quantity])
+      CartItem.find_by(id: params[:cart_item_id]).update(quantity: params[:quantity])
     end
-    render json: success_message('ok')
+    render json: success_message('Your card updated successfully')
   end
 
   def delete_cart_item

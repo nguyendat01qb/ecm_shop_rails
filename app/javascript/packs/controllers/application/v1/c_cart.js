@@ -13,7 +13,8 @@ function CCart(options) {
     },
     elements: {
       cart: $('#a_list_cart_items'),
-    }
+    },
+    data: {}
   };
 
   module.settings = $.extend({}, defaults, options);
@@ -55,6 +56,7 @@ function CCart(options) {
 
   module.handleIncrement = function () {
     $(document).on('click', '#cart_quantity_up', function () {
+      module.settings.data.signed_in = JSON.parse($('#signed_in').val());
       var input = $(this).siblings('#cart_quantity_input');
       var stock = parseInt(input.attr('max'));
       var quantity = parseInt(input.attr('value'));
@@ -66,7 +68,7 @@ function CCart(options) {
       if (quantity < stock) {
         quantity = quantity + 1;
         input.attr('value', quantity);
-        if (cart_item_id >= 0) {
+        if (module.settings.data.signed_in) {
           module.handleUpdate(cart_item_id, quantity);
         } else {
           let carts = JSON.parse(localStorage.getItem('carts'));
@@ -113,6 +115,7 @@ function CCart(options) {
 
   module.handleDecrement = function () {
     $(document).on('click', '#cart_quantity_down', function () {
+      module.settings.data.signed_in = JSON.parse($('#signed_in').val());
       var input = $(this).siblings('#cart_quantity_input');
       var quantity = parseInt(input.attr('value'));
       var cart_item_id = parseInt(input.attr('cart_id'));
@@ -123,7 +126,7 @@ function CCart(options) {
       if (quantity > 1) {
         quantity = quantity - 1;
         input.attr('value', quantity);
-        if (cart_item_id >= 0) {
+        if (module.settings.data.signed_in) {
           module.handleUpdate(cart_item_id, quantity);
         } else {
           let carts = JSON.parse(localStorage.getItem('carts'));
@@ -186,7 +189,14 @@ function CCart(options) {
       type: 'PUT',
       data: data,
       dataType: 'json',
-      success: function (res) { },
+      success: function (res) {
+        if (res.code === 200) {
+          module.loadDefaultData();
+          $.notify(res.message, 'success');
+        } else {
+          $.notify(res.message);
+        }
+      },
     });
   };
 

@@ -43,7 +43,7 @@ header#header
         .col-sm-8
           .shop-menu
             ul.nav.navbar-nav
-              li: a.cart.sendCart href="#{show_cart_cart_url}"
+              li: a.cart.sendCart href="#{carts_url}"
                 span.badge.count-product
                 i.fa.fa-shopping-cart &nbsp
                 = t('.cart')
@@ -92,7 +92,7 @@ header#header
                       i.fa.fa-angle-down
                       ul.sub-menu role='menu'
                         - if user_signed_in?
-                          li: a href="#{show_cart_cart_path}"
+                          li: a href="#{carts_path}"
                             = t('.cart')
                           li: a href="#{user_order_url}"
                             = t('.my_orders')

@@ -122,15 +122,15 @@ function CProduct(options) {
                   $('.product__stock').replaceWith(`
                     <div class='product__stock'><b>Quantity in stock: </b><span id='stock' value='${res.data.attribute_value.quantity}'>${res.data.attribute_value.quantity}</span></div>
                   `);
-                  $('#cart_quantity_input').attr(
+                  $('#pd_quantity_input').attr(
                     'max',
                     res.data.attribute_value.quantity
                   );
                   if (
-                    parseInt($('#cart_quantity_input').val()) >
+                    parseInt($('#pd_quantity_input').val()) >
                     res.data.attribute_value.quantity
                   ) {
-                    $('#cart_quantity_input').attr(
+                    $('#pd_quantity_input').attr(
                       'value',
                       res.data.attribute_value.quantity
                     );
@@ -158,7 +158,7 @@ function CProduct(options) {
   module.handleAddCart = function () {
     $(document).on('click', '#add-to-cart', () => {
       const p_id = $(this).data('product_id') || product_id;
-      const quantity = parseInt($('#cart_quantity_input').val());
+      const quantity = parseInt($('#pd_quantity_input').val());
       const id_attr1 = $('.item_1.active').data('attribute');
       const value_attr1 = $('.item_1.active').html() ? $('.item_1.active').html().trim() : '';
       const id_attr2 = $('.item_2.active').data('attribute');
@@ -244,7 +244,7 @@ function CProduct(options) {
       dataType: 'json',
       success: function (res) {
         if (res.code === 200) {
-          $('#cart_quantity_input').attr('value', res.data.cart_item.quantity);
+          $('#pd_quantity_input').attr('value', res.data.cart_item.quantity);
           popupFire(
             'top-right',
             'success',
@@ -295,8 +295,8 @@ function CProduct(options) {
   };
 
   module.handleIncrement = function () {
-    $(document).on('click', '#cart_quantity_up', function () {
-      var input = $(this).siblings('#cart_quantity_input');
+    $(document).on('click', '#pd_quantity_up', function () {
+      var input = $(this).siblings('#pd_quantity_input');
       var stock = input.attr('max');
       var quantity = parseInt(input.attr('value'));
       if (quantity < stock) {
@@ -309,8 +309,8 @@ function CProduct(options) {
   };
 
   module.handleDecrement = function () {
-    $(document).on('click', '#cart_quantity_down', function () {
-      var input = $(this).siblings('#cart_quantity_input');
+    $(document).on('click', '#pd_quantity_down', function () {
+      var input = $(this).siblings('#pd_quantity_input');
       var quantity = parseInt(input.attr('value'));
       if (quantity > 0) {
         input.attr('value', quantity - 1);
@@ -394,8 +394,8 @@ function CProduct(options) {
     module.handleAttribute();
     module.handleAddCart();
 
-    module.handleIncrement();
-    module.handleDecrement();
+    // module.handleIncrement();
+    // module.handleDecrement();
     module.handleStar();
   };
 }
