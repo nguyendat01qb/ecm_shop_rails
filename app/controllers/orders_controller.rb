@@ -1,10 +1,10 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :authenticate_user
-  before_action :set_order, only: %i[order_detail show_order_detail]
+  before_action :set_order, only: %i[show order_detail show_order_detail]
 
   def show
-    @pagy, @orders = pagy(current_user.orders, items: 5)
+    @orders = current_user.orders
   end
 
   def order_detail
@@ -26,6 +26,6 @@ class OrdersController < ApplicationController
   private
 
   def set_order
-    @order = Order.find_by(token: params[:code])
+    @order = Order.find_by(id: params[:id])
   end
 end
