@@ -8,11 +8,6 @@ class CheckoutsController < ApplicationController
 
   def error; end
 
-  def info_checkout
-    code, message, data = Client::Checkout::GetInfo.call(current_user, cookies[:add_to_cart])
-    render json: { status: code, message: message, data: data }
-  end
-
   def voucher
     result, message, cost = Client::Checkout::Voucher.call(current_user, params[:voucher])
     render json: { status: 200, result: result, message: message, cost: cost }

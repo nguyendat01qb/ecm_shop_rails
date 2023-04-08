@@ -1,3 +1,4 @@
+import { redirect } from '../../lib/application';
 import '../../lib/notify';
 
 function CCheckout(options) {
@@ -239,9 +240,15 @@ function CCheckout(options) {
       dataType: 'json',
       success: function (res) {
         if (res.code == 200) {
-
+          $.notify('Your order created successfully', 'success');
+          setTimeout(() => {
+            document.location.href = '/'
+          }, 2000);
         } else {
-          $.notify(res.message);
+          $.notify('Your order create fail');
+          setTimeout(() => {
+            document.location.href = '/'
+          }, 2000);
         }
       },
     });
