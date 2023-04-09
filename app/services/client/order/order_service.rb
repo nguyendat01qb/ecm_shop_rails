@@ -13,7 +13,7 @@ class Client::Order::OrderService < ApplicationService
     return [false, I18n.t('messages.error.cart.blank')] if cart_items.blank?
 
     payment_gateway = order_params[:payment_gateway]
-    token = order_params[:token]
+    token = order_params[:token] || ''
     # total_amount = order_params[:total_amount]
     transport_fee = order_params[:transport_fee]
     voucher_id = order_params[:voucher_id]
@@ -96,7 +96,7 @@ class Client::Order::OrderService < ApplicationService
             product.update(quantity: quantity_order)
           end
         end
-        cart.destroy
+        cart.update!(status: Cart::STATUSES[:done])
       end
 
       [create, I18n.t('messages.success.order.created'), order]

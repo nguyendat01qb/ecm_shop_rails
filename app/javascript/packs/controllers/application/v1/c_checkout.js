@@ -214,25 +214,31 @@ function CCheckout(options) {
             } else {
               // Submits the order
               module.settings.data.orderToken = res.token.id
-              module.handleStripeCheckout();
+              module.handleCheckout();
             }
           });
           break;
+        case 'pay_on_delivery':
+          module.handleCheckout();
         default:
           break;
       }
     })
   }
 
-  module.handleStripeCheckout = function () {
+  module.handleCheckout = function () {
     var data = {
       payment_gateway: module.settings.data.paymentGateway,
-      token: module.settings.data.orderToken,
       total_amount: $('#total_amount').data('total-amount'),
       transport_fee: $('#transport_fee').data('fee'),
       voucher_id: $('#voucher_code').data('voucher-id'),
       total_bill: $('#total_bill').data('total-bill')
     }
+
+    if (module.settings.data.paymentGateway == 'stripe') {
+      data.token = module.settings.data.orderToken;
+    }
+
     return $.ajax({
       url: module.settings.api.checkout,
       type: 'POST',

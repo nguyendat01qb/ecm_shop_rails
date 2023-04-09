@@ -84,7 +84,7 @@ class V1::Customer::CheckoutsController < V1::BaseController
       pa_value = [attr_value.attribute_1, attr_value.attribute_2].compact
       quantity = cart_item.quantity
       price = attr_value.price_attribute_product
-      discount = attr_value.discount_attribute_product * 100
+      discount = (attr_value.discount_attribute_product * 100).to_f.round(2)
       amount = ((price * quantity * discount) / 100).to_f.round(2)
       total_amount += amount
       {
