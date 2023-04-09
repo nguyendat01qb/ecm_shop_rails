@@ -394,8 +394,8 @@ function CProduct(options) {
     module.handleAttribute();
     module.handleAddCart();
 
-    // module.handleIncrement();
-    // module.handleDecrement();
+    module.handleIncrement();
+    module.handleDecrement();
     module.handleStar();
   };
 }
