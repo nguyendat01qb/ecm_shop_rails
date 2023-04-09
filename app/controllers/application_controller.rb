@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    set_api_token(current_user)
+    set_api_token
     if is_admin?
       stored_location_for(resource) || admin_path
     else
@@ -47,8 +47,8 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def set_api_token(current_user)
-    return unless user_signed_in?
+  def set_api_token
+    return cookies.delete(:api_token) unless user_signed_in?
 
     payload = current_user.generate_token
     cookies.permanent[:api_token] = payload
