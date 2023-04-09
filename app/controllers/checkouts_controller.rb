@@ -35,7 +35,7 @@ class CheckoutsController < ApplicationController
         message = 'successfully'
       else
         status = 500
-        essage = 'Invalid when payment'
+        message = 'Invalid when payment'
       end
     when 'COD'
       create, @order = Client::Order::CreateService.execute!(

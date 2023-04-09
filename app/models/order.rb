@@ -1,6 +1,6 @@
 class Order < ApplicationRecord
   STATUSES = { pending: 0, failed: 1, paid: 2, approved: 3, canceled: 4, shipping: 5, delivering: 6, success: 7 }.freeze
-  enum payment_gateway: { stripe: 0, momo: 1, vnpay: 2, paypal: 3, cod: 4 }
+  enum payment_gateway: { stripe: 0, pay_on_delivery: 1, momo: 2, vnpay: 3, paypal: 4, cod: 5 }
 
   has_many :order_items, dependent: :destroy
 

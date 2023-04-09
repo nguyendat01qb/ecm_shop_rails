@@ -12,7 +12,6 @@
       /   / = radio_button_tag 'payment-selection', 'stripe', true"
       /   = image_tag('payment/cod')
       /   label Cash On Delivery (COD)
-      / br
       .item
         / input[type='radio' name='payment_gateway' value='STRIPE']
         = radio_button_tag 'payment-selection', 'stripe', true
@@ -20,14 +19,20 @@
         label Pay online with stripe
       br
       #tab-stripe.paymentSelectionTab.active
-        #card-element abc
+        #card-element
         #card-errors role='alert'
       br
       .item
+        = radio_button_tag 'payment-selection', 'pay_on_delivery'
+        = image_tag('payment/delivery')
+        label Payment on delivery
+      br
+      .item.disabledbutton
         / input[type='radio' name='payment_gateway' value='PAYPAL']
         = radio_button_tag 'payment-selection', 'paypal'
         = image_tag('payment/paypal')
         label Pay online with paypal
+        p style='color: red;' The function is in development, can't use it right now
         #paypal-button-container
       / br
       / .item
@@ -35,5 +40,5 @@
       /   = image_tag('payment/momo')
       /   label Pay online with momo
       br
-      #tab-paypal.paymentSelectionTab def
+      #tab-paypal.paymentSelectionTab
 
