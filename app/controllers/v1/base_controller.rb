@@ -1,6 +1,7 @@
 class V1::BaseController < ApplicationController
   include Authority
   include PrivacyPolicy
+  protect_from_forgery unless: -> { request.format.json? }
   before_action :set_online_time, if: proc { user_signed_in? }
   before_action :set_api_token
   # ./bin/webpack-dev-server
