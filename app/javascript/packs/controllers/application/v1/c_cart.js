@@ -205,7 +205,9 @@ function CCart(options) {
       var cart_item_id = $(this).attr('cart_id');
       var product_id = parseInt($(this).attr('product_id'));
       var attr_id = parseInt($(this).attr('attr_id'));
-      if (_.isEmpty(cart_item_id)) {
+      if (module.settings.data.signed_in) {
+        module.deleteCartItem(cart_item_id);
+      } else {
         var results = [];
         var cart_items = JSON.parse(localStorage.getItem('carts'));
         $.map(cart_items, function (cart_item) {
@@ -219,8 +221,6 @@ function CCart(options) {
         localStorage.setItem('carts', JSON.stringify(results));
         module.loadDefaultData();
         $.notify('Cart item deleted successfully', 'success');
-      } else {
-        module.deleteCartItem(cart_item_id);
       }
     });
   };
