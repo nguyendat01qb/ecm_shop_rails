@@ -22,7 +22,7 @@ class V1::Admin::UsersController < V1::Admin::BaseAuthController
     per_page = 10
     users = User.all.select(:id, :name, :phone, :email, :sign_in_count, :created_at).page(page).per(per_page)
     users_new = users.map do |user|
-      avatar_url = url_for(user.avatar).presence
+      avatar_url = user.avatar.present? ? url_for(user.avatar).presence : ''
       {
         user: ActiveModelSerializers::SerializableResource.new(
           user,
