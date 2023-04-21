@@ -36,10 +36,29 @@ class V1::Customer::ProductsController < V1::BaseController
   end
 
   def search
-    @products = Product.query_search(:title, params[:search]).order(created_at: :desc)
+    per_page = params[:per_page]
+    products = Kaminari.paginate_array(Product.query_search(:title,
+                                                            params[:keyword]).order(created_at: :desc)).page(1).per(per_page)
 
-    html = render_to_string partial: 'home/shared/features_items', layout: false
-    render json: { status: 200, message: 'Successfully', html: html }
+    if products.present?
+      images = products.each_with_object({}) do |product, result|
+        result[product.id] = url_for(product.images.first)
+      end
+      is_load_more = products.total_pages > 1
+
+      render json: success_message(
+        I18n.t('messages.success.product.list_products'),
+        products: ActiveModelSerializers::SerializableResource.new(
+          products,
+          each_serializer: Product::FilterProductsSerializer
+        ),
+        images: images,
+        is_load_more: is_load_more,
+        per_page: per_page
+      )
+    else
+      render json: error_message(I18n.t('messages.error.product.empty'))
+    end
   end
 
   def select_attribute
