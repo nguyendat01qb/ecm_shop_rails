@@ -91,7 +91,7 @@ function CHome(options) {
     $('body').on('keypress', '.input_search', (e) => {
       if (e.keyCode == 13) {
         const keyword = $(e.target).val();
-        var data = { keyword: keyword };
+        var data = { keyword: keyword, per_page: module.settings.per_page };
         $.ajax({
           url: module.settings.api.search,
           type: 'POST',
@@ -99,16 +99,11 @@ function CHome(options) {
           dataType: 'json',
           success: function (res) {
             if (res.code === 200) {
-              loadPage({ time: 200 });
-              $('.features_items').replaceWith(res.html);
-              $('.btn-load_more').remove();
-              $('html, body').animate(
-                {
-                  scrollTop: $('.features_items').offset().top,
-                },
-                1000
-              );
-              // changeUrl(`/?search=${keyword}`);
+              module.renderProducts(res.data);
+              module.handleLoadMore(res.data.is_load_more);
+            } else {
+              module.settings.elements.product.html(`<h4 class='error_message'>${res.message}</h4>`);
+              $('.load_more').hide();
             }
           },
         });
@@ -156,7 +151,7 @@ function CHome(options) {
       dataType: 'json',
       success: function (res) {
         if (res.code == 200) {
-          localStorage.setItem('home-per-page', res.data.per_page)
+          localStorage.setItem('home-per-page', res.data.per_page);
           module.renderProducts(res.data);
           module.handleLoadMore(res.data.is_load_more);
         } else {
