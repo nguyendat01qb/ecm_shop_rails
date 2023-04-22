@@ -35,6 +35,7 @@ Rails.application.routes.draw do
         member do
           get :comments
           get :images
+          get :content
         end
       end
       resources :home do

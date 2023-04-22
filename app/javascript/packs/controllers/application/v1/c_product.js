@@ -17,14 +17,17 @@ function CProduct(options) {
       add_to_cart: '/v1/customer/products/add_to_cart',
       images: `/v1/customer/products/${product_id}/images`,
       detail: `/v1/customer/products/${product_id}`,
+      content: `/v1/customer/products/${product_id}/content`,
     },
     templates: {
       images: $('#product_images_template'),
-      detail: $('#product_detail_template')
+      detail: $('#product_detail_template'),
+      content: $('#content_template')
     },
     elements: {
       images: $('#product_images'),
-      detail: $('#product_detail')
+      detail: $('#product_detail'),
+      content: $('#description')
     },
     data: {
       starClicked: false
@@ -75,6 +78,26 @@ function CProduct(options) {
     var template = _.template(module.settings.templates.detail.html());
     module.settings.elements.detail.html(template({ option: data }));
   };
+
+  module.handleDescription = function () {
+    $('.description').on('click', function () {
+      return $.ajax({
+        url: module.settings.api.content,
+        type: 'GET',
+        dataType: 'json',
+        success: function (res) {
+          if (res.code == 200) {
+            module.renderContent(res.data.content);
+          }
+        }
+      })
+    })
+  };
+
+  module.renderContent = function (data) {
+    var template = _.template(module.settings.templates.content.html());
+    module.settings.elements.content.html(template({ options: data }));
+  }
 
   module.handleAttribute = function () {
     $(document).on('click', '.attribute_item', ({ target }) => {
@@ -393,6 +416,7 @@ function CProduct(options) {
     module.getProductDetail();
     module.handleAttribute();
     module.handleAddCart();
+    module.handleDescription();
 
     module.handleIncrement();
     module.handleDecrement();

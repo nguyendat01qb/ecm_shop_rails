@@ -35,6 +35,11 @@ class V1::Customer::ProductsController < V1::BaseController
     )
   end
 
+  def content
+    content = JSON.parse(Product.find(params[:id]).content)
+    render json: success_message(I18n.t('messages.success.product.contents'), content: content)
+  end
+
   def search
     per_page = params[:per_page]
     products = Kaminari.paginate_array(Product.query_search(:title,
