@@ -219,6 +219,29 @@ size2 = [36, 37, 39, 40, 41, 42]
 # ]
 # Category.create!(child_categories)
 
+vouchers = []
+current_date = Date.current
+end_date = current_date.next_month
+(1..20).each do |i|
+  vouchers <<
+    {
+      code: "voucher#{i}",
+      name: "Mã giảm giá #{i}",
+      description: "Mã giảm giá #{i}",
+      max_user: 10,
+      type_voucher: 'normal',
+      discount_mount: 10,
+      apply_amount: 20,
+      cost: 10,
+      status: 'applying',
+      start_time: current_date,
+      end_time: end_date
+    }
+end
+UserVoucher.delete_all
+Voucher.delete_all
+Voucher.create!(vouchers)
+
 # # Product 1
 # pr1 = Product.new(
 #   title: 'FAST Trenddy Tainer Lace-ups Sporty Casuals Running Shoes For Men',

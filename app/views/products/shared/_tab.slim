@@ -5,7 +5,7 @@
       li.active
         a href='#productsother' data-toggle='tab' Products Other
       li
-        a href='#description' data-toggle='tab' Description
+        a.description href='#description' data-toggle='tab' Description
       li
         a.reviews href='#reviews' data-toggle='tab' Reviews
   .tab-content
@@ -51,7 +51,6 @@
                           i.fa.fa-shopping-cart
                           |   Add to cart
     .tab-pane.fade#description
-      = raw @description
     .tab-pane.fade#reviews p_id='1'
       .col-sm-12#comment_group
         / .rating
@@ -163,3 +162,11 @@ script#list_comments_template[type='text/template']
   |     </div>
   |   </li>
   | <% }) %>
+
+script#content_template[type='text/template']
+  | <ul>
+  |   <li style='margin-top: 100px;'></li>
+  |   <% _.each(options, function(option) { %>
+  |     <li style='list-style: circle; margin: 10px; margin-left: 30px;'><%- option %></li>
+  |   <% }) %>
+  | </ul>
