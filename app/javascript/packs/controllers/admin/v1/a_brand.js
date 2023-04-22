@@ -9,6 +9,7 @@ function ABrand(options) {
     per_page: 10,
     api: {
       get_all: '/v1/admin/load_brands',
+      search: '/v1/admin/brands/search',
     },
     data: {
       list_brands: {},
@@ -47,6 +48,38 @@ function ABrand(options) {
     });
   };
 
+  module.search = function (callback) {
+    $('#form_search').on('keypress', function (e) {
+      var keycode = e.keyCode ? e.keyCode : e.which;
+      if (keycode == '13') {
+        var brand_name = $(this).val();
+        return $.ajax({
+          url: module.settings.api.search,
+          type: 'POST',
+          data: { brand_name: brand_name, per_page: module.settings.per_page },
+          dataType: 'json',
+          success: function (res) {
+            if (res.code === 200) {
+              module.settings.data.list_brands = res.data.brands;
+              module.settings.total_page = res.data.total_page;
+              module.settings.total = res.data.total;
+              module.settings.per_page = res.data.per_page;
+              if (module.settings.total_page > 1) {
+                $('#paginate').show();
+                module.initPaginate();
+              } else {
+                $('#paginate').hide();
+              }
+              if (callback) {
+                callback();
+              }
+            }
+          },
+        });
+      }
+    })
+  }
+
   module.renderBrands = function () {
     var brands = module.settings.data.list_brands;
     var template = _.template(elements.list_brands.html());
@@ -84,6 +117,7 @@ function ABrand(options) {
   };
 
   module.init = function () {
+    module.search(module.renderBrands);
     module.loadBrands(module.renderBrands);
   };
 }

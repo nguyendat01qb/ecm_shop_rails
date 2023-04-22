@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_230_219_030_458) do
+ActiveRecord::Schema.define(version: 20_230_422_080_320) do
   create_table 'active_storage_attachments', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
     t.string 'name', null: false
     t.string 'record_type', null: false
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 20_230_219_030_458) do
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
     t.string 'slug'
+    t.index ['title'], name: 'title_index_fulltext', type: :fulltext
   end
 
   create_table 'cart_items', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
@@ -106,6 +107,7 @@ ActiveRecord::Schema.define(version: 20_230_219_030_458) do
     t.datetime 'updated_at', precision: 6, null: false
     t.bigint 'category_id'
     t.index ['category_id'], name: 'index_categories_on_category_id'
+    t.index ['title'], name: 'title_index_fulltext', type: :fulltext
   end
 
   create_table 'ckeditor_assets', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
@@ -320,6 +322,7 @@ ActiveRecord::Schema.define(version: 20_230_219_030_458) do
     t.string 'slug'
     t.float 'total_online_time'
     t.index ['email'], name: 'index_users_on_email', unique: true
+    t.index ['name'], name: 'name_index_fulltext', type: :fulltext
     t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true
   end
 
@@ -345,6 +348,7 @@ ActiveRecord::Schema.define(version: 20_230_219_030_458) do
     t.datetime 'updated_at', precision: 6, null: false
     t.float 'cost'
     t.integer 'apply_amount'
+    t.index ['name'], name: 'name_index_fulltext', type: :fulltext
   end
 
   add_foreign_key 'active_storage_attachments', 'active_storage_blobs', column: 'blob_id'

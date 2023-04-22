@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   CSV_ATTRIBUTES = %w[name phone gender is_admin email created_at updated_at sign_in_count].freeze
   extend FriendlyId
+  extend SearchKeyword::QuerySearch
   friendly_id :name, use: :slugged
   rolify
 
