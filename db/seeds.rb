@@ -219,28 +219,28 @@ size2 = [36, 37, 39, 40, 41, 42]
 # ]
 # Category.create!(child_categories)
 
-vouchers = []
-current_date = Date.current
-end_date = current_date.next_month
-(1..20).each do |i|
-  vouchers <<
-    {
-      code: "voucher#{i}",
-      name: "Mã giảm giá #{i}",
-      description: "Mã giảm giá #{i}",
-      max_user: 10,
-      type_voucher: 'normal',
-      discount_mount: 10,
-      apply_amount: 20,
-      cost: 10,
-      status: 'applying',
-      start_time: current_date,
-      end_time: end_date
-    }
-end
-UserVoucher.delete_all
-Voucher.delete_all
-Voucher.create!(vouchers)
+# vouchers = []
+# current_date = Date.current
+# end_date = current_date.next_month
+# (1..20).each do |i|
+#   vouchers <<
+#     {
+#       code: "voucher#{i}",
+#       name: "Ma giam gia #{i}",
+#       description: "Ma giam gia #{i}",
+#       max_user: 10,
+#       type_voucher: 'normal',
+#       discount_mount: 10,
+#       apply_amount: 20,
+#       cost: 10,
+#       status: 'applying',
+#       start_time: current_date,
+#       end_time: end_date
+#     }
+# end
+# UserVoucher.delete_all
+# Voucher.delete_all
+# Voucher.create!(vouchers)
 
 # # Product 1
 # pr1 = Product.new(
@@ -544,3 +544,785 @@ Voucher.create!(vouchers)
 # end
 # pr7.quantity = quantity7 unless quantity7.zero?
 # pr7.save!
+# # End of product 7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# # Product 8
+# pr8 = Product.new(
+#   title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   meta_title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   price: 24.5,
+#   discount: 0.7,
+#   content: Faker::Lorem.paragraphs,
+#   brand_id: 2,
+#   product_type: Product::TYPES[:hide]
+# )
+# (2..5).each do |i|
+#   pr8.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr8/black_#{i}.jpeg"), filename: "black_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr8.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr8/grey_#{i}.jpeg"), filename: "grey_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr8.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr8/blue_#{i}.jpeg"), filename: "blue_#{i}.jpeg"])
+# end
+
+# attribute_81 = pr8.product_attributes.build(name: 'color')
+# attribute_82 = pr8.product_attributes.build(name: 'size')
+# ['black', 'grey', 'blue'].each do |color|
+#   attribute_81.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr8/#{color}_1.jpeg"), filename: "#{color}_1.jpeg"])
+# end
+
+# attribute_81.save!
+# attribute_82.save!
+
+# pr8.product_categories.create!(category_id: 13)
+# color8s = ['Black', 'Grey', 'Blue']
+# quantity8 = 0
+# color8s.each do |color|
+#   size2.each do |size|
+#     quantity = rand(1..20)
+#     quantity8 += quantity
+#     attribute_value = AttributeValue.create!(
+#       attribute_1: color,
+#       attribute_2: size,
+#       price_attribute_product: 24.5,
+#       discount_attribute_product: 0.7,
+#       stock: quantity
+#     )
+#     attribute_81.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#     attribute_82.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#   end
+# end
+# pr8.quantity = quantity8 unless quantity8.zero?
+# pr8.save!
+# # End of product 8
+
+# # Product 9
+# pr9 = Product.new(
+#   title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   meta_title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   price: 24.5,
+#   discount: 0.7,
+#   content: Faker::Lorem.paragraphs,
+#   brand_id: 2,
+#   product_type: Product::TYPES[:hide]
+# )
+# (2..5).each do |i|
+#   pr9.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr9/black_#{i}.jpeg"), filename: "black_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr9.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr9/grey_#{i}.jpeg"), filename: "grey_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr9.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr9/blue_#{i}.jpeg"), filename: "blue_#{i}.jpeg"])
+# end
+
+# attribute_91 = pr9.product_attributes.build(name: 'color')
+# attribute_92 = pr9.product_attributes.build(name: 'size')
+# ['black', 'grey', 'blue'].each do |color|
+#   attribute_91.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr9/#{color}_1.jpeg"), filename: "#{color}_1.jpeg"])
+# end
+
+# attribute_91.save!
+# attribute_92.save!
+
+# pr9.product_categories.create!(category_id: 13)
+# color9s = ['Black', 'Grey', 'Blue']
+# quantity9 = 0
+# color9s.each do |color|
+#   size2.each do |size|
+#     quantity = rand(1..20)
+#     quantity9 += quantity
+#     attribute_value = AttributeValue.create!(
+#       attribute_1: color,
+#       attribute_2: size,
+#       price_attribute_product: 24.5,
+#       discount_attribute_product: 0.7,
+#       stock: quantity
+#     )
+#     attribute_91.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#     attribute_92.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#   end
+# end
+# pr9.quantity = quantity9 unless quantity9.zero?
+# pr9.save!
+# # End of product 9
+
+# # Product 10
+# pr10 = Product.new(
+#   title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   meta_title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   price: 24.5,
+#   discount: 0.7,
+#   content: Faker::Lorem.paragraphs,
+#   brand_id: 2,
+#   product_type: Product::TYPES[:hide]
+# )
+# (2..5).each do |i|
+#   pr10.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr10/black_#{i}.jpeg"), filename: "black_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr10.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr10/grey_#{i}.jpeg"), filename: "grey_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr10.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr10/blue_#{i}.jpeg"), filename: "blue_#{i}.jpeg"])
+# end
+
+# attribute_101 = pr10.product_attributes.build(name: 'color')
+# attribute_102 = pr10.product_attributes.build(name: 'size')
+# ['black', 'grey', 'blue'].each do |color|
+#   attribute_101.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr10/#{color}_1.jpeg"), filename: "#{color}_1.jpeg"])
+# end
+
+# attribute_101.save!
+# attribute_102.save!
+
+# pr10.product_categories.create!(category_id: 13)
+# color10s = ['Black', 'Grey', 'Blue']
+# quantity10 = 0
+# color10s.each do |color|
+#   size2.each do |size|
+#     quantity = rand(1..20)
+#     quantity10 += quantity
+#     attribute_value = AttributeValue.create!(
+#       attribute_1: color,
+#       attribute_2: size,
+#       price_attribute_product: 24.5,
+#       discount_attribute_product: 0.7,
+#       stock: quantity
+#     )
+#     attribute_101.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#     attribute_102.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#   end
+# end
+# pr10.quantity = quantity10 unless quantity10.zero?
+# pr10.save!
+# # End of product 10
+
+# # Product 11
+# pr11 = Product.new(
+#   title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   meta_title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   price: 24.5,
+#   discount: 0.7,
+#   content: Faker::Lorem.paragraphs,
+#   brand_id: 2,
+#   product_type: Product::TYPES[:hide]
+# )
+# (2..5).each do |i|
+#   pr11.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr11/black_#{i}.jpeg"), filename: "black_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr11.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr11/grey_#{i}.jpeg"), filename: "grey_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr11.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr11/blue_#{i}.jpeg"), filename: "blue_#{i}.jpeg"])
+# end
+
+# attribute_111 = pr11.product_attributes.build(name: 'color')
+# attribute_112 = pr11.product_attributes.build(name: 'size')
+# ['black', 'grey', 'blue'].each do |color|
+#   attribute_111.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr11/#{color}_1.jpeg"), filename: "#{color}_1.jpeg"])
+# end
+
+# attribute_111.save!
+# attribute_112.save!
+
+# pr11.product_categories.create!(category_id: 13)
+# color11s = ['Black', 'Grey', 'Blue']
+# quantity11 = 0
+# color11s.each do |color|
+#   size2.each do |size|
+#     quantity = rand(1..20)
+#     quantity11 += quantity
+#     attribute_value = AttributeValue.create!(
+#       attribute_1: color,
+#       attribute_2: size,
+#       price_attribute_product: 24.5,
+#       discount_attribute_product: 0.7,
+#       stock: quantity
+#     )
+#     attribute_111.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#     attribute_112.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#   end
+# end
+# pr11.quantity = quantity11 unless quantity11.zero?
+# pr11.save!
+# # End of product 11
+
+# # Product 12
+# pr12 = Product.new(
+#   title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   meta_title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   price: 24.5,
+#   discount: 0.7,
+#   content: Faker::Lorem.paragraphs,
+#   brand_id: 2,
+#   product_type: Product::TYPES[:hide]
+# )
+# (2..5).each do |i|
+#   pr12.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr12/black_#{i}.jpeg"), filename: "black_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr12.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr12/grey_#{i}.jpeg"), filename: "grey_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr12.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr12/blue_#{i}.jpeg"), filename: "blue_#{i}.jpeg"])
+# end
+
+# attribute_121 = pr12.product_attributes.build(name: 'color')
+# attribute_122 = pr12.product_attributes.build(name: 'size')
+# ['black', 'grey', 'blue'].each do |color|
+#   attribute_121.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr12/#{color}_1.jpeg"), filename: "#{color}_1.jpeg"])
+# end
+
+# attribute_121.save!
+# attribute_122.save!
+
+# pr12.product_categories.create!(category_id: 13)
+# color12s = ['Black', 'Grey', 'Blue']
+# quantity12 = 0
+# color12s.each do |color|
+#   size2.each do |size|
+#     quantity = rand(1..20)
+#     quantity12 += quantity
+#     attribute_value = AttributeValue.create!(
+#       attribute_1: color,
+#       attribute_2: size,
+#       price_attribute_product: 24.5,
+#       discount_attribute_product: 0.7,
+#       stock: quantity
+#     )
+#     attribute_121.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#     attribute_122.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#   end
+# end
+# pr12.quantity = quantity12 unless quantity12.zero?
+# pr12.save!
+# # End of product 12
+
+# # Product 13
+# pr13 = Product.new(
+#   title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   meta_title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   price: 24.5,
+#   discount: 0.7,
+#   content: Faker::Lorem.paragraphs,
+#   brand_id: 2,
+#   product_type: Product::TYPES[:hide]
+# )
+# (2..5).each do |i|
+#   pr13.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr13/black_#{i}.jpeg"), filename: "black_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr13.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr13/grey_#{i}.jpeg"), filename: "grey_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr13.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr13/blue_#{i}.jpeg"), filename: "blue_#{i}.jpeg"])
+# end
+
+# attribute_131 = pr13.product_attributes.build(name: 'color')
+# attribute_132 = pr13.product_attributes.build(name: 'size')
+# ['black', 'grey', 'blue'].each do |color|
+#   attribute_131.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr13/#{color}_1.jpeg"), filename: "#{color}_1.jpeg"])
+# end
+
+# attribute_131.save!
+# attribute_132.save!
+
+# pr13.product_categories.create!(category_id: 13)
+# color13s = ['Black', 'Grey', 'Blue']
+# quantity13 = 0
+# color13s.each do |color|
+#   size2.each do |size|
+#     quantity = rand(1..20)
+#     quantity13 += quantity
+#     attribute_value = AttributeValue.create!(
+#       attribute_1: color,
+#       attribute_2: size,
+#       price_attribute_product: 24.5,
+#       discount_attribute_product: 0.7,
+#       stock: quantity
+#     )
+#     attribute_131.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#     attribute_132.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#   end
+# end
+# pr13.quantity = quantity13 unless quantity13.zero?
+# pr13.save!
+# # End of product 13
+
+
+# # Product 14
+# pr14 = Product.new(
+#   title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   meta_title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   price: 24.5,
+#   discount: 0.7,
+#   content: Faker::Lorem.paragraphs,
+#   brand_id: 2,
+#   product_type: Product::TYPES[:hide]
+# )
+# (2..5).each do |i|
+#   pr14.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr14/black_#{i}.jpeg"), filename: "black_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr14.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr14/grey_#{i}.jpeg"), filename: "grey_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr14.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr14/blue_#{i}.jpeg"), filename: "blue_#{i}.jpeg"])
+# end
+
+# attribute_141 = pr14.product_attributes.build(name: 'color')
+# attribute_142 = pr14.product_attributes.build(name: 'size')
+# ['black', 'grey', 'blue'].each do |color|
+#   attribute_141.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr14/#{color}_1.jpeg"), filename: "#{color}_1.jpeg"])
+# end
+
+# attribute_141.save!
+# attribute_142.save!
+
+# pr14.product_categories.create!(category_id: 13)
+# color14s = ['Black', 'Grey', 'Blue']
+# quantity14 = 0
+# color14s.each do |color|
+#   size2.each do |size|
+#     quantity = rand(1..20)
+#     quantity14 += quantity
+#     attribute_value = AttributeValue.create!(
+#       attribute_1: color,
+#       attribute_2: size,
+#       price_attribute_product: 24.5,
+#       discount_attribute_product: 0.7,
+#       stock: quantity
+#     )
+#     attribute_141.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#     attribute_142.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#   end
+# end
+# pr14.quantity = quantity14 unless quantity14.zero?
+# pr14.save!
+# # End of product 14
+
+# # Product 15
+# pr15 = Product.new(
+#   title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   meta_title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   price: 24.5,
+#   discount: 0.7,
+#   content: Faker::Lorem.paragraphs,
+#   brand_id: 2,
+#   product_type: Product::TYPES[:hide]
+# )
+# (2..5).each do |i|
+#   pr15.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr15/black_#{i}.jpeg"), filename: "black_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr15.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr15/grey_#{i}.jpeg"), filename: "grey_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr15.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr15/blue_#{i}.jpeg"), filename: "blue_#{i}.jpeg"])
+# end
+
+# attribute_151 = pr15.product_attributes.build(name: 'color')
+# attribute_152 = pr15.product_attributes.build(name: 'size')
+# ['black', 'grey', 'blue'].each do |color|
+#   attribute_151.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr15/#{color}_1.jpeg"), filename: "#{color}_1.jpeg"])
+# end
+
+# attribute_151.save!
+# attribute_152.save!
+
+# pr15.product_categories.create!(category_id: 13)
+# color15s = ['Black', 'Grey', 'Blue']
+# quantity15 = 0
+# color15s.each do |color|
+#   size2.each do |size|
+#     quantity = rand(1..20)
+#     quantity15 += quantity
+#     attribute_value = AttributeValue.create!(
+#       attribute_1: color,
+#       attribute_2: size,
+#       price_attribute_product: 24.5,
+#       discount_attribute_product: 0.7,
+#       stock: quantity
+#     )
+#     attribute_151.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#     attribute_152.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#   end
+# end
+# pr15.quantity = quantity15 unless quantity15.zero?
+# pr15.save!
+# # End of product 15
+
+# # Product 16
+# pr16 = Product.new(
+#   title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   meta_title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   price: 24.5,
+#   discount: 0.7,
+#   content: Faker::Lorem.paragraphs,
+#   brand_id: 2,
+#   product_type: Product::TYPES[:hide]
+# )
+# (2..5).each do |i|
+#   pr16.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr16/black_#{i}.jpeg"), filename: "black_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr16.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr16/grey_#{i}.jpeg"), filename: "grey_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr16.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr16/blue_#{i}.jpeg"), filename: "blue_#{i}.jpeg"])
+# end
+
+# attribute_161 = pr16.product_attributes.build(name: 'color')
+# attribute_162 = pr16.product_attributes.build(name: 'size')
+# ['black', 'grey', 'blue'].each do |color|
+#   attribute_161.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr16/#{color}_1.jpeg"), filename: "#{color}_1.jpeg"])
+# end
+
+# attribute_161.save!
+# attribute_162.save!
+
+# pr16.product_categories.create!(category_id: 13)
+# color16s = ['Black', 'Grey', 'Blue']
+# quantity16 = 0
+# color16s.each do |color|
+#   size2.each do |size|
+#     quantity = rand(1..20)
+#     quantity16 += quantity
+#     attribute_value = AttributeValue.create!(
+#       attribute_1: color,
+#       attribute_2: size,
+#       price_attribute_product: 24.5,
+#       discount_attribute_product: 0.7,
+#       stock: quantity
+#     )
+#     attribute_161.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#     attribute_162.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#   end
+# end
+# pr16.quantity = quantity16 unless quantity16.zero?
+# pr16.save!
+# # End of product 16
+
+# # Product 17
+# pr17 = Product.new(
+#   title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   meta_title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   price: 24.5,
+#   discount: 0.7,
+#   content: Faker::Lorem.paragraphs,
+#   brand_id: 2,
+#   product_type: Product::TYPES[:hide]
+# )
+# (2..5).each do |i|
+#   pr17.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr17/black_#{i}.jpeg"), filename: "black_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr17.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr17/grey_#{i}.jpeg"), filename: "grey_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr17.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr17/blue_#{i}.jpeg"), filename: "blue_#{i}.jpeg"])
+# end
+
+# attribute_171 = pr17.product_attributes.build(name: 'color')
+# attribute_172 = pr17.product_attributes.build(name: 'size')
+# ['black', 'grey', 'blue'].each do |color|
+#   attribute_171.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr17/#{color}_1.jpeg"), filename: "#{color}_1.jpeg"])
+# end
+
+# attribute_171.save!
+# attribute_172.save!
+
+# pr17.product_categories.create!(category_id: 13)
+# color17s = ['Black', 'Grey', 'Blue']
+# quantity17 = 0
+# color17s.each do |color|
+#   size2.each do |size|
+#     quantity = rand(1..20)
+#     quantity17 += quantity
+#     attribute_value = AttributeValue.create!(
+#       attribute_1: color,
+#       attribute_2: size,
+#       price_attribute_product: 24.5,
+#       discount_attribute_product: 0.7,
+#       stock: quantity
+#     )
+#     attribute_171.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#     attribute_172.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#   end
+# end
+# pr17.quantity = quantity17 unless quantity17.zero?
+# pr17.save!
+# # End of product 17
+
+# # Product 18
+# pr18 = Product.new(
+#   title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   meta_title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   price: 24.5,
+#   discount: 0.7,
+#   content: Faker::Lorem.paragraphs,
+#   brand_id: 2,
+#   product_type: Product::TYPES[:hide]
+# )
+# (2..5).each do |i|
+#   pr18.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr18/black_#{i}.jpeg"), filename: "black_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr18.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr18/grey_#{i}.jpeg"), filename: "grey_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr18.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr18/blue_#{i}.jpeg"), filename: "blue_#{i}.jpeg"])
+# end
+
+# attribute_181 = pr18.product_attributes.build(name: 'color')
+# attribute_182 = pr18.product_attributes.build(name: 'size')
+# ['black', 'grey', 'blue'].each do |color|
+#   attribute_181.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr18/#{color}_1.jpeg"), filename: "#{color}_1.jpeg"])
+# end
+
+# attribute_181.save!
+# attribute_182.save!
+
+# pr18.product_categories.create!(category_id: 13)
+# color18s = ['Black', 'Grey', 'Blue']
+# quantity18 = 0
+# color18s.each do |color|
+#   size2.each do |size|
+#     quantity = rand(1..20)
+#     quantity18 += quantity
+#     attribute_value = AttributeValue.create!(
+#       attribute_1: color,
+#       attribute_2: size,
+#       price_attribute_product: 24.5,
+#       discount_attribute_product: 0.7,
+#       stock: quantity
+#     )
+#     attribute_181.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#     attribute_182.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#   end
+# end
+# pr18.quantity = quantity18 unless quantity18.zero?
+# pr18.save!
+# # End of product 18
+
+# # Product 19
+# pr19 = Product.new(
+#   title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   meta_title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   price: 24.5,
+#   discount: 0.7,
+#   content: Faker::Lorem.paragraphs,
+#   brand_id: 2,
+#   product_type: Product::TYPES[:hide]
+# )
+# (2..5).each do |i|
+#   pr19.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr19/black_#{i}.jpeg"), filename: "black_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr19.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr19/grey_#{i}.jpeg"), filename: "grey_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr19.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr19/blue_#{i}.jpeg"), filename: "blue_#{i}.jpeg"])
+# end
+
+# attribute_191 = pr19.product_attributes.build(name: 'color')
+# attribute_192 = pr19.product_attributes.build(name: 'size')
+# ['black', 'grey', 'blue'].each do |color|
+#   attribute_191.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr19/#{color}_1.jpeg"), filename: "#{color}_1.jpeg"])
+# end
+
+# attribute_191.save!
+# attribute_192.save!
+
+# pr19.product_categories.create!(category_id: 13)
+# color19s = ['Black', 'Grey', 'Blue']
+# quantity19 = 0
+# color19s.each do |color|
+#   size2.each do |size|
+#     quantity = rand(1..20)
+#     quantity19 += quantity
+#     attribute_value = AttributeValue.create!(
+#       attribute_1: color,
+#       attribute_2: size,
+#       price_attribute_product: 24.5,
+#       discount_attribute_product: 0.7,
+#       stock: quantity
+#     )
+#     attribute_191.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#     attribute_192.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#   end
+# end
+# pr19.quantity = quantity19 unless quantity19.zero?
+# pr19.save!
+# # End of product 19
+
+# # Product 20
+# pr20 = Product.new(
+#   title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   meta_title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   price: 24.5,
+#   discount: 0.7,
+#   content: Faker::Lorem.paragraphs,
+#   brand_id: 2,
+#   product_type: Product::TYPES[:hide]
+# )
+# (2..5).each do |i|
+#   pr20.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr20/black_#{i}.jpeg"), filename: "black_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr20.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr20/grey_#{i}.jpeg"), filename: "grey_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr20.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr20/blue_#{i}.jpeg"), filename: "blue_#{i}.jpeg"])
+# end
+
+# attribute_201 = pr20.product_attributes.build(name: 'color')
+# attribute_202 = pr20.product_attributes.build(name: 'size')
+# ['black', 'grey', 'blue'].each do |color|
+#   attribute_201.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr20/#{color}_1.jpeg"), filename: "#{color}_1.jpeg"])
+# end
+
+# attribute_201.save!
+# attribute_202.save!
+
+# pr20.product_categories.create!(category_id: 13)
+# color20s = ['Black', 'Grey', 'Blue']
+# quantity20 = 0
+# color20s.each do |color|
+#   size2.each do |size|
+#     quantity = rand(1..20)
+#     quantity20 += quantity
+#     attribute_value = AttributeValue.create!(
+#       attribute_1: color,
+#       attribute_2: size,
+#       price_attribute_product: 24.5,
+#       discount_attribute_product: 0.7,
+#       stock: quantity
+#     )
+#     attribute_201.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#     attribute_202.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#   end
+# end
+# pr20.quantity = quantity20 unless quantity20.zero?
+# pr20.save!
+# # End of product 20
+
+# # Product 21
+# pr21 = Product.new(
+#   title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   meta_title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   price: 24.5,
+#   discount: 0.7,
+#   content: Faker::Lorem.paragraphs,
+#   brand_id: 2,
+#   product_type: Product::TYPES[:hide]
+# )
+# (2..5).each do |i|
+#   pr21.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr21/black_#{i}.jpeg"), filename: "black_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr21.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr21/grey_#{i}.jpeg"), filename: "grey_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr21.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr21/blue_#{i}.jpeg"), filename: "blue_#{i}.jpeg"])
+# end
+
+# attribute_211 = pr21.product_attributes.build(name: 'color')
+# attribute_212 = pr21.product_attributes.build(name: 'size')
+# ['black', 'grey', 'blue'].each do |color|
+#   attribute_211.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr21/#{color}_1.jpeg"), filename: "#{color}_1.jpeg"])
+# end
+
+# attribute_211.save!
+# attribute_212.save!
+
+# pr21.product_categories.create!(category_id: 13)
+# color21s = ['Black', 'Grey', 'Blue']
+# quantity21 = 0
+# color21s.each do |color|
+#   size2.each do |size|
+#     quantity = rand(1..20)
+#     quantity21 += quantity
+#     attribute_value = AttributeValue.create!(
+#       attribute_1: color,
+#       attribute_2: size,
+#       price_attribute_product: 24.5,
+#       discount_attribute_product: 0.7,
+#       stock: quantity
+#     )
+#     attribute_211.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#     attribute_212.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#   end
+# end
+# pr21.quantity = quantity21 unless quantity21.zero?
+# pr21.save!
+# # End of product 21
+
+# # Product 22
+# pr22 = Product.new(
+#   title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   meta_title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
+#   price: 24.5,
+#   discount: 0.7,
+#   content: Faker::Lorem.paragraphs,
+#   brand_id: 2,
+#   product_type: Product::TYPES[:hide]
+# )
+# (2..5).each do |i|
+#   pr22.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr22/black_#{i}.jpeg"), filename: "black_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr22.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr22/grey_#{i}.jpeg"), filename: "grey_#{i}.jpeg"])
+# end
+# (2..6).each do |i|
+#   pr22.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr22/blue_#{i}.jpeg"), filename: "blue_#{i}.jpeg"])
+# end
+
+# attribute_221 = pr22.product_attributes.build(name: 'color')
+# attribute_222 = pr22.product_attributes.build(name: 'size')
+# ['black', 'grey', 'blue'].each do |color|
+#   attribute_221.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr22/#{color}_1.jpeg"), filename: "#{color}_1.jpeg"])
+# end
+
+# attribute_221.save!
+# attribute_222.save!
+
+# pr22.product_categories.create!(category_id: 13)
+# color22s = ['Black', 'Grey', 'Blue']
+# quantity22 = 0
+# color22s.each do |color|
+#   size2.each do |size|
+#     quantity = rand(1..20)
+#     quantity22 += quantity
+#     attribute_value = AttributeValue.create!(
+#       attribute_1: color,
+#       attribute_2: size,
+#       price_attribute_product: 24.5,
+#       discount_attribute_product: 0.7,
+#       stock: quantity
+#     )
+#     attribute_221.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#     attribute_222.product_attribute_values.create!(attribute_value_id: attribute_value.id)
+#   end
+# end
+# pr22.quantity = quantity22 unless quantity22.zero?
+# pr22.save!
+# # End of product 22

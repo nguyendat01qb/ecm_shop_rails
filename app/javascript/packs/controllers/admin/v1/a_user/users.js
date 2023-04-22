@@ -9,6 +9,7 @@ function AUser(options) {
     per_page: 10,
     api: {
       get_all: '/v1/admin/load_users',
+      search: '/v1/admin/users/search',
     },
     data: {
       list_users: {},
@@ -50,6 +51,38 @@ function AUser(options) {
     });
   };
 
+  module.search = function (callback) {
+    $('#form_search').on('keypress', function (e) {
+      var keycode = e.keyCode ? e.keyCode : e.which;
+      if (keycode == '13') {
+        var name = $(this).val();
+        return $.ajax({
+          url: module.settings.api.search,
+          type: 'POST',
+          data: { name: name, per_page: module.settings.per_page },
+          dataType: 'json',
+          success: function (res) {
+            if (res.code === 200) {
+              module.settings.data.list_users = res.data.users;
+              module.settings.total_page = res.data.total_page;
+              module.settings.total = res.data.total;
+              module.settings.per_page = res.data.per_page;
+              if (module.settings.total_page > 1) {
+                $('#paginate').show();
+                module.initPaginate();
+              } else {
+                $('#paginate').hide();
+              }
+              if (callback) {
+                callback();
+              }
+            }
+          },
+        });
+      }
+    })
+  }
+
   module.renderUsers = function () {
     var users = module.settings.data.list_users;
     var template = _.template(elements.list_users.html());
@@ -88,6 +121,7 @@ function AUser(options) {
 
   module.init = function () {
     module.loadUsers(module.renderUsers);
+    module.search(module.renderUsers);
   };
 }
 

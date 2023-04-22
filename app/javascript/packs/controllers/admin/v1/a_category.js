@@ -9,6 +9,7 @@ function ACategory(options) {
     per_page: 10,
     api: {
       get_all: '/v1/admin/load_categories',
+      search: '/v1/admin/categories/search',
     },
     data: {
       list_categories: {},
@@ -46,6 +47,38 @@ function ACategory(options) {
       },
     });
   };
+
+  module.search = function (callback) {
+    $('#form_search').on('keypress', function (e) {
+      var keycode = e.keyCode ? e.keyCode : e.which;
+      if (keycode == '13') {
+        var category_name = $(this).val();
+        return $.ajax({
+          url: module.settings.api.search,
+          type: 'POST',
+          data: { category_name: category_name, per_page: module.settings.per_page },
+          dataType: 'json',
+          success: function (res) {
+            if (res.code === 200) {
+              module.settings.data.list_categories = res.data.categories;
+              module.settings.total_page = res.data.total_page;
+              module.settings.total = res.data.total;
+              module.settings.per_page = res.data.per_page;
+              if (module.settings.total_page > 1) {
+                $('#paginate').show();
+                module.initPaginate();
+              } else {
+                $('#paginate').hide();
+              }
+              if (callback) {
+                callback();
+              }
+            }
+          },
+        });
+      }
+    })
+  }
 
   module.renderCategories = function () {
     var categories = module.settings.data.list_categories;
@@ -85,6 +118,7 @@ function ACategory(options) {
 
   module.init = function () {
     module.loadCategories(module.renderCategories);
+    module.search(module.renderCategories);
   };
 }
 

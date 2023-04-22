@@ -10,19 +10,23 @@ ol.breadcrumb
 
 = render 'admin/shared/flash_message_errors'
 
-ul.nav.nav-tabs.action_items
-  li.active
-    a.pjax href='#{admin_brands_url}'
-      i.fa.fa-list
-      span = t('.list')
-  li
-    a.pjax href='#{new_admin_brand_url}'
-      i.fa.fa-plus
-      span = t('.new')
-  li
-    p.pjax
-      i.fa.fa-share
-      = link_to t('.export'), export_csv_admin_brands_path(format: :csv)
+#header
+  ul.nav.nav-tabs.action_items
+    li.active
+      a.pjax href='#{admin_brands_url}'
+        i.fa.fa-list
+        span = t('.list')
+    li
+      a.pjax href='#{new_admin_brand_url}'
+        i.fa.fa-plus
+        span = t('.new')
+    li
+      p.pjax
+        i.fa.fa-share
+        = link_to t('.export'), export_csv_admin_brands_path(format: :csv)
+  #search
+    h4 Search:
+    input#form_search
 
 .col-lg-12.grid-margin.stretch-card
   .card

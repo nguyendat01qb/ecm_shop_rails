@@ -1,5 +1,6 @@
 class Brand < ApplicationRecord
   extend FriendlyId
+  extend SearchKeyword::QuerySearch
   CSV_ATTRIBUTES = %w[title slug created_at updated_at].freeze
 
   friendly_id :title, use: :slugged

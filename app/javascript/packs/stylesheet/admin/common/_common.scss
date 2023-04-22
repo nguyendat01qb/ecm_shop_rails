@@ -358,3 +358,27 @@ ul>li>p {
     margin-right: 10px;
   }
 }
+
+#header {
+  display: flex;
+  justify-content: space-between;
+
+  #search {
+    display: flex;
+
+    h4 {
+      margin: auto;
+      font-size: 18px;
+      font-weight: 500;
+      margin-right: 20px;
+    }
+
+    #form_search {
+      width: 400px;
+      border-radius: 10px;
+      border: 1px solid #000;
+      font-size: 16px;
+    }
+  }
+}
+

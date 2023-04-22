@@ -22,6 +22,36 @@ Rails.application.routes.draw do
           post :approve
         end
       end
+
+      resources :users do
+        collection do
+          post :search
+        end
+      end
+
+      resources :brands do
+        collection do
+          post :search
+        end
+      end
+
+      resources :categories do
+        collection do
+          post :search
+        end
+      end
+
+      resources :products do
+        collection do
+          post :search
+        end
+      end
+
+      resources :vouchers do
+        collection do
+          post :search
+        end
+      end
     end
 
     namespace :customer do

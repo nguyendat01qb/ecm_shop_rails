@@ -1,5 +1,6 @@
 class Category < ApplicationRecord
   extend FriendlyId
+  extend SearchKeyword::QuerySearch
   CSV_ATTRIBUTES = %w[title meta_title slug content created_at updated_at category_id].freeze
 
   friendly_id :title, use: :slugged
