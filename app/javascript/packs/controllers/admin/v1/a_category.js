@@ -52,32 +52,36 @@ function ACategory(options) {
     $('#form_search').on('keypress', function (e) {
       var keycode = e.keyCode ? e.keyCode : e.which;
       if (keycode == '13') {
-        var category_name = $(this).val();
-        return $.ajax({
-          url: module.settings.api.search,
-          type: 'POST',
-          data: { category_name: category_name, per_page: module.settings.per_page },
-          dataType: 'json',
-          success: function (res) {
-            if (res.code === 200) {
-              module.settings.data.list_categories = res.data.categories;
-              module.settings.total_page = res.data.total_page;
-              module.settings.total = res.data.total;
-              module.settings.per_page = res.data.per_page;
-              if (module.settings.total_page > 1) {
-                $('#paginate').show();
-                module.initPaginate();
-              } else {
-                $('#paginate').hide();
-              }
-              if (callback) {
-                callback();
-              }
-            }
-          },
-        });
+        module.settings.data.category_name = $(this).val();
+        module.searchAjax(callback);
       }
     })
+  };
+
+  module.searchAjax = function (callback) {
+    return $.ajax({
+      url: module.settings.api.search,
+      type: 'POST',
+      data: { category_name: module.settings.data.category_name, page: module.settings.page, per_page: module.settings.per_page },
+      dataType: 'json',
+      success: function (res) {
+        if (res.code === 200) {
+          module.settings.data.list_categories = res.data.categories;
+          module.settings.total_page = res.data.total_page;
+          module.settings.total = res.data.total;
+          module.settings.per_page = res.data.per_page;
+          if (module.settings.total_page > 1) {
+            $('#paginate').show();
+            module.initPaginate();
+          } else {
+            $('#paginate').hide();
+          }
+          if (callback) {
+            callback();
+          }
+        }
+      },
+    });
   }
 
   module.renderCategories = function () {
@@ -95,7 +99,11 @@ function ACategory(options) {
     $('.pagination span a').on('click', function () {
       if ($(this).closest('.page').hasClass('current')) return;
       module.settings.page = $(this).data('page');
-      module.loadCategories(module.renderCategories);
+      if (module.settings.data.category_name) {
+        module.searchAjax(module.renderCategories);
+      } else {
+        module.loadCategories(module.renderCategories);
+      }
     });
   };
 

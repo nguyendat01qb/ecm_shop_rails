@@ -21,7 +21,7 @@ class V1::Admin::ProductsController < V1::Admin::BaseAuthController
 
   def search
     per_page = params[:per_page]
-    page = 1
+    page = params[:page]
     products = Kaminari.paginate_array(Product.query_search(:title,
                                                             params[:product_title]).select(:id, :title, :price, :discount, :quantity, :price_cents, :product_type, :brand_id,
                                                                                            :created_at).order(created_at: :desc)).page(page).per(per_page)

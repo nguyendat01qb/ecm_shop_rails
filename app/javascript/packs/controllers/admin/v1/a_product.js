@@ -52,32 +52,36 @@ function AProduct(options) {
     $('#form_search').on('keypress', function (e) {
       var keycode = e.keyCode ? e.keyCode : e.which;
       if (keycode == '13') {
-        var product_title = $(this).val();
-        return $.ajax({
-          url: module.settings.api.search,
-          type: 'POST',
-          data: { product_title: product_title, per_page: module.settings.per_page },
-          dataType: 'json',
-          success: function (res) {
-            if (res.code === 200) {
-              module.settings.data.list_products = res.data.products;
-              module.settings.total_page = res.data.total_page;
-              module.settings.total = res.data.total;
-              module.settings.per_page = res.data.per_page;
-              if (module.settings.total_page > 1) {
-                $('#paginate').show();
-                module.initPaginate();
-              } else {
-                $('#paginate').hide();
-              }
-              if (callback) {
-                callback();
-              }
-            }
-          },
-        });
+        module.settings.data.product_title = $(this).val();
+        module.searchAjax(callback);
       }
     })
+  }
+
+  module.searchAjax = function (callback) {
+    return $.ajax({
+      url: module.settings.api.search,
+      type: 'POST',
+      data: { product_title: module.settings.data.product_title, per_page: module.settings.per_page, page: module.settings.page },
+      dataType: 'json',
+      success: function (res) {
+        if (res.code === 200) {
+          module.settings.data.list_products = res.data.products;
+          module.settings.total_page = res.data.total_page;
+          module.settings.total = res.data.total;
+          module.settings.per_page = res.data.per_page;
+          if (module.settings.total_page > 1) {
+            $('#paginate').show();
+            module.initPaginate();
+          } else {
+            $('#paginate').hide();
+          }
+          if (callback) {
+            callback();
+          }
+        }
+      },
+    });
   }
 
   module.renderProducts = function () {
@@ -95,7 +99,11 @@ function AProduct(options) {
     $('.pagination span a').on('click', function () {
       if ($(this).closest('.page').hasClass('current')) return;
       module.settings.page = $(this).data('page');
-      module.loadProducts(module.renderProducts);
+      if (module.settings.data.product_title) {
+        module.searchAjax(module.renderProducts);
+      } else {
+        module.loadProducts(module.renderProducts);
+      }
     });
   };
 

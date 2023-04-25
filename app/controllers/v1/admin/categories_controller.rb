@@ -21,7 +21,7 @@ class V1::Admin::CategoriesController < V1::Admin::BaseAuthController
 
   def search
     per_page = params[:per_page]
-    page = 1
+    page = params[:page]
     categories = Kaminari.paginate_array(Category.query_search(:title,
                                                                params[:category_name]).select(:id, :title, :meta_title, :slug, :created_at,
                                                                                               :category_id).order(created_at: :desc)).page(page).per(per_page)
