@@ -546,52 +546,31 @@ size2 = [36, 37, 39, 40, 41, 42]
 # pr7.save!
 # # End of product 7
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # # Product 8
 # pr8 = Product.new(
-#   title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
-#   meta_title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
-#   price: 24.5,
-#   discount: 0.7,
+#   title: 'Men Solid Round Neck White T-Shirt',
+#   meta_title: 'Men Solid Round Neck White T-Shirt',
+#   price: 3.64,
+#   discount: 0.79,
 #   content: Faker::Lorem.paragraphs,
-#   brand_id: 2,
+#   brand_id: 96,
 #   product_type: Product::TYPES[:hide]
 # )
-# (2..5).each do |i|
+# (2..4).each do |i|
 #   pr8.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr8/black_#{i}.jpeg"), filename: "black_#{i}.jpeg"])
-# end
-# (2..6).each do |i|
-#   pr8.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr8/grey_#{i}.jpeg"), filename: "grey_#{i}.jpeg"])
-# end
-# (2..6).each do |i|
-#   pr8.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr8/blue_#{i}.jpeg"), filename: "blue_#{i}.jpeg"])
 # end
 
 # attribute_81 = pr8.product_attributes.build(name: 'color')
 # attribute_82 = pr8.product_attributes.build(name: 'size')
-# ['black', 'grey', 'blue'].each do |color|
+# ['black'].each do |color|
 #   attribute_81.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr8/#{color}_1.jpeg"), filename: "#{color}_1.jpeg"])
 # end
 
 # attribute_81.save!
 # attribute_82.save!
 
-# pr8.product_categories.create!(category_id: 13)
-# color8s = ['Black', 'Grey', 'Blue']
+# pr8.product_categories.create!(category_id: 27)
+# color8s = ['Black']
 # quantity8 = 0
 # color8s.each do |color|
 #   size2.each do |size|
@@ -600,8 +579,8 @@ size2 = [36, 37, 39, 40, 41, 42]
 #     attribute_value = AttributeValue.create!(
 #       attribute_1: color,
 #       attribute_2: size,
-#       price_attribute_product: 24.5,
-#       discount_attribute_product: 0.7,
+#       price_attribute_product: 3.64,
+#       discount_attribute_product: 0.79,
 #       stock: quantity
 #     )
 #     attribute_81.product_attribute_values.create!(attribute_value_id: attribute_value.id)
@@ -614,35 +593,35 @@ size2 = [36, 37, 39, 40, 41, 42]
 
 # # Product 9
 # pr9 = Product.new(
-#   title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
-#   meta_title: 'Sport Shoes | Casual Lace up Running Training Gym Lightweight Shoes Training & Gym Shoes For Men',
-#   price: 24.5,
-#   discount: 0.7,
+#   title: 'E-MAX T-Shirt For Mens Men Solid Round Neck Blue T-Shirt',
+#   meta_title: 'E-MAX T-Shirt For Mens Men Solid Round Neck Blue T-Shirt',
+#   price: 10.97,
+#   discount: 0.37,
 #   content: Faker::Lorem.paragraphs,
-#   brand_id: 2,
+#   brand_id: 97,
 #   product_type: Product::TYPES[:hide]
 # )
-# (2..5).each do |i|
-#   pr9.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr9/black_#{i}.jpeg"), filename: "black_#{i}.jpeg"])
+# (2..4).each do |i|
+#   pr9.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr9/airforce_#{i}.jpeg"), filename: "airforce_#{i}.jpeg"])
 # end
-# (2..6).each do |i|
-#   pr9.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr9/grey_#{i}.jpeg"), filename: "grey_#{i}.jpeg"])
+# (2..4).each do |i|
+#   pr9.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr9/gold_#{i}.jpeg"), filename: "gold_#{i}.jpeg"])
 # end
-# (2..6).each do |i|
-#   pr9.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr9/blue_#{i}.jpeg"), filename: "blue_#{i}.jpeg"])
+# (2..4).each do |i|
+#   pr9.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr9/red_#{i}.jpeg"), filename: "red_#{i}.jpeg"])
 # end
 
 # attribute_91 = pr9.product_attributes.build(name: 'color')
 # attribute_92 = pr9.product_attributes.build(name: 'size')
-# ['black', 'grey', 'blue'].each do |color|
+# ['airforce', 'gold', 'red'].each do |color|
 #   attribute_91.images.attach([io: File.open(Rails.root + "app/assets/images/home/products/pr9/#{color}_1.jpeg"), filename: "#{color}_1.jpeg"])
 # end
 
 # attribute_91.save!
 # attribute_92.save!
 
-# pr9.product_categories.create!(category_id: 13)
-# color9s = ['Black', 'Grey', 'Blue']
+# pr9.product_categories.create!(category_id: 27)
+# color9s = ['Airforce', 'Gold', 'Red']
 # quantity9 = 0
 # color9s.each do |color|
 #   size2.each do |size|
@@ -651,8 +630,8 @@ size2 = [36, 37, 39, 40, 41, 42]
 #     attribute_value = AttributeValue.create!(
 #       attribute_1: color,
 #       attribute_2: size,
-#       price_attribute_product: 24.5,
-#       discount_attribute_product: 0.7,
+#       price_attribute_product: 10.97,
+#       discount_attribute_product: 0.37,
 #       stock: quantity
 #     )
 #     attribute_91.product_attribute_values.create!(attribute_value_id: attribute_value.id)
@@ -662,6 +641,11 @@ size2 = [36, 37, 39, 40, 41, 42]
 # pr9.quantity = quantity9 unless quantity9.zero?
 # pr9.save!
 # # End of product 9
+
+
+
+# PENDING
+
 
 # # Product 10
 # pr10 = Product.new(
