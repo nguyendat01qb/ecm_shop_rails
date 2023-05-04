@@ -100,6 +100,8 @@ class Client::Order::OrderService < ApplicationService
       end
 
       [create, I18n.t('messages.success.order.created'), order]
+    rescue => e
+      binding.pry
     end
   end
 

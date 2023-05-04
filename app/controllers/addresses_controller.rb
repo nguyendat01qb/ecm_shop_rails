@@ -48,7 +48,7 @@ class AddressesController < ApplicationController
   end
 
   def destroy
-    authorize @address
+    # authorize @address
     if @address&.destroy
       render json: { status: 200, message: 'Successfully' }
     else

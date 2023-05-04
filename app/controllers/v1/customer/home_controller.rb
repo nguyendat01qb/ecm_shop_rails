@@ -23,7 +23,7 @@ class V1::Customer::HomeController < V1::BaseController
 
   def load_default_products
     per_page = request.params[:per_page] ? request.params[:per_page].to_i : 6
-    products = Product.all.select(:id, :title, :price, :price_cents, :discount, :quantity).page(1).per(per_page)
+    products = Product.newest.select(:id, :title, :price, :price_cents, :discount, :quantity).page(1).per(per_page)
     images = products.each_with_object({}) do |product, result|
       result[product.id] = url_for(product.images.first)
     end
@@ -55,9 +55,9 @@ class V1::Customer::HomeController < V1::BaseController
         Product.where(brand_id: brand_id).select(:id, :title, :price, :price_cents, :discount,
                                                  :quantity).page(1).per(per_page)
       else
-        Product.all.select(:id, :title, :price, :price_cents, :discount, :quantity).page(1).per(per_page)
+        Product.newest.select(:id, :title, :price, :price_cents, :discount, :quantity).page(1).per(per_page)
       end
-    if products.present?
+    if products.compact.uniq.present?
       images = products.each_with_object({}) do |product, result|
         result[product.id] = url_for(product.images.first)
       end

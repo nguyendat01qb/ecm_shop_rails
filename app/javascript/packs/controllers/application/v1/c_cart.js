@@ -202,6 +202,7 @@ function CCart(options) {
 
   module.handleDelete = function () {
     $(document).on('click', '#cart_quantity_delete', function () {
+      module.settings.data.signed_in = JSON.parse($('#signed_in').val());
       var cart_item_id = $(this).attr('cart_id');
       var product_id = parseInt($(this).attr('product_id'));
       var attr_id = parseInt($(this).attr('attr_id'));

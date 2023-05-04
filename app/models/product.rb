@@ -33,6 +33,7 @@ class Product < ApplicationRecord
                      attached: true
 
   scope :with_attached_images, -> { includes(images_attachments: :blob) }
+  scope :newest, -> { order(created_at: :desc) }
 
   def display_image
     images[0].variant resize_to_limit: [720, 1280]

@@ -1,6 +1,6 @@
 = simple_form_for @user, url: url, :html => {:class => 'form-horizontal denser'} do |f|
   .form-group.control-group
-    = f.label :username, class:'col-sm-2 control-label'
+    = f.label :name, class:'col-sm-2 control-label'
     .col-sm-8.controls
       = f.input :name, required:'required', label: false, hint: 'Required. Length form 6 to 30.'
   .form-group.control-group

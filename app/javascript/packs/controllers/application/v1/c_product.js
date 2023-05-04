@@ -158,15 +158,21 @@ function CProduct(options) {
                       res.data.attribute_value.quantity
                     );
                   }
+                  $('#pd_quantity_down').removeAttr("disabled");
+                  $('#pd_quantity_up').removeAttr("disabled");
+                  $('#pd_quantity_input').attr('value', 1);
                   $('.quantity').attr(
                     'stock',
                     res.data.attribute_value.quantity
                   );
                 } else {
+                  $('#pd_quantity_input').attr('value', 0);
+                  $('#pd_quantity_down').attr("disabled", "disabled");
+                  $('#pd_quantity_up').attr("disabled", "disabled");
                   $('.product__stock').replaceWith(`
                     <div class='product__stock'><b>Quantity in stock: </b><span id='stock' value='0'>0</span></div>
                   `);
-                  $('.add-to-cart').replaceWith(`
+                  $('#add-to-cart').replaceWith(`
                     <a class='btn btn-danger out-of-stock' href='javascript:void(0)'>Out of stock</a>
                   `);
                 }
@@ -204,7 +210,7 @@ function CProduct(options) {
         value_attr2: value_attr2,
       };
       module.getAttributes(data, p_id, quantity);
-      if (!_.isEmpty(module.settings.headers['Api-Token'])) {
+      if (JSON.parse($('#signed_in').val())) {
         data.product_id = p_id;
         data.quantity = quantity;
         module.handleUpdateCart(data);
@@ -227,7 +233,7 @@ function CProduct(options) {
             amount: amount,
             attr_val_id: attr_val_id,
           };
-          if (_.isEmpty(module.settings.headers['Api-Token'])) {
+          if (!JSON.parse($('#signed_in').val())) {
             let cart_present = false;
             if (_.isEmpty(carts)) {
               carts = [cart_params];
